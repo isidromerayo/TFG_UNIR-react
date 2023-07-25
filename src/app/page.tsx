@@ -1,22 +1,14 @@
+import Head from 'next/head'
 
-import FooterComponent from './components/FooterComponent';
-import HeaderComponent from './components/HeaderComponent';
-import HomeComponent from './components/HomeComponent';
-import SliderComponent from './components/SliderComponent';
 
-export default function Home() {
+
+export default function Home({children}) {
   return (
     <div>
+      <Head><title>Home</title></Head>
 
-      <HeaderComponent></HeaderComponent>
-
-      <SliderComponent></SliderComponent>
-
-      <main id="main">
-        <HomeComponent></HomeComponent>
-      </main>
+      <h1>Home</h1>
       
-      <FooterComponent></FooterComponent>
 
     </div>
 
