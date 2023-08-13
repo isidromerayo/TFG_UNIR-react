@@ -10,9 +10,9 @@ export default function LayoutComponent({ children }) {
     <>
           <HeaderComponent></HeaderComponent>
 
-        <SliderComponent></SliderComponent>
+        {/* <SliderComponent></SliderComponent> */}
         <main id="main">
-      {/* {children} */}
+      {children}
       </main>
       <FooterComponent></FooterComponent>
     </>
