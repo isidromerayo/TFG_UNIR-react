@@ -1,6 +1,25 @@
 import Link from "next/link";
+import { useRouter } from 'next/router';
+import Swal from 'sweetalert2';
+import { removeToken, getToken, removeUser } from '../services'
+import { API_URL } from '../utils/'
+
+
 
 export default function HeaderComponent() {
+    const { push } = useRouter();
+
+    const logout = () => {
+      removeToken()
+      removeUser()
+      push('/')
+      Swal.fire('Acceso', 'Cierre de sesion correcta');
+    }
+    const isLogin = ():boolean => {
+        console.log(getToken())
+        return (getToken() === '') ? false : true;
+    }
+    
     return (
         <>
         {/* html header - TODO */}
@@ -27,8 +46,27 @@ export default function HeaderComponent() {
                             </ul>
                         </li>
                         <li><Link href="/carrito" title="carrito de la compra"><i className="bi bi-cart4" title="carito de la compra" aria-hidden="true"> carrito</i></Link></li>
-                        <li><Link href="/registro">Registro</Link></li>
-                        <li><Link href="/acceso" className="get-a-quote">Acceso</Link></li>
+                        {isLogin ? (
+                            <>
+                            <li className="dropdown">
+                                <Link href="/mis-datos" active-class="active">
+                            <span><i className="bi bi-file-person iconos-menu"> Privado</i></span>
+                            <i className="bi bi-chevron-down dropdown-indicator"></i></Link>
+                            <ul>
+                                <li><Link href="/mis-datos">Mis datos</Link></li>
+                                <li><Link href="/mis-cursos">Mis cursos</Link></li>
+                                <li><Link href="#" onClick={logout}>desconectar</Link></li>
+                            </ul>
+                            </li>
+
+                            </>
+                            
+                            ):(
+                                <>
+                                <li><Link href="/registro">Registro</Link></li>
+                                <li><Link href="/acceso" className="get-a-quote">Acceso</Link></li>
+                                </>
+                        ) }
 
                     </ul>
                 </nav>
