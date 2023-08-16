@@ -1,7 +1,7 @@
 export default function HomeComponent() {
     return (
         <>
-            <section className="featured-services">
+            <section className="featured-services portada-cards">
                 <div className="container">
 
                     <div className="row gy-4 cursos-destacados">
@@ -37,7 +37,7 @@ export default function HomeComponent() {
                 </div>
             </section>
 
-            <section className="featured-services">
+            <section className="featured-services portada-cards">
                 <div className="container">
 
                     <div className="row gy-4 cursos-opiniones">
@@ -72,7 +72,7 @@ export default function HomeComponent() {
                 </div>
             </section>
 
-            <section className="featured-services">
+            <section className="featured-services portada-cards">
                 <div className="container">
 
                     <div className="row gy-4 cursos-actualizaciones">

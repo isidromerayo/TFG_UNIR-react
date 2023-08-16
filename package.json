@@ -9,13 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.2.0",
     "@types/node": "20.4.2",
     "@types/react": "18.2.15",
     "@types/react-dom": "18.2.7",
+    "axios": "^1.4.0",
     "eslint": "8.45.0",
     "eslint-config-next": "13.4.10",
     "next": "13.4.10",
     "react": "18.2.0",
-    "typescript": "5.1.6"
+    "react-hook-form": "^7.45.4",
+    "sweetalert2": "^11.7.23",
+    "typescript": "5.1.6",
+    "yup": "^1.2.0"
   }
 }
