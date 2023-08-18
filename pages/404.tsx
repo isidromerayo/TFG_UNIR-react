@@ -7,7 +7,7 @@ const Custom404: NextPage = () => {
         <h1>Página no encontrada...</h1>
 
         <div className="col-lg-5 order-1 order-lg-2 hero-img">
-          <Image src="assets/img/hero-img.svg" width={500} height={500} className="img-fluid mb-3 mb-lg-0" alt="" />
+          <Image src="/assets/img/hero-img.svg" width={500} height={500} className="img-fluid mb-3 mb-lg-0" alt="" />
         </div>
         <pre>
           error 404
