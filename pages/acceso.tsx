@@ -1,5 +1,5 @@
+import { useState, useEffect } from 'react'
 import { NextPage } from 'next'
-import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { setUser , setToken } from '../services/'
 import { API_URL } from '../utils/'
@@ -7,6 +7,12 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 
 const Acceso: NextPage = () => {
+
+  const [isClient, setIsClient] = useState(false)
+ 
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   const [formData, setFormData] = useState({
     email: "",
@@ -49,7 +55,7 @@ const Acceso: NextPage = () => {
           <form className="form-signin" onSubmit={submitForm}>
           <div>
                 <label htmlFor="inputEmail" className="sr-only">Email address</label>
-                <input type="email" id="inputEmail" name="email" onChange={handleInput} value={formData.email} className="form-control" placeholder="Email address" required autofocus/>
+                <input type="email" id="inputEmail" name="email" onChange={handleInput} value={formData.email} className="form-control" placeholder="Email address" required autoFocus/>
             </div>
             <div>
                 <label htmlFor="inputPassword" className="sr-only">Password</label>
