@@ -1,10 +1,15 @@
 import { NextPage } from 'next'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 const Categoria: NextPage = () => {
+
+  const router = useRouter()
+  
   return (
     <>
       <div className="container pagina-datos">
+      {router.query.id}
         <h1>Categoria <span className="destacar-palabra"> categoria.nombre</span>, sus cursos...</h1>
         <div>
 
