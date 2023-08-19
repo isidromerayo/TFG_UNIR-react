@@ -7,7 +7,6 @@ import axios from 'axios'
 
 const Categoria: NextPage = ({data}) => {
 
-  console.log(data)
   const router = useRouter()
   const [cursos, setCursos] = useState(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -33,7 +32,7 @@ const Categoria: NextPage = ({data}) => {
             </div>) : ''}
   
         {cursos.map(curso => (
-          <section className="listado-categorias">
+          <section className="listado-categorias" key={curso.id}>
             <div>
               <h2> {curso.titulo} </h2>
             </div>
@@ -56,7 +55,6 @@ const Categoria: NextPage = ({data}) => {
 // This gets called on every request
 export async function getServerSideProps({query}) {
   // Fetch data from external API
-  console.log(query.id)
   const categoria_id = query.id;
   const res = await fetch(`${API_URL}categorias/${categoria_id}`)
   const data = await res.json()

@@ -3,25 +3,18 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { API_URL } from '../../utils'
-import axios from 'axios'
+import Swal from 'sweetalert2';
 
 const Curso: NextPage = ({ data }) => {
 
-  console.log(data)
   const curso = data;
   const router = useRouter()
-  /*
-  const [cursos, setCursos] = useState(null);
-  const [loading, setLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    const fetchData = async (categoria_id: number) => {
-        const result_cursos = await axios(`${API_URL}categorias/${categoria_id}/cursos`)
-        setCursos(result_cursos.data._embedded.cursos)
-        setLoading(false);
-    }
-    fetchData(data.id)
-}, [data.id, router.isReady])*/
+  const addCursoCarrito = () => {
+    console.log(curso.id + ' añadido al carrito')
+    Swal.fire({ title: 'Curso añadido al carrito'} )
+  } 
+
   return (
 
     <>
@@ -33,7 +26,7 @@ const Curso: NextPage = ({ data }) => {
           <p className="description">Precio { curso.precio } </p>
           <p className="descripcion">Creado: { curso.fechaCreacion }/ actualizado: { curso.fechaActualizacion }</p>
           <p v-if="curso.instructor" className="info-instructor">Instructor: { curso.instructor.nombre } {curso.instructor.apellidos } <i>"{ curso.instructor.descripcion }"</i></p>
-          <p><button type="button" className="btn btn-primary borrar-form">Comprar curso</button></p>
+          <p><button type="button" className="btn btn-primary borrar-form" onClick={addCursoCarrito}>Comprar curso</button></p>
 
         </section>
 

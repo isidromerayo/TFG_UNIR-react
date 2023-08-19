@@ -14,7 +14,6 @@ const Categorias: NextPage = () => {
     const fetchData = async (categoria_id: number) => {
       const result_cursos = await axios(`${API_URL}categorias?sort=nombre`)
       setCategorias(result_cursos.data._embedded.categorias)
-      console.log(categorias)
       setLoading(false);
     }
     fetchData()
@@ -28,7 +27,7 @@ const Categorias: NextPage = () => {
       
       {
         categorias.map((categoria) => (
-      <section className="listado-categorias" >
+      <section className="listado-categorias" key={categoria.id}>
         <div>
           <h2>{categoria.nombre}</h2>
         </div>
