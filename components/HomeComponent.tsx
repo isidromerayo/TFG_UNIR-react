@@ -1,4 +1,9 @@
-export default function HomeComponent() {
+import Link from "next/link";
+
+
+export default function HomeComponent({ data }) {
+    const { cursos_mas_valorados, valoraciones_cursos, cursos_actualizados } = data;
+
     return (
         <>
             <section className="featured-services portada-cards">
@@ -8,29 +13,21 @@ export default function HomeComponent() {
                         <div>
                             <h1>Cursos destacados</h1>
                         </div>
-                        <div className="col-lg-4 col-md-6 service-item d-flex">
-                            <div>
-                                <h4 className="title">Lorem Ipsum</h4>
-                                <p className="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
-                                <a href="#" className="readmore stretched-link"><span>Detalle</span><i className="bi bi-arrow-right"></i></a>
-                            </div>
-                        </div>
-
-                        <div className="col-lg-4 col-md-6 service-item d-flex">
-                            <div>
-                                <h4 className="title">Dolor Sitema</h4>
-                                <p className="description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
-                                <a href="#" className="readmore stretched-link"><span>Detalle</span><i className="bi bi-arrow-right"></i></a>
-                            </div>
-                        </div>
-
-                        <div className="col-lg-4 col-md-6 service-item d-flex">
-                            <div>
-                                <h4 className="title">Sed ut perspiciatis</h4>
-                                <p className="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
-                                <a href="#" className="readmore stretched-link"><span>Detalle</span><i className="bi bi-arrow-right"></i></a>
-                            </div>
-                        </div>
+                        {
+                            cursos_mas_valorados.map((datos: any) => (
+                                <div className="col-lg-4 col-md-6 service-item d-flex" key={datos.id}>
+                                    <div>
+                                        <h4>{datos.titulo}</h4>
+                                        <p className="description">{datos.descripcion}</p>
+                                        <p className="description">valoración media: <b>{datos.valoracionMedia}/5</b> / actualizado: {
+                                            datos.fechaActualizacion}</p>
+                                        <Link href={`/curso/${datos.id}`} className="">
+                                            <span>Detalle</span><i className="bi bi-arrow-right"></i>
+                                        </Link>
+                                    </div>
+                                </div>
+                            ))
+                        }
 
                     </div>
 
@@ -44,29 +41,19 @@ export default function HomeComponent() {
                         <div>
                             <h1>Opiniones</h1>
                         </div>
-                        <div className="col-lg-4 col-md-6 service-item d-flex">
-                            <div>
-                                <h4 className="title">Voluptatum deleniti atque </h4>
-                                <p className="description">Corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
-                                <a href="#" className="readmore stretched-link"><span>Detalle</span><i className="bi bi-arrow-right"></i></a>
-                            </div>
-                        </div>
-
-                        <div className="col-lg-4 col-md-6 service-item d-flex">
-                            <div>
-                                <h4 className="title">Minim veniam</h4>
-                                <p className="description">Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
-                                <a href="#" className="readmore stretched-link"><span>Detalle</span><i className="bi bi-arrow-right"></i></a>
-                            </div>
-                        </div>
-
-                        <div className="col-lg-4 col-md-6 service-item d-flex">
-                            <div>
-                                <h4 className="title">Perspiciatis</h4>
-                                <p className="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
-                                <a href="#" className="readmore stretched-link"><span>Detalle</span><i className="bi bi-arrow-right"></i></a>
-                            </div>
-                        </div>
+                        {
+                            valoraciones_cursos.map((datos: any) => (
+                                <div className="col-lg-4 col-md-6 service-item d-flex" key={datos.id}>
+                                    <div>
+                                        <p className="description">Valoración: <b>{datos.puntuacion}/5</b></p>
+                                        <p className="description">{datos.comentario}</p>
+                                        <Link href="#" className="">
+                                            <span>Detalle</span><i className="bi bi-arrow-right">
+                                            </i></Link>
+                                    </div>
+                                </div>
+                            ))
+                        }
 
                     </div>
                 </div>
@@ -79,33 +66,26 @@ export default function HomeComponent() {
                         <div>
                             <h1>Ultimas actualizaciones</h1>
                         </div>
-                        <div className="col-lg-4 col-md-6 service-item d-flex">
-                            <div>
-                                <h4 className="title">Voluptatum deleniti atque </h4>
-                                <p className="description">Corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
-                                <a href="#" className="readmore stretched-link"><span>Detalle</span><i className="bi bi-arrow-right"></i></a>
-                            </div>
-                        </div>
+
+                        {
+                            cursos_actualizados.map((datos: any) => (
+                                <div className="col-lg-4 col-md-6 service-item d-flex" key={datos.id}>
+                                    <div>
+                                        <h4 className="title">{datos.titulo} </h4>
+                                        <p className="description">{datos.descripcion}</p>
+                                        <Link href={`/curso/${datos.id}`} className="">
+                                            <span>Detalle</span><i className="bi bi-arrow-right"></i>
+                                        </Link>
+                                    </div>
+                                </div>
+                            ))
+                        }
 
 
-                        <div className="col-lg-4 col-md-6 service-item d-flex">
-                            <div>
-                                <h4 className="title">Minim veniam</h4>
-                                <p className="description">Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
-                                <a href="#" className="readmore stretched-link"><span>Detalle</span><i className="bi bi-arrow-right"></i></a>
-                            </div>
-                        </div>
-
-                        <div className="col-lg-4 col-md-6 service-item d-flex">
-                            <div>
-                                <h4 className="title">Perspiciatis</h4>
-                                <p className="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
-                                <a href="#" className="readmore stretched-link"><span>Detalle</span><i className="bi bi-arrow-right"></i></a>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </section>
         </>
     )
 }
+
