@@ -15,8 +15,8 @@ const MisDatos: NextPage = () => {
             <div className="pagina-datos container">
                 <h1>Mis Datos</h1>
                 <section className="detalle-curso">
-                <p>{ user.username }</p>
                 <p>{ user.fullname }</p>
+                <p>{ user.username }</p>
                 </section>
             </div>
         </>
