@@ -6,15 +6,13 @@ import HeaderComponent from './HeaderComponent'
 import FooterComponent from './FooterComponent'
 
 export default function LayoutComponent({ children }) {
-    return (
+  return (
     <>
-          <HeaderComponent></HeaderComponent>
-
-        {/* <SliderComponent></SliderComponent> */}
-        <main id="main">
-      {children}
+      <HeaderComponent></HeaderComponent>
+      <main id="main">
+        {children}
       </main>
       <FooterComponent></FooterComponent>
     </>
-    )
+  )
 }

@@ -2,6 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import LayoutComponent from '../../components/LayoutComponent'
+import Script from 'next/script'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,8 +24,6 @@ export default function RootLayout({
         <LayoutComponent>
         {children}
         </LayoutComponent>
-        <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="assets/js/main.js"></script>
       </body>
     </html>
   )
