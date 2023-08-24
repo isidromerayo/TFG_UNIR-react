@@ -47,7 +47,7 @@ export default function HomeComponent({ data }) {
                                     <div>
                                         <p className="description">Valoración: <b>{datos.puntuacion}/5</b></p>
                                         <p className="description">{datos.comentario}</p>
-                                        <Link href="#" className="">
+                                        <Link href={`/valoracion/${datos.id}`} className="">
                                             <span>Detalle</span><i className="bi bi-arrow-right">
                                             </i></Link>
                                     </div>

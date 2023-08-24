@@ -1,19 +1,26 @@
+import { useEffect, useState } from 'react';
 import { NextPage } from 'next'
-import { useRouter } from 'next/router'
 import { API_URL } from '../../utils'
 import Swal from 'sweetalert2';
 
 const Curso: NextPage = ({ data }) => {
 
   const curso = data;
-  const router = useRouter()
+  const [loading, setLoading] = useState<boolean>(true);
 
+  useEffect(() => {
+    setLoading(false);
+
+  }, [])
+  
   const addCursoCarrito = () => {
     console.log(curso.id + ' añadido al carrito')
     Swal.fire({ title: 'Curso añadido al carrito'} )
   } 
 
-  return (
+  return loading ? (
+    <div>...Data Loading.....</div>
+  ) : (
 
     <>
       <div className="container pagina-datos">
@@ -23,7 +30,10 @@ const Curso: NextPage = ({ data }) => {
           <p className="description">Valoración: <b>{ curso.valoracionMedia }/5</b></p>
           <p className="description">Precio { curso.precio } </p>
           <p className="descripcion">Creado: { curso.fechaCreacion }/ actualizado: { curso.fechaActualizacion }</p>
-          <p v-if="curso.instructor" className="info-instructor">Instructor: { curso.instructor.nombre } {curso.instructor.apellidos } <i>"{ curso.instructor.descripcion }"</i></p>
+          {curso.instructo ? (
+            <p className="info-instructor">Instructor: { curso.instructor.nombre } {curso.instructor.apellidos } <i>"{ curso.instructor.descripcion }"</i></p>
+         ): ''
+          }
           <p><button type="button" className="btn btn-primary borrar-form" onClick={addCursoCarrito}>Comprar curso</button></p>
 
         </section>
