@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { NextPage } from 'next'
-import { getUser } from '../services'
+import { getToken, getUser } from '../services'
 
 const MisDatos: NextPage = () => {
 
@@ -12,6 +12,7 @@ const MisDatos: NextPage = () => {
 
     return (
         <>
+            {user ? 
             <div className="pagina-datos container">
                 <h1>Mis Datos</h1>
                 <section className="detalle-curso">
@@ -19,8 +20,19 @@ const MisDatos: NextPage = () => {
                 <p>{ user.username }</p>
                 </section>
             </div>
+            : '' }
         </>
     )
+}
+
+export async function getServerSideProps({ req, res }) {
+  const token = getToken();
+  if (!token) {
+    res.writeHead(307, { Location: "/acceso" });
+    res.end();
+  }
+  return { props: {} };
+
 }
 
 export default MisDatos

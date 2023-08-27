@@ -1,5 +1,6 @@
 
 import { NextPage } from 'next'
+import { getToken } from '../services';
 
 const MisCursos: NextPage = () => {
 
@@ -14,5 +15,15 @@ const MisCursos: NextPage = () => {
         </>
     )
 }
+
+export async function getServerSideProps({ req, res }) {
+    const token = getToken();
+    if (!token) {
+      res.writeHead(307, { Location: "/acceso" });
+      res.end();
+    }
+    return { props: {} };
+  
+  }
 
 export default MisCursos

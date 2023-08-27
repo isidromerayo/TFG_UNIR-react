@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import { NextPage } from 'next'
 import { API_URL } from '../../utils'
 import Swal from 'sweetalert2';
+import { useCartStore } from '../../store/useCartStore';
 
 const Curso: NextPage = ({ data }) => {
 
   const curso = data;
   const [loading, setLoading] = useState<boolean>(true);
+  const addToCart = useCartStore(state => state.addToCart)
 
   useEffect(() => {
     setLoading(false);
@@ -14,7 +16,7 @@ const Curso: NextPage = ({ data }) => {
   }, [])
   
   const addCursoCarrito = () => {
-    console.log(curso.id + ' añadido al carrito')
+    addToCart(curso)
     Swal.fire({ title: 'Curso añadido al carrito'} )
   } 
 
