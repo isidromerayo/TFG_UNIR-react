@@ -26,7 +26,7 @@ const Registro: NextPage = () => {
 
   })
   
-  const { register, handleSubmit, formState:{ errors } } = useForm({
+  const { register, reset, handleSubmit, formState:{ errors } } = useForm({
     resolver: yupResolver(schemaForm)
   });
 
@@ -90,7 +90,7 @@ const Registro: NextPage = () => {
             <div className="text-center signup-form-button">
               <button type="submit" className="btn btn-primary" aria-label="registrarse en el portal">Registrar</button>
               <button type="button" className="btn btn-warning borrar-form"
-                aria-label="limpiar formulario de registro">Borrar</button>
+                aria-label="limpiar formulario de registro" onClick={() => reset()}>Borrar</button>
             </div>
 
           </div>
