@@ -5,14 +5,18 @@ import React, { useState, FormEvent } from 'react'
 import { API_URL } from '../utils/constants'
 import Swal from 'sweetalert2'
 import router from 'next/router'
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler} from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from "yup";
 
-const Registro: NextPage = () => {
+interface Inputs {
+  nombre: string,
+  apellidos: string,
+  email: string,
+  password: string,
+};
 
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  //const router = useRouter()
+const Registro: NextPage = () => {
 
   const schemaForm = Yup.object().shape({
     nombre: Yup.string().required(),
@@ -26,11 +30,8 @@ const Registro: NextPage = () => {
     resolver: yupResolver(schemaForm)
   });
 
-  const onRegister = data => {
-    console.log(data);
+  const onRegister: SubmitHandler<Inputs> = (data) => {
 
-    try {
-      //await schemaForm.validate(formData, { abortEarly: false, strict: false })
       try {
         axios.post(`${API_URL}usuarios`, data).then(response => {
           Swal.fire('Alta', 'Se ha registrado su usuario correctamente, recibirá un correo para confirmar el alta');
@@ -46,10 +47,6 @@ const Registro: NextPage = () => {
       } catch (error) {
         console.log(error)
       }
-    } catch (e: any) {
-      console.dir(e)
-
-    }
 
   }
 
