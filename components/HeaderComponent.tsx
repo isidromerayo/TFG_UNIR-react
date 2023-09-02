@@ -46,10 +46,9 @@ export default function HeaderComponent() {
         <div>...Data Loading.....</div>
       ) : (
         <>
-            {/* html header - TODO */}
-            <div id="header" className="header d-flex align-items-center fixed-top color-react-azulclaro">
-                <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
-
+    <header id="header" className="header d-flex align-items-center fixed-top color-vue-verde">
+        <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
+            
                     <Link href="/" className="logo d-flex align-items-center fix-home-menu">
                         <img src="/react.svg" alt="Logo React" className="unir-logo" />
                         <img src="/assets/img/Unir_2021_logo.svg" alt="Logo UNIR" className="unir-logo" />
@@ -97,7 +96,7 @@ export default function HeaderComponent() {
                         </ul>
                     </nav>
                 </div>
-            </div>
+            </header>
         </>
     )
 }
