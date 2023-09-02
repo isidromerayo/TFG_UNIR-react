@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { NextPage } from 'next'
-import Link from 'next/link'
-import React, { useState, FormEvent } from 'react'
+import React, {  } from 'react'
 import { API_URL } from '../utils/constants'
 import Swal from 'sweetalert2'
 import router from 'next/router'
