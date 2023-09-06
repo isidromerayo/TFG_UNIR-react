@@ -1,7 +1,9 @@
+import Link from "next/link"
 
 export default function MenuCategoriaComponent({ data }) {
+    console.log(data)
 
-    return data ? ('') : (
+    return (
 
         data.map(item => (
             <li key={item.id}>

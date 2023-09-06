@@ -46,7 +46,7 @@ export default function HeaderComponent() {
         <div>...Data Loading.....</div>
       ) : (
         <>
-    <header id="header" className="header d-flex align-items-center fixed-top color-vue-verde">
+    <header id="header" className="header d-flex align-items-center fixed-top color-react-azulclaro">
         <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
             
                     <Link href="/" className="logo d-flex align-items-center fix-home-menu">
