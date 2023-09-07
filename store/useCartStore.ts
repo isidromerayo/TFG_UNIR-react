@@ -1,7 +1,7 @@
 import { create } from "zustand"
 
 interface State {
-    cart: []
+    cart: any[]
     totalPrice: number
    }
 
@@ -22,7 +22,7 @@ export const useCartStore = create<State & Actions>((set, get) => ({
     totalPrice: INITIAL_STATE.totalPrice,
     addToCart: (product: any) => {
      const cart = get().cart
-     const cartItem = cart.find(item => item.id === product.id)
+     const cartItem = cart.find((item:any) => item.id === product.id)
    
      if (cartItem) {
    
@@ -37,7 +37,7 @@ export const useCartStore = create<State & Actions>((set, get) => ({
     },
     removeFromCart: (product: any) => {
      set(state => ({
-      cart: state.cart.filter(item => item.id !== product.id),
+      cart: state.cart.filter((item:any) => item.id !== product.id),
       totalPrice: state.totalPrice - product.precio,
      }))
     },

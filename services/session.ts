@@ -18,7 +18,9 @@ export function setUser(user: string): void {
 }
 export function getUser(): any | null {
     if (typeof window !== 'undefined') {
-        return JSON.parse(localStorage.getItem(USER));
+        const user = localStorage.getItem(USER);
+        if ( user !== null)
+            return JSON.parse(user);
     }
     return ''
 }

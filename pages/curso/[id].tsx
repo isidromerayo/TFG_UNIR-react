@@ -33,7 +33,7 @@ function Curso({ data }: { data: any; }) {
           <p className="description">Precio {curso.precio} </p>
           <p className="descripcion">Creado: {curso.fechaCreacion}/ actualizado: {curso.fechaActualizacion}</p>
           {curso.instructo ? (
-            <p className="info-instructor">Instructor: {curso.instructor.nombre} {curso.instructor.apellidos} <i>"{curso.instructor.descripcion}"</i></p>
+            <p className="info-instructor">Instructor: {curso.instructor.nombre} {curso.instructor.apellidos} <i>&quot;{curso.instructor.descripcion}&quot;</i></p>
           ) : ''}
           <p><button type="button" className="btn btn-primary borrar-form" onClick={addCursoCarrito}>Comprar curso</button></p>
 

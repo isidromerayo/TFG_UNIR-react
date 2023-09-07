@@ -38,7 +38,7 @@ export default function SliderComponent() {
           </div>
 
           <div className="col-lg-5 order-1 order-lg-2 hero-img">
-            <img src="assets/img/hero-img.svg" className="img-fluid mb-3 mb-lg-0" alt="" />
+            <img src="assets/img/hero-img.svg" className="img-fluid mb-3 mb-lg-0" alt="Slider imagen" />
           </div>
 
         </div>
