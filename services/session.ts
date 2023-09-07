@@ -3,11 +3,11 @@ import { TOKEN, USER } from '../utils'
 export function setToken(token: string): void {
     localStorage.setItem(TOKEN, token)
 }
-export function getToken(): string {
+export function getToken(): string | null {
     if (typeof window !== 'undefined') {
         return localStorage.getItem(TOKEN);
     }
-    return undefined
+    return ''
 }
 export function removeToken(): void {
     localStorage.removeItem(TOKEN);
@@ -16,11 +16,11 @@ export function removeToken(): void {
 export function setUser(user: string): void {
     localStorage.setItem(USER, user)
 }
-export function getUser(): string {
+export function getUser(): any | null {
     if (typeof window !== 'undefined') {
-        return localStorage.getItem(USER);
+        return JSON.parse(localStorage.getItem(USER));
     }
-    return undefined
+    return ''
 }
 export function removeUser(): void {
     localStorage.removeItem(USER);

@@ -4,20 +4,20 @@ import { getToken, getUser } from '../services'
 
 const MisDatos: NextPage = () => {
 
-    const [user, setUser] = useState(false)
+    const [usuario, setUsuario] = useState<any>(null)
  
   useEffect(() => {
-    setUser(JSON.parse(getUser()))
+    setUsuario(getUser())
   }, [])
 
     return (
         <>
-            {user ? 
+            {usuario ? 
             <div className="pagina-datos container">
                 <h1>Mis Datos</h1>
                 <section className="detalle-curso">
-                <p>{ user.fullname }</p>
-                <p>{ user.username }</p>
+                <p>{ usuario.fullname }</p>
+                <p>{ usuario.username }</p>
                 </section>
             </div>
             : '' }
@@ -25,7 +25,7 @@ const MisDatos: NextPage = () => {
     )
 }
 
-export async function getServerSideProps({ req, res }) {
+export async function getServerSideProps({ req, res }:{ req:any, res:any }) {
   const token = getToken();
   if (!token) {
     res.writeHead(307, { Location: "/acceso" });
