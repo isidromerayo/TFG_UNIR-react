@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { jest } from "@jest/globals";
-import { render, screen, cleanup, waitForElement } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import SliderComponent from "../../components/SliderComponent";
 
 import * as nextRouter from 'next/router';
