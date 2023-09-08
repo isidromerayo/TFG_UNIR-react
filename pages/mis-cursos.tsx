@@ -16,7 +16,7 @@ const MisCursos: NextPage = () => {
     )
 }
 
-export async function getServerSideProps({ req, res }) {
+export async function getServerSideProps({ req, res }:{req:any, res:any}) {
     const token = getToken();
     if (!token) {
       res.writeHead(307, { Location: "/acceso" });

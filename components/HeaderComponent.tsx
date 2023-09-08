@@ -7,19 +7,24 @@ import { removeToken, getToken, removeUser } from '../services'
 import { API_URL } from '../utils/'
 
 import axios from 'axios';
+import MenuCategoriaComponent from "./MenuCategoriaComponent";
 
 export default function HeaderComponent() {
     const { push } = useRouter();
 
-    const [data, setData] = useState(null);
+    const [data, setData] = useState({});
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const fetchData = async () => {
-            const result = await axios(
+            await axios(
                 `${API_URL}categorias?sort=nombre&size=5`
-            )
-            setData(result.data._embedded.categorias)
+            ).then(function(response) 
+            {
+                setData(response.data._embedded.categorias)
+            }).catch(function(error) {
+                console.log(error.message + ' ' + error.name);
+            });
             setLoading(false);
         }
         fetchData()
@@ -41,10 +46,9 @@ export default function HeaderComponent() {
         <div>...Data Loading.....</div>
       ) : (
         <>
-            {/* html header - TODO */}
-            <div id="header" className="header d-flex align-items-center fixed-top color-react-azulclaro">
-                <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
-
+    <header id="header" className="header d-flex align-items-center fixed-top color-react-azulclaro">
+        <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
+            
                     <Link href="/" className="logo d-flex align-items-center fix-home-menu">
                         <img src="/react.svg" alt="Logo React" className="unir-logo" />
                         <img src="/assets/img/Unir_2021_logo.svg" alt="Logo UNIR" className="unir-logo" />
@@ -58,11 +62,7 @@ export default function HeaderComponent() {
                             <li><Link href="/" className="active">Home</Link></li>
                             <li className="dropdown"><Link href="/categorias"><span>Categorias</span><i className="bi bi-chevron-down dropdown-indicator"></i></Link>
                                 <ul>
-                                    {data.map(item => (
-                                        <li key={item.id}>
-                                            <Link href={`/categoria/${item.id}`} key={item.id}>{item.nombre}</Link>
-                                        </li>
-                                    ))}
+                                    <MenuCategoriaComponent data={data}/>
                                     <li><Link href="/categorias">...</Link></li>
                                 </ul>
 
@@ -96,7 +96,7 @@ export default function HeaderComponent() {
                         </ul>
                     </nav>
                 </div>
-            </div>
+            </header>
         </>
     )
 }

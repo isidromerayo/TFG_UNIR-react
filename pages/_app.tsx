@@ -9,8 +9,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     <LayoutComponent>
       <Component {...pageProps} />
     </LayoutComponent>
-    <Script src='/assets/vendor/bootstrap/js/bootstrap.bundle.min.js' />
-    <Script src='/assets/js/main.js' />
+    <Script src='/assets/vendor/bootstrap/js/bootstrap.bundle.min.js' strategy='beforeInteractive' />
+    <Script src='/assets/js/main.js' strategy='beforeInteractive' />
   </>
 }
 

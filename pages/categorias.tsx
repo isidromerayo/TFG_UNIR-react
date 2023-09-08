@@ -7,11 +7,11 @@ import axios from 'axios';
 const Categorias: NextPage = () => {
 
 
-  const [categorias, setCategorias] = useState(null);
+  const [categorias, setCategorias] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchData = async (categoria_id: number) => {
+    const fetchData = async () => {
       const result_cursos = await axios(`${API_URL}categorias?sort=nombre`)
       setCategorias(result_cursos.data._embedded.categorias)
       setLoading(false);

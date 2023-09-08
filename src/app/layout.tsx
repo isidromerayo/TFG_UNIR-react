@@ -22,8 +22,10 @@ export default function RootLayout({
       </head>
       <body>
         <LayoutComponent>
-        {children}
+          {children}
         </LayoutComponent>
+        <Script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js" strategy="beforeInteractive"/>
+        <Script src="assets/js/main.js" strategy="beforeInteractive" />
       </body>
     </html>
   )

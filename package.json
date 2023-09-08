@@ -6,10 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test": "jest --watch",
     "lint": "next lint"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.2.0",
+    "@hookform/resolvers": "^3.3.1",
     "@types/node": "20.4.2",
     "@types/react": "18.2.15",
     "@types/react-dom": "18.2.7",
@@ -19,9 +20,22 @@
     "next": "13.4.10",
     "react": "18.2.0",
     "react-hook-form": "^7.45.4",
-    "sweetalert2": "^11.7.23",
+    "sweetalert2": "^11.6.13",
     "typescript": "5.1.6",
     "yup": "^1.2.0",
     "zustand": "^4.4.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.15",
+    "@babel/preset-env": "^7.22.15",
+    "@babel/preset-react": "^7.22.15",
+    "@jest/globals": "^29.6.4",
+    "@testing-library/jest-dom": "^6.1.2",
+    "@testing-library/react": "^14.0.0",
+    "babel-jest": "^29.6.4",
+    "cypress": "^13.1.0",
+    "jest": "^29.6.4",
+    "jest-environment-jsdom": "^29.6.4",
+    "ts-jest": "^29.1.1"
   }
 }

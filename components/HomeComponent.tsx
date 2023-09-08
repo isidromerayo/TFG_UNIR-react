@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 
-export default function HomeComponent({ data }) {
+export default function HomeComponent({data} : { data:any }) {
     const { cursos_mas_valorados, valoraciones_cursos, cursos_actualizados } = data;
 
     return (

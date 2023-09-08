@@ -21,7 +21,7 @@ const Acceso: NextPage = () => {
   
   const { push } = useRouter();
 
-  const handleInput = (e) => {
+  const handleInput = (e:any) => {
     const fieldName = e.target.name;
     const fieldValue = e.target.value;
 
@@ -32,7 +32,7 @@ const Acceso: NextPage = () => {
   }
 
 
-  const submitForm = (e) => {
+  const submitForm = (e:any) => {
     e.preventDefault();
 
     axios.post(`${API_URL}auth`, formData).then(response => {

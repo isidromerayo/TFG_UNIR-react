@@ -13,7 +13,7 @@ const Carrito: NextPage = () => {
     const router = useRouter()
     
     const cart = useCartStore(state => state.cart); 
-    const totalCompra = cart.reduce((acc, product) => acc + product.precio * (product.quantity as number), 0);
+    const totalCompra = cart.reduce((acc, product:any) => acc + product.precio * (product.quantity as number), 0);
     const removeFromCart = useCartStore(state => state.removeFromCart)
     const removeAllFromCart = useCartStore(state => state.clearCart)
 
@@ -63,7 +63,7 @@ const Carrito: NextPage = () => {
             <div>
             <h2>Cursos a comprar</h2>
             <ul>
-            {cartState.map(product => (<li key={product.id}> {product.titulo} - {product.precio} 
+            {cartState.map(product => (<li key={product.id} className='curso-carrito'> {product.titulo} - {product.precio} 
             <button className="btn btn-warning borrar-curso-carrito" onClick={ () => deleteCursoCarrito(product)}>borrar</button></li>))}
             </ul>
         <div className="total-carrito">Total: <span className="destacar-info">{ totalCompra }</span></div>
