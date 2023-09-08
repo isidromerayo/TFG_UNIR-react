@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation"
 import { useRouter } from "next/router"
 import { FormEvent } from "react"
 
@@ -10,7 +9,6 @@ export default function SliderComponent() {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
     const query = formData.get('query')
-    console.log(query)
     push(`/busqueda/${query}`)
   }
 
