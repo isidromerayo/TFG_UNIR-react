@@ -8,7 +8,7 @@ const MisCursos: NextPage = () => {
         <>
             <div className="pagina-datos container">
                 <h1>Mis cursos</h1>
-                <section className="detalle-curso">
+                <section className="detalle-curso card">
 
                 </section>
             </div>

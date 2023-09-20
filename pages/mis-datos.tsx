@@ -4,28 +4,30 @@ import { getToken, getUser } from '../services'
 
 const MisDatos: NextPage = () => {
 
-    const [usuario, setUsuario] = useState<any>(null)
- 
+  const [usuario, setUsuario] = useState<any>(null)
+
   useEffect(() => {
     setUsuario(getUser())
   }, [])
 
-    return (
-        <>
-            {usuario ? 
-            <div className="pagina-datos container">
-                <h1>Mis Datos</h1>
-                <section className="detalle-curso">
-                <p>{ usuario.fullname }</p>
-                <p>{ usuario.username }</p>
-                </section>
-            </div>
-            : '' }
-        </>
-    )
+  return (
+    <>
+      {usuario ?
+        <div className="pagina-datos container">
+          <h1>Mis datos</h1>
+          <section className="detalle-curso card">
+            <div className="perfil-datos">Nombre y apellidos</div>
+            <div>{usuario.fullname}</div>
+            <div className="perfil-datos">Correo electrónico</div>
+            <div>{usuario.username}</div>
+          </section>
+        </div>
+        : ''}
+    </>
+  )
 }
 
-export async function getServerSideProps({ req, res }:{ req:any, res:any }) {
+export async function getServerSideProps({ req, res }: { req: any, res: any }) {
   const token = getToken();
   if (!token) {
     res.writeHead(307, { Location: "/acceso" });
