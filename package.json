@@ -17,7 +17,7 @@
     "axios": "^1.7.7",
     "eslint": "8.45.0",
     "eslint-config-next": "13.4.10",
-    "next": "14.2.10",
+    "next": "14.2.21",
     "react": "18.2.0",
     "react-hook-form": "^7.45.4",
     "sweetalert2": "^11.6.13",
