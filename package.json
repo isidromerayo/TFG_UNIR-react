@@ -16,7 +16,7 @@
     "@types/react-dom": "18.2.7",
     "axios": "^1.7.8",
     "eslint": "8.45.0",
-    "eslint-config-next": "13.4.10",
+    "eslint-config-next": "13.5.8",
     "next": "14.2.21",
     "react": "18.2.0",
     "react-hook-form": "^7.45.4",
