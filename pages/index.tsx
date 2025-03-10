@@ -8,30 +8,52 @@ import { useEffect, useState } from 'react'
 const Home: NextPage = () => {
   
 
-  const [valorados, setValorados] = useState(null);
-  const [valoraciones, setValoraciones] = useState(null);
-  const [actualizados, setActualizados] = useState(null);
+  interface Curso {
+    id: number;
+    titulo: string;
+    // Add other curso properties as needed
+  }
+
+  interface Valoracion {
+    id: number;
+    comentario: string;
+    // Add other valoracion properties as needed
+  }
+
+  const [valorados, setValorados] = useState<Curso[]>([]);
+  const [valoraciones, setValoraciones] = useState<Valoracion[]>([]);
+  const [actualizados, setActualizados] = useState<Curso[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
 
   useEffect(() => {
-    const url_cursos = `${API_URL}cursos/search/selectMorePoints`;
-  // response.data._embedded.cursos
-  const url_valoraciones = `${API_URL}valoraciones/search/selectLastOpinions`;
-  //response.data._embedded.valoraciones
-  const url_actualizaciones = `${API_URL}cursos/search/selectLastUpdates`;
-  //response.data._embedded.cursos;
-    const fetchData = async () => {
-      const result_cursos = await axios(url_cursos)
-      setValorados(result_cursos.data._embedded.cursos)
-      const result_valoraciones = await axios(url_valoraciones)
-      setValoraciones(result_valoraciones.data._embedded.valoraciones)
-      const result_actualizaciones = await axios(url_actualizaciones)
-      setActualizados(result_actualizaciones.data._embedded.cursos)
+    const url_cursos = `${API_URL}/cursos/search/selectMorePoints/`;
+    const url_valoraciones = `${API_URL}/valoraciones/search/selectLastOpinions/`;
+    const url_actualizaciones = `${API_URL}/cursos/search/selectLastUpdates/`;
 
-      setLoading(false);
-    }
-    fetchData()
+    const fetchData = async () => {
+      try {
+        const [result_cursos, result_valoraciones, result_actualizaciones] = await Promise.all([
+          axios.get(url_cursos),
+          axios.get(url_valoraciones),
+          axios.get(url_actualizaciones)
+        ]);
+
+        setValorados(result_cursos.data._embedded?.cursos || []);
+        setValoraciones(result_valoraciones.data._embedded?.valoraciones || []);
+        setActualizados(result_actualizaciones.data._embedded?.cursos || []);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        // Set empty arrays as fallback
+        setValorados([]);
+        setValoraciones([]);
+        setActualizados([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchData();
   }, [])
   
     //const { cursos_mas_valorados, valoraciones_cursos, cursos_actualizados } = data; 

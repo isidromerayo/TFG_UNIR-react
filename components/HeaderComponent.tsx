@@ -6,28 +6,67 @@ import Swal from 'sweetalert2';
 import { removeToken, getToken, removeUser } from '../services'
 import { API_URL } from '../utils/'
 
-import axios from 'axios';
+import api from '../utils/api';
 import MenuCategoriaComponent from "./MenuCategoriaComponent";
 
 export default function HeaderComponent() {
     const { push } = useRouter();
 
-    const [data, setData] = useState({});
+    interface Categoria {
+        id: number;
+        nombre: string;
+    }
+
+    const [data, setData] = useState<Categoria[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const fetchData = async () => {
-            await axios(
-                `${API_URL}categorias?sort=nombre&size=5`
-            ).then(function(response) 
-            {
-                setData(response.data._embedded.categorias)
-            }).catch(function(error) {
-                console.log(error.message + ' ' + error.name);
-            });
+            try {
+                setLoading(true);
+                const response = await api.get('categorias', {
+                    params: {
+                        sort: 'nombre',
+                        size: 5
+                    },
+                    headers: {
+                        'Accept': 'application/json, application/hal+json',
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                // Check if we have a valid response with categories
+                const categories = response.data?._embedded?.categorias;
+                if (Array.isArray(categories)) {
+                    setData(categories);
+                } else {
+                    console.warn('No categories found in response:', response.data);
+                    setData([]);
+                }
+            } catch (error: any) {
+                console.error('Failed to fetch categories:', {
+                    message: error.message,
+                    status: error.response?.status,
+                    data: error.response?.data
+                });
+                setData([]);
+                // Show error message to user
+                const errorMessage = error.response?.status === 404
+                    ? 'No se encontraron categorías'
+                    : 'Error al cargar las categorías. Por favor, inténtelo de nuevo más tarde.';
+                console.error(errorMessage);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+
+        // Cleanup function
+        return () => {
+            setData([]);
             setLoading(false);
-        }
-        fetchData()
+        };
     }, [])
 
     let isLogin = false;
