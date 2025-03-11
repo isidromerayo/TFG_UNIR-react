@@ -44,7 +44,7 @@ api.interceptors.request.use(
     (config) => {
         // Add trailing slash if needed
         if (!config.url?.endsWith('/')) {
-            config.url += '/';
+            //config.url += '/';
         }
         return config;
     },
