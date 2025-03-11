@@ -1,8 +1,3 @@
-@import url("public/assets/vendor/bootstrap/css/bootstrap.min.css");
-@import url("public/assets/vendor/bootstrap-icons/bootstrap-icons.css");
-@import url("public/assets/vendor/fontawesome-free/css/all.min.css");
-@import url("public/assets/css/main.css");
-
 .fix-home-menu {
     width: 100%;
 }
@@ -14,7 +9,6 @@
   background-color: aliceblue;
 }
 
-
 .icono-carrito {
   font-size: 64px;
 }
@@ -23,7 +17,6 @@
   margin-top: 10em;
   margin-bottom: 2em;
 }
-
 
 .icono-carrito {
   font-size: 24px;

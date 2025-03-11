@@ -29,24 +29,51 @@ const Registro: NextPage = () => {
     resolver: yupResolver(schemaForm)
   });
 
-  const onRegister: SubmitHandler<Inputs> = (data) => {
+  const onRegister: SubmitHandler<Inputs> = async (data) => {
+    try {
+      // Add estado field for new users
+      const userData = {
+        ...data,
+        estado: 'P' // P for Pending
+      };
 
-      try {
-        axios.post(`${API_URL}usuarios`, data).then(response => {
-          Swal.fire('Alta', 'Se ha registrado su usuario correctamente, recibirá un correo para confirmar el alta');
-          router.push("/acceso")
-        }).catch(error => {
-          Swal.fire(
-            'Alta de usuario',
-            'Ha habido problemas con su registro: ' + error.response.data.message,
-            'error'
-          )
-          console.log(error)
-        })
-      } catch (error) {
-        console.log(error)
+      const response = await axios.post(`${API_URL}/usuarios`, userData, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      });
+
+      Swal.fire({
+        title: 'Alta',
+        text: 'Se ha registrado su usuario correctamente, recibirá un correo para confirmar el alta',
+        icon: 'success'
+      });
+      router.push('/acceso');
+    } catch (error: any) {
+      console.error('Error en registro:', error);
+      let errorMessage = 'Ha habido problemas con su registro';
+      
+      if (error.response?.data?.message) {
+        errorMessage += ': ' + error.response.data.message;
+      } else if (error.response?.data?.errors?.[0]?.message) {
+        errorMessage += ': ' + error.response.data.errors[0].message;
+      } else if (error.response?.status === 400) {
+        errorMessage += ': Los datos proporcionados no son válidos';
+      } else if (error.response?.status === 409) {
+        errorMessage += ': El usuario ya existe';
+      } else if (error.code === 'ECONNABORTED') {
+        errorMessage += ': Tiempo de espera agotado';
+      } else if (!error.response) {
+        errorMessage += ': Error de conexión con el servidor. Por favor, inténtelo de nuevo.';
       }
 
+      Swal.fire({
+        title: 'Alta de usuario',
+        text: errorMessage,
+        icon: 'error'
+      });
+    }
   }
 
   return (
