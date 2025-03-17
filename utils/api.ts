@@ -50,7 +50,7 @@ api.interceptors.request.use(
     },
     (error) => {
         console.error('Request Error:', error);
-        return Promise.reject(error);
+        return Promise.reject(new Error(error.message));
     }
 );
 
@@ -80,7 +80,7 @@ api.interceptors.response.use(
                 message: error.message
             });
         }
-        return Promise.reject(error);
+        return Promise.reject(new Error(error.message));
     }
 );
 
