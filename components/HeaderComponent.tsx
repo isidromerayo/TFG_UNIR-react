@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 
 import Swal from 'sweetalert2';
 import { removeToken, getToken, removeUser } from '../services'
-import { API_URL } from '../utils/'
 
 import api from '../utils/api';
 import MenuCategoriaComponent from "./MenuCategoriaComponent";
