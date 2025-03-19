@@ -12,8 +12,8 @@ const Categorias: NextPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result_cursos = await axios(`${API_URL}categorias?sort=nombre`)
-      setCategorias(result_cursos.data._embedded.categorias)
+      const result_cursos = await (await axios(`${API_URL}/categorias?sort=nombre`)).data._embedded.categorias;
+      setCategorias(result_cursos)
       setLoading(false);
     }
     fetchData()
