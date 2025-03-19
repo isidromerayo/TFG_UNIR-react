@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { NextPage } from 'next'
 import { API_URL } from '../../utils'
 import Swal from 'sweetalert2';
 import { useCartStore } from '../../store/useCartStore';
@@ -24,7 +23,6 @@ function Curso({ data }: { data: any; }) {
     <div>...Data Loading.....</div>
   ) : (
 
-    <>
       <div className="container pagina-datos">
         <h1>{curso.titulo}</h1>
         <section className="detalle-curso">
@@ -40,13 +38,13 @@ function Curso({ data }: { data: any; }) {
         </section>
 
       </div>
-    </>
+
   );
 }
 
 export async function getServerSideProps({ query }:{query:any}) {
   const curso_id = query.id;
-  const res = await fetch(`${API_URL}cursos/${curso_id}`)
+  const res = await fetch(`${API_URL}/cursos/${curso_id}`)
   const data = await res.json()
 
   return { props: { data } }

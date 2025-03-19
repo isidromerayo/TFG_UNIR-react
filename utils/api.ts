@@ -23,16 +23,16 @@ const api = axios.create({
 // Add retry functionality to axios
 api.interceptors.response.use(undefined, async (err) => {
     const { config } = err;
-    if (!config) return Promise.reject(err);
+    if (!config) return Promise.reject(new Error(err.message));
 
     // Use a symbol to store retry count to avoid type conflicts
-    const retryCount = (config as any)._retryCount || 0;
+    const retryCount = config._retryCount || 0;
     
     if (retryCount >= RETRY_CONFIG.maxRetries) {
-        return Promise.reject(err);
+        return Promise.reject(new Error(err.message));
     }
 
-    (config as any)._retryCount = retryCount + 1;
+    config._retryCount = retryCount + 1;
     const delayMs = RETRY_CONFIG.retryDelay * (retryCount + 1);
     
     await new Promise(resolve => setTimeout(resolve, delayMs));
@@ -44,7 +44,7 @@ api.interceptors.request.use(
     (config) => {
         // Add trailing slash if needed
         if (!config.url?.endsWith('/')) {
-            //config.url += '/';
+            console.log('URL:', config.url);
         }
         return config;
     },

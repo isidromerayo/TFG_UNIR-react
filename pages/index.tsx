@@ -27,9 +27,9 @@ const Home: NextPage = () => {
 
 
   useEffect(() => {
-    const url_cursos = `${API_URL}/cursos/search/selectMorePoints/`;
-    const url_valoraciones = `${API_URL}/valoraciones/search/selectLastOpinions/`;
-    const url_actualizaciones = `${API_URL}/cursos/search/selectLastUpdates/`;
+    const url_cursos = `${API_URL}/cursos/search/selectMorePoints`;
+    const url_valoraciones = `${API_URL}/valoraciones/search/selectLastOpinions`;
+    const url_actualizaciones = `${API_URL}/cursos/search/selectLastUpdates`;
 
     const fetchData = async () => {
       try {

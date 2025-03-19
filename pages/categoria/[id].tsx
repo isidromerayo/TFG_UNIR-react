@@ -1,4 +1,3 @@
-import { NextPage } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
@@ -13,7 +12,7 @@ function Categoria({ data }: { data: any} ) {
 
   useEffect(() => {
     const fetchData = async (categoria_id: number) => {
-      const result_cursos = await axios(`${API_URL}categorias/${categoria_id}/cursos`)
+      const result_cursos = await axios(`${API_URL}/categorias/${categoria_id}/cursos`)
       setCursos(result_cursos.data._embedded.cursos)
       setLoading(false)
     }
@@ -23,7 +22,6 @@ function Categoria({ data }: { data: any} ) {
     <div>...Data Loading.....</div>
   ) : (
 
-    <>
       <div className="container pagina-datos">
         <h1>Categoria <span className="destacar-palabra"> {data.nombre}</span>, sus cursos...</h1>
         <div>
@@ -48,7 +46,6 @@ function Categoria({ data }: { data: any} ) {
         </div>
 
       </div>
-    </>
   )
 }
 
@@ -56,7 +53,7 @@ function Categoria({ data }: { data: any} ) {
 export async function getServerSideProps({query}:{query:any}) {
   // Fetch data from external API
   const categoria_id = query.id;
-  const res = await fetch(`${API_URL}categorias/${categoria_id}`)
+  const res = await fetch(`${API_URL}/categorias/${categoria_id}`)
   const data = await res.json()
  
   // Pass data to the page via props

@@ -1,15 +1,12 @@
-import { NextPage } from 'next'
-import { useRouter } from 'next/router'
 import { API_URL } from '../../utils'
 import Link from 'next/link';
 
-function Valoracion({ data }: { data: any; }) {
+function Valoracion({ data }: {readonly data: any; }) {
 
   const { valoracion, curso, alumno } = data;
 
   return (
 
-    <>
       <div className="container pagina-datos">
         <h1>Opinión</h1>
         <section className="detalle_opinion">
@@ -33,7 +30,6 @@ function Valoracion({ data }: { data: any; }) {
         </section>
 
       </div>
-    </>
   );
 }
 
