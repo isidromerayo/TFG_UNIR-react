@@ -52,7 +52,10 @@ function Categoria({ data }: { data: any} ) {
 // This gets called on every request
 export async function getServerSideProps({query}:{query:any}) {
   // Fetch data from external API
-  const categoria_id = query.id;
+  const categoria_id = parseInt(query.id, 10);
+  if (isNaN(categoria_id)) {
+    return { notFound: true };
+  }
   const res = await fetch(`${API_URL}/categorias/${categoria_id}`)
   const data = await res.json()
  
