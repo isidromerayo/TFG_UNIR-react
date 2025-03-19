@@ -51,7 +51,7 @@ function Categoria({ data }: { data: any} ) {
 
 // This gets called on every request
 export async function getServerSideProps({query}:{query:any}) {
-  // Fetch data from external API
+  // Fetch data from external API - change any to the type of data you are fetching
   const categoria_id = parseInt(query.id, 10);
   if (isNaN(categoria_id)) {
     return { notFound: true };
