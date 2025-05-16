@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "test": "jest --watch",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test-headless": "jest --watch=false --browsers=ChromeHeadless",
+    "test-headless-cc": "jest --no-watch --coverage --browsers=ChromeHeadless"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
