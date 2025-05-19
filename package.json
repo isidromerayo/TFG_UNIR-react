@@ -21,7 +21,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.54.2",
-    "sweetalert2": "^11.6.13",
+    "sweetalert2": "^11.21.2",
     "typescript": "5.7.2",
     "yup": "^1.2.0",
     "zustand": "^4.4.1"
