@@ -44,5 +44,8 @@
     "jest-environment-jsdom": "^30.0.2",
     "style-loader": "^4.0.0",
     "ts-jest": "^29.4.0"
+  },
+  "overrides": {
+    "brace-expansion": "1.1.12"
   }
 }
