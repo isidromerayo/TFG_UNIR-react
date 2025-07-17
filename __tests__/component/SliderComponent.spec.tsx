@@ -5,8 +5,15 @@ import SliderComponent from "../../components/SliderComponent";
 
 import * as nextRouter from 'next/router';
 
+const mockPush = jest.fn();
 nextRouter.useRouter = jest.fn();
-nextRouter.useRouter.mockImplementation(() => ({ route: '/' }));
+nextRouter.useRouter.mockImplementation(() => ({
+  route: '/',
+  push: mockPush,
+  query: {},
+  pathname: '/',
+  asPath: '/',
+}));
 
  
 describe('SliderComponent Component', () => {  
