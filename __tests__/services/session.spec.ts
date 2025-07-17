@@ -91,19 +91,19 @@ describe('Session Service', () => {
       expect(user).toEqual(mockUser);
     });
 
-    it('debe devolver una cadena vacía cuando no hay usuario', () => {
+    it('debe devolver null cuando no hay usuario', () => {
       const user = getUser();
-      expect(user).toBe('');
+      expect(user).toBeNull();
     });
 
-    it('debe devolver una cadena vacía cuando no hay ventana (SSR)', () => {
+    it('debe devolver null cuando no hay ventana (SSR)', () => {
       // Guardamos el objeto window original
       const originalWindow = global.window;
       // @ts-ignore - Simulamos que window no está definido
       delete global.window;
       
       const user = getUser();
-      expect(user).toBe('');
+      expect(user).toBeNull();
       
       // Restauramos window
       global.window = originalWindow;
@@ -119,7 +119,7 @@ describe('Session Service', () => {
       
       // Verificamos que se maneje el error
       const user = getUser();
-      expect(user).toBe('');
+      expect(user).toBeNull();
       
       // Verificamos que se llamó a console.error
       expect(console.error).toHaveBeenCalled();

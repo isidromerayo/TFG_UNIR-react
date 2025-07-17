@@ -10,8 +10,10 @@ export default function SliderComponent() {
   async function buscarCursos(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
-    const query = formData.get('query')
-    push(`/busqueda/${query}`)
+    const query = formData.get('query');
+    if (typeof query === 'string') {
+      push(`/busqueda/${query}`);
+    }
   }
 
   return (
