@@ -1,4 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
+import Script from 'next/script'
 
 class MyDocument extends Document {
   render() {
@@ -14,6 +15,8 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <Script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js" strategy="beforeInteractive" />
+          <Script src="/assets/js/main.js" strategy="beforeInteractive" />
         </body>
       </Html>
     )
