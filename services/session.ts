@@ -25,17 +25,17 @@ export function setUser(user: string): void {
     }
 }
 
-export function getUser(): any | string {
+export function getUser(): string | null {
     if (typeof window !== 'undefined') {
         try {
             const user = localStorage.getItem(USER);
-            return user ? JSON.parse(user) : '';
+            return user ? JSON.parse(user) : null;
         } catch (error) {
             console.error('Error parsing user data:', error);
-            return '';
+            return null;
         }
     }
-    return '';
+    return null;
 }
 
 export function removeUser(): void {
