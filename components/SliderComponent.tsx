@@ -3,7 +3,7 @@ import { FormEvent } from "react"
 
 export default function SliderComponent() {
 
-  const { push } = useRouter();
+  const { readonly push } = useRouter();
 
   async function buscarCursos(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
