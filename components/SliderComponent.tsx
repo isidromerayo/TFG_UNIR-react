@@ -3,7 +3,8 @@ import { FormEvent } from "react"
 
 export default function SliderComponent() {
 
-  const { push } = useRouter();
+  const router = useRouter();
+  const { push } = router;
 
   async function buscarCursos(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -13,7 +14,6 @@ export default function SliderComponent() {
   }
 
   return (
-
     <section id="hero" className="hero d-flex align-items-center">
       <div className="container">
         <div className="row gy-4 d-flex justify-content-between">
@@ -23,7 +23,11 @@ export default function SliderComponent() {
             <p>Facere distinctio molestiae nisi fugit tenetur repellat non praesentium nesciunt optio quis sit odio nemo
               quisquam. eius quos reiciendis eum vel eum voluptatem eum maiores eaque id optio ullam occaecati odio est
               possimus vel reprehenderit</p>
-            <form onSubmit={buscarCursos} className="form-search d-flex align-items-stretch mb-3">
+            <form 
+              onSubmit={buscarCursos} 
+              className="form-search d-flex align-items-stretch mb-3"
+              role="search"
+            >
               <input type="text" className="form-control" placeholder="nombre del curso" name="query" aria-label="buscador de cursos" />
               <button type="submit" className="btn btn-primary">Search</button>
             </form>

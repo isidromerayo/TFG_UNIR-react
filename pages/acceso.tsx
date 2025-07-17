@@ -8,11 +8,7 @@ import Swal from 'sweetalert2';
 
 const Acceso: NextPage = () => {
 
-  const [isClient, setIsClient] = useState(false)
- 
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
+  
 
   const [formData, setFormData] = useState({
     email: "",

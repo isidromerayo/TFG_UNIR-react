@@ -1,29 +1,45 @@
-import { TOKEN, USER } from '../utils'
+import { TOKEN, USER } from '../utils/constants'
 
 export function setToken(token: string): void {
-    localStorage.setItem(TOKEN, token)
-}
-export function getToken(): string | null {
     if (typeof window !== 'undefined') {
-        return localStorage.getItem(TOKEN);
+        localStorage.setItem(TOKEN, token)
     }
-    return ''
 }
+
+export function getToken(): string {
+    if (typeof window !== 'undefined') {
+        return localStorage.getItem(TOKEN) || '';
+    }
+    return '';
+}
+
 export function removeToken(): void {
-    localStorage.removeItem(TOKEN);
+    if (typeof window !== 'undefined') {
+        localStorage.removeItem(TOKEN);
+    }
 }
 
 export function setUser(user: string): void {
-    localStorage.setItem(USER, user)
-}
-export function getUser(): any | null {
     if (typeof window !== 'undefined') {
-        const user = localStorage.getItem(USER);
-        if ( user !== null)
-            return JSON.parse(user);
+        localStorage.setItem(USER, user);
     }
-    return ''
 }
+
+export function getUser(): any | string {
+    if (typeof window !== 'undefined') {
+        try {
+            const user = localStorage.getItem(USER);
+            return user ? JSON.parse(user) : '';
+        } catch (error) {
+            console.error('Error parsing user data:', error);
+            return '';
+        }
+    }
+    return '';
+}
+
 export function removeUser(): void {
-    localStorage.removeItem(USER);
+    if (typeof window !== 'undefined') {
+        localStorage.removeItem(USER);
+    }
 }

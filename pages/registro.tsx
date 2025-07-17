@@ -3,7 +3,7 @@ import { NextPage } from 'next'
 import React, {  } from 'react'
 import { API_URL } from '../utils/constants'
 import Swal from 'sweetalert2'
-import router from 'next/router'
+
 import { useForm, SubmitHandler} from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from "yup";
@@ -37,7 +37,7 @@ const Registro: NextPage = () => {
         estado: 'P' // P for Pending
       };
 
-      const response = await axios.post(`${API_URL}/usuarios`, userData, {
+      await axios.post(`${API_URL}/usuarios`, userData, {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
