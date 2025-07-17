@@ -7,6 +7,7 @@ import { removeToken, getToken, removeUser } from '../services'
 
 import api from '../utils/api';
 import MenuCategoriaComponent from "./MenuCategoriaComponent";
+import Image from 'next/image';
 
 export default function HeaderComponent() {
     const { push } = useRouter();
@@ -88,8 +89,8 @@ export default function HeaderComponent() {
         <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
             
                     <Link href="/" className="logo d-flex align-items-center fix-home-menu">
-                        <img src="/react.svg" alt="Logo React" className="unir-logo" />
-                        <img src="/assets/img/Unir_2021_logo.svg" alt="Logo UNIR" className="unir-logo" />
+                        <Image src="/react.svg" alt="Logo React" className="unir-logo" width={40} height={40} />
+                        <Image src="/assets/img/Unir_2021_logo.svg" alt="Logo UNIR" className="unir-logo" width={100} height={40} />
                         <h1>TFG - FFJ: AEP</h1>
                     </Link>
 

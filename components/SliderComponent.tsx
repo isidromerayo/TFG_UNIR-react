@@ -1,5 +1,6 @@
 import { useRouter } from "next/router"
 import { FormEvent } from "react"
+import Image from 'next/image';
 
 export default function SliderComponent() {
 
@@ -40,7 +41,7 @@ export default function SliderComponent() {
           </div>
 
           <div className="col-lg-5 order-1 order-lg-2 hero-img">
-            <img src="assets/img/hero-img.svg" className="img-fluid mb-3 mb-lg-0" alt="Slider imagen" />
+            <Image src="/assets/img/hero-img.svg" className="img-fluid mb-3 mb-lg-0" alt="Slider imagen" width={500} height={400} />
           </div>
 
         </div>

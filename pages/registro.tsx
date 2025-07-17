@@ -7,6 +7,7 @@ import Swal from 'sweetalert2'
 import { useForm, SubmitHandler} from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from "yup";
+import { useRouter } from 'next/router';
 
 interface Inputs {
   nombre: string,
@@ -16,6 +17,8 @@ interface Inputs {
 };
 
 const Registro: NextPage = () => {
+
+  const router = useRouter();
 
   const schemaForm = Yup.object().shape({
     nombre: Yup.string().required(),
