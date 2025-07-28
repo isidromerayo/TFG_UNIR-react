@@ -33,7 +33,7 @@
     "@babel/preset-env": "^7.27.2",
     "@babel/preset-react": "^7.27.1",
     "@cypress/react": "^9.0.1",
-    "@jest/globals": "^30.0.2",
+    "@jest/globals": "^30.0.5",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "babel-jest": "^30.0.2",
