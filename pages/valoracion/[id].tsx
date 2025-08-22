@@ -36,6 +36,11 @@ function Valoracion({ data }: {readonly data: any; }) {
 export async function getServerSideProps({ query }:{query:any}) {
   const id = query.id;
 
+  // Validate that id is a string of digits only (adjust the regex if needed for your ID scheme)
+  if (typeof id !== "string" || !/^\d+$/.test(id)) {
+    return { notFound: true };
+  }
+
   const res = await fetch(`${API_URL}valoraciones/${id}`)
   const valoracion = await res.json()
   const res2 = await fetch(`${API_URL}valoraciones/${id}/curso`)
