@@ -210,17 +210,25 @@ cypress/
 ## 🚀 CI/CD
 
 ### GitHub Actions
-Workflow configurado en `.github/workflows/`:
-- Setup de Node.js 20.x
-- Instalación de pnpm
-- Caché de pnpm store
-- Build del proyecto
-- Ejecución de tests
-- Auditoría de seguridad
+Workflow configurado en `.github/workflows/node.js.yml`:
+- Checkout del código (actions/checkout@v4)
+- Setup de Node.js 20.x (actions/setup-node@v4)
+- Instalación de pnpm (pnpm/action-setup@v4)
+- Caché de pnpm store para builds más rápidos
+- Instalación de dependencias con `--frozen-lockfile`
+- Linter (pnpm lint)
+- Build del proyecto (pnpm build)
+- Ejecución de tests (pnpm test-headless-cc)
+- Auditoría de seguridad (pnpm audit)
 
 ### Triggers
 - Push a `main`
 - Pull requests a `main`
+
+### Optimizaciones
+- Caché de pnpm store reduce tiempo de instalación
+- `--frozen-lockfile` asegura builds reproducibles
+- Actions actualizadas a v4 para mejor performance
 
 ## 📦 Dependencias Clave
 

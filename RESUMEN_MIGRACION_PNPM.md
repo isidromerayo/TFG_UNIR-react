@@ -208,7 +208,7 @@ Si encuentras problemas:
 - [ ] Commit de migración completada
 
 ### Finalización
-- [ ] Actualizar CI/CD workflows
+- [x] Actualizar CI/CD workflows
 - [ ] Merge a main
 - [ ] Notificar al equipo
 - [ ] Actualizar documentación del equipo
