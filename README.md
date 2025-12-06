@@ -123,6 +123,7 @@ TFG_UNIR-react/
 - **[AGENTS.md](./AGENTS.md)** - Contexto completo del proyecto para agentes IA
 - **[MIGRATION_TO_PNPM.md](./MIGRATION_TO_PNPM.md)** - Guía de migración a pnpm
 - **[CHANGELOG_PNPM.md](./CHANGELOG_PNPM.md)** - Changelog de la migración
+- **[AUDIT_REPORT.md](./AUDIT_REPORT.md)** - Reporte de auditoría de seguridad
 
 ## 🚀 CI/CD
 
