@@ -67,11 +67,40 @@ pnpm install
 pnpm build
 ```
 
+## 🔒 Mantenimiento
+
+### Verificar Seguridad
+```bash
+# Auditoría de vulnerabilidades
+pnpm audit
+
+# Ver dependencias desactualizadas
+pnpm outdated
+```
+
+### Actualizar Dependencias
+```bash
+# Actualizar todas (seguro)
+pnpm update
+
+# Actualizar a últimas versiones
+pnpm update --latest
+
+# Actualizar una específica
+pnpm update <package>
+```
+
+**Después de actualizar**:
+```bash
+pnpm lint && pnpm test-headless && pnpm build
+```
+
 ## 📚 Más Información
 
 - **RESUMEN_MIGRACION_PNPM.md** - Resumen completo
 - **MIGRATION_TO_PNPM.md** - Guía detallada
 - **AGENTS.md** - Contexto del proyecto
+- **AUDIT_REPORT.md** - Reporte de seguridad
 
 ---
 

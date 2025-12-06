@@ -124,6 +124,81 @@ TFG_UNIR-react/
 - **[MIGRATION_TO_PNPM.md](./MIGRATION_TO_PNPM.md)** - Guía de migración a pnpm
 - **[CHANGELOG_PNPM.md](./CHANGELOG_PNPM.md)** - Changelog de la migración
 - **[AUDIT_REPORT.md](./AUDIT_REPORT.md)** - Reporte de auditoría de seguridad
+- **[DEPENDENCY_UPDATE_GUIDE.md](./DEPENDENCY_UPDATE_GUIDE.md)** - Guía de actualización de dependencias
+
+## � Se/guridad y Mantenimiento
+
+### Auditoría de Seguridad
+
+```bash
+# Verificar vulnerabilidades
+pnpm audit
+
+# Auditoría con detalles en JSON
+pnpm audit --json
+
+# Auditoría con nivel específico
+pnpm audit --audit-level=moderate
+```
+
+**Estado actual**: ✅ 0 vulnerabilidades conocidas
+
+Ver [AUDIT_REPORT.md](./AUDIT_REPORT.md) para el reporte completo.
+
+### Verificar Dependencias Desactualizadas
+
+```bash
+# Ver todas las dependencias desactualizadas
+pnpm outdated
+
+# Ver solo dependencias de producción
+pnpm outdated --prod
+
+# Ver en formato JSON
+pnpm outdated --json
+```
+
+### Actualizar Dependencias
+
+```bash
+# Actualizar todas (respetando semver en package.json)
+pnpm update
+
+# Actualizar a últimas versiones (ignora semver)
+pnpm update --latest
+
+# Actualizar una dependencia específica
+pnpm update <package>
+
+# Actualizar dependencias interactivamente
+pnpm update --interactive
+
+# Actualizar solo dependencias de producción
+pnpm update --prod
+```
+
+### Recomendaciones de Actualización
+
+**Actualizaciones seguras** (parches y menores):
+```bash
+pnpm update @types/node eslint react react-dom typescript
+```
+
+**Actualizaciones mayores** (requieren revisión):
+```bash
+# Next.js 16 - Revisar breaking changes primero
+pnpm update next eslint-config-next --latest
+
+# Cypress 15 - Revisar changelog
+pnpm update cypress --latest
+```
+
+**Después de actualizar, siempre verificar**:
+```bash
+pnpm lint
+pnpm test-headless
+pnpm build
+```
 
 ## 🚀 CI/CD
 

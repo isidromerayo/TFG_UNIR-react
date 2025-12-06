@@ -157,10 +157,26 @@ Ver `.npmrc` para configuración específica de Next.js/React:
 - React 19.1.0 (última versión estable)
 - Next.js 15.3.4 (incluye mejoras de seguridad)
 
-### Auditoría
+### Auditoría y Mantenimiento
+
 ```bash
-pnpm audit  # Verificar vulnerabilidades
+# Auditoría de seguridad
+pnpm audit
+
+# Verificar dependencias desactualizadas
+pnpm outdated
+
+# Actualizar dependencias (respetando semver)
+pnpm update
+
+# Actualizar a últimas versiones
+pnpm update --latest
+
+# Actualizar interactivamente
+pnpm update --interactive
 ```
+
+**Estado actual**: 0 vulnerabilidades, 8 paquetes con actualizaciones disponibles
 
 ### Autenticación
 - Gestión de sesiones con Zustand
