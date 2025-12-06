@@ -9,11 +9,23 @@
 ### Estado de Seguridad: ✅ EXCELENTE
 
 - **Vulnerabilidades Totales**: 0
-- **Vulnerabilidades Críticas**: 0
+- **Vulnerabilidades Críticas**: 0 (1 corregida)
 - **Vulnerabilidades Altas**: 0
 - **Vulnerabilidades Moderadas**: 0
 - **Vulnerabilidades Bajas**: 0
 - **Vulnerabilidades Info**: 0
+
+### 🔒 Actualización de Seguridad Aplicada
+
+**Fecha**: 6 de diciembre de 2024
+
+Se corrigió una vulnerabilidad crítica en Next.js:
+- **CVE**: SNYK-JS-NEXT-14173355
+- **Tipo**: Arbitrary Code Injection
+- **Severidad**: CRÍTICA (893/1000)
+- **Versión vulnerable**: 15.5.7
+- **Versión segura**: 15.4.8
+- **Estado**: ✅ CORREGIDA
 
 ### Dependencias
 
@@ -55,7 +67,7 @@
 
 | Paquete | Versión Actual | Última Versión | Estado |
 |---------|---------------|----------------|--------|
-| next | 15.5.7 | 16.0.7 | ⚠️ Actualización disponible |
+| next | 15.4.8 | 16.0.7 | ✅ Versión segura (backport) |
 | react | 19.1.0 | 19.2.1 | ⚠️ Actualización disponible |
 | react-dom | 19.1.0 | 19.2.1 | ⚠️ Actualización disponible |
 | typescript | 5.8.3 | 5.9.3 | ⚠️ Actualización disponible |
@@ -66,7 +78,7 @@
 | yup | 1.7.1 | - | ✅ Actualizado |
 | @hookform/resolvers | 5.2.2 | - | ✅ Actualizado |
 | eslint | 9.31.0 | 9.39.1 | ⚠️ Actualización disponible |
-| eslint-config-next | 15.5.7 | 16.0.7 | ⚠️ Actualización disponible |
+| eslint-config-next | 15.4.8 | 16.0.7 | ✅ Versión segura (backport) |
 
 ### Desarrollo
 
