@@ -124,7 +124,9 @@ TFG_UNIR-react/
 - **[MIGRATION_TO_PNPM.md](./MIGRATION_TO_PNPM.md)** - Guía de migración a pnpm
 - **[CHANGELOG_PNPM.md](./CHANGELOG_PNPM.md)** - Changelog de la migración
 - **[AUDIT_REPORT.md](./AUDIT_REPORT.md)** - Reporte de auditoría de seguridad
+- **[SECURITY_AUDIT_ANALYSIS.md](./SECURITY_AUDIT_ANALYSIS.md)** - Análisis de herramientas de auditoría
 - **[DEPENDENCY_UPDATE_GUIDE.md](./DEPENDENCY_UPDATE_GUIDE.md)** - Guía de actualización de dependencias
+- **[PENDING_PRS_REPORT.md](./PENDING_PRS_REPORT.md)** - Análisis de PRs pendientes
 
 ## � Se/guridad y Mantenimiento
 
@@ -143,7 +145,13 @@ pnpm audit --audit-level=moderate
 
 **Estado actual**: ✅ 0 vulnerabilidades conocidas
 
-Ver [AUDIT_REPORT.md](./AUDIT_REPORT.md) para el reporte completo.
+⚠️ **Importante**: `pnpm audit` solo consulta la npm Advisory Database. Para una seguridad completa:
+- Revisar PRs de Snyk y Dependabot
+- Monitorear security advisories de paquetes críticos
+- Usar múltiples herramientas de auditoría
+
+Ver [AUDIT_REPORT.md](./AUDIT_REPORT.md) para el reporte completo.  
+Ver [SECURITY_AUDIT_ANALYSIS.md](./SECURITY_AUDIT_ANALYSIS.md) para entender las limitaciones de `pnpm audit`.
 
 ### Verificar Dependencias Desactualizadas
 
