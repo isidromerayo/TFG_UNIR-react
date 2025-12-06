@@ -142,7 +142,7 @@ jobs:
       # 7. Crear issue si hay vulnerabilidades críticas
       - name: Create issue for critical vulnerabilities
         if: steps.pnpm-audit.outputs.vulnerabilities != '0' || failure()
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const title = '🔒 Security Alert: Vulnerabilities Detected';
@@ -200,7 +200,7 @@ jobs:
       # 8. Comentar en PR si hay vulnerabilidades
       - name: Comment on PR
         if: github.event_name == 'pull_request' && steps.pnpm-audit.outputs.vulnerabilities != '0'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const comment = `
