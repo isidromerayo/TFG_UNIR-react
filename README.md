@@ -124,6 +124,34 @@ TFG_UNIR-react/
 - **[MIGRATION_TO_PNPM.md](./MIGRATION_TO_PNPM.md)** - Guía de migración a pnpm
 - **[CHANGELOG_PNPM.md](./CHANGELOG_PNPM.md)** - Changelog de la migración
 
+## 🚀 CI/CD
+
+### GitHub Actions
+
+El proyecto incluye un workflow de CI/CD configurado en `.github/workflows/node.js.yml` que se ejecuta automáticamente en:
+
+- Push a `main`
+- Pull requests a `main`
+
+#### Pipeline
+
+1. **Checkout** - Descarga el código
+2. **Setup Node.js** - Configura Node.js 20.x
+3. **Install pnpm** - Instala pnpm 10.x
+4. **Cache** - Cachea el store de pnpm para builds más rápidos
+5. **Install** - Instala dependencias con `--frozen-lockfile`
+6. **Lint** - Ejecuta el linter
+7. **Build** - Compila el proyecto
+8. **Test** - Ejecuta tests con coverage
+9. **Audit** - Verifica vulnerabilidades de seguridad
+
+#### Beneficios
+
+- ✅ Builds reproducibles con lockfile congelado
+- ✅ Instalación rápida con caché de pnpm
+- ✅ Verificación automática de calidad de código
+- ✅ Detección temprana de errores
+
 ## 🔄 Migración a pnpm
 
 Este proyecto ha sido migrado de npm a pnpm. Para más información, consulta [MIGRATION_TO_PNPM.md](./MIGRATION_TO_PNPM.md).
