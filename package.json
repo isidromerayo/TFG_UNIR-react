@@ -9,7 +9,10 @@
     "test": "jest --watch",
     "lint": "next lint",
     "test-headless": "jest --watch=false --browsers=ChromeHeadless",
-    "test-headless-cc": "jest --no-watch --coverage --browsers=ChromeHeadless"
+    "test-headless-cc": "jest --no-watch --coverage --browsers=ChromeHeadless",
+    "security": "./scripts/security-check.sh",
+    "security:audit": "pnpm audit",
+    "security:outdated": "pnpm outdated"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
