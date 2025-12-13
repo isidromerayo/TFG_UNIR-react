@@ -8,9 +8,8 @@ import { removeToken, getToken, removeUser } from '../services'
 import api from '../utils/api';
 import MenuCategoriaComponent from "./MenuCategoriaComponent";
 import Image from 'next/image';
-import { Categoria } from '../types';
+import { Categoria, ApiError } from '../types';
 import { logger } from '../utils/logger';
-import { ApiError } from '../types';
 
 export default function HeaderComponent() {
     const { push } = useRouter();
