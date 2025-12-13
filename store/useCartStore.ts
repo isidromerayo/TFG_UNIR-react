@@ -38,7 +38,11 @@ export const useCartStore = create<State & Actions>((set, get) => ({
     },
     removeFromCart: (product: CartItem) => {
      const cartItem = get().cart.find((item: CartItem) => item.id === product.id);
-     const quantity = cartItem?.quantity || 1;
+     if (!cartItem) {
+       // Producto no está en el carrito, no hacer nada
+       return;
+     }
+     const quantity = cartItem.quantity;
      set(state => ({
       cart: state.cart.filter((item: CartItem) => item.id !== product.id),
       totalPrice: state.totalPrice - (product.precio * quantity),

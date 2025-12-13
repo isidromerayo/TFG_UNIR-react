@@ -46,7 +46,7 @@ function Curso({ data }: { data: CursoType }) {
 
 export async function getServerSideProps({ query }: NextPageContext) {
   const curso_id = query.id;
-  if (!/^\d+$/.test(curso_id)) {
+  if (!curso_id || !/^\d+$/.test(curso_id)) {
     return { notFound: true };
   }
   const res = await fetch(`${API_URL}/cursos/${curso_id}`)
