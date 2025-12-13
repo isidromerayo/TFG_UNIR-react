@@ -64,16 +64,78 @@ describe('useCartStore', () => {
       expect(totalPrice).toBe(0);
     });
 
+    it('debe calcular correctamente el totalPrice considerando la quantity al eliminar', () => {
+      // Añadimos un producto con quantity > 1 (simulando que se añadió manualmente)
+      const productoConQuantity = { ...mockProduct, quantity: 3 };
+      
+      act(() => {
+        // Primero añadimos el producto (quantity: 1)
+        useCartStore.getState().addToCart(mockProduct);
+        // Luego modificamos manualmente para simular quantity: 3
+        const cart = useCartStore.getState().cart;
+        cart[0].quantity = 3;
+        useCartStore.setState({ cart, totalPrice: mockProduct.precio * 3 });
+      });
+
+      // Verificamos que el totalPrice es correcto antes de eliminar
+      expect(useCartStore.getState().totalPrice).toBe(mockProduct.precio * 3);
+
+      // Eliminamos el producto
+      act(() => {
+        useCartStore.getState().removeFromCart(mockProduct);
+      });
+
+      // El totalPrice debe restar precio * quantity (3)
+      const { cart, totalPrice } = useCartStore.getState();
+      expect(cart).toHaveLength(0);
+      expect(totalPrice).toBe(0);
+    });
+
     it('no debe hacer nada si el producto no está en el carrito', () => {
       const otroProducto = { ...mockProduct, id: 2 };
       
       act(() => {
         useCartStore.getState().addToCart(mockProduct);
+        const precioAntes = useCartStore.getState().totalPrice;
         useCartStore.getState().removeFromCart(otroProducto);
+        const precioDespues = useCartStore.getState().totalPrice;
+        // El precio no debe cambiar
+        expect(precioDespues).toBe(precioAntes);
       });
 
       const { cart } = useCartStore.getState();
       expect(cart).toHaveLength(1);
+    });
+
+    it('debe manejar correctamente múltiples productos con diferentes quantities', () => {
+      const producto1 = { ...mockProduct, id: 1, precio: 100 };
+      const producto2 = { ...mockProduct, id: 2, precio: 200 };
+      
+      act(() => {
+        useCartStore.getState().addToCart(producto1);
+        useCartStore.getState().addToCart(producto2);
+        
+        // Simulamos quantities diferentes
+        const cart = useCartStore.getState().cart;
+        cart[0].quantity = 2;
+        cart[1].quantity = 3;
+        useCartStore.setState({ 
+          cart, 
+          totalPrice: (producto1.precio * 2) + (producto2.precio * 3) 
+        });
+      });
+
+      const precioTotalEsperado = (producto1.precio * 2) + (producto2.precio * 3);
+      expect(useCartStore.getState().totalPrice).toBe(precioTotalEsperado);
+
+      // Eliminamos producto1
+      act(() => {
+        useCartStore.getState().removeFromCart(producto1);
+      });
+
+      // Debe restar producto1.precio * 2
+      expect(useCartStore.getState().totalPrice).toBe(producto2.precio * 3);
+      expect(useCartStore.getState().cart).toHaveLength(1);
     });
   });
 
