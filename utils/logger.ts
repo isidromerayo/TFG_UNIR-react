@@ -15,9 +15,11 @@ class Logger {
 
   constructor() {
     // Only log in development or when explicitly enabled
+    // Default level: 'debug' in development (logs everything), 'log' in production
+    const defaultLevel = process.env.NODE_ENV === 'production' ? 'log' : 'debug';
     this.config = {
       enabled: process.env.NODE_ENV !== 'production' || process.env.NEXT_PUBLIC_ENABLE_LOGGING === 'true',
-      level: (process.env.NEXT_PUBLIC_LOG_LEVEL as LogLevel) || 'log'
+      level: (process.env.NEXT_PUBLIC_LOG_LEVEL as LogLevel) || defaultLevel
     };
   }
 

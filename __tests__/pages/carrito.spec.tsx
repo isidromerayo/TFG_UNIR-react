@@ -52,10 +52,12 @@ describe('Carrito Page', () => {
 
     useCartStore.getState().addToCart(mockProduct);
 
-    const { getByText } = render(<Carrito />);
+    const { getByText, getAllByText } = render(<Carrito />);
     // El texto puede estar dividido, usamos un matcher más flexible
     expect(getByText(/Curso Test/i)).toBeInTheDocument();
-    expect(getByText(/100/)).toBeInTheDocument();
+    // Hay múltiples elementos con "100" (precio y total), verificamos que existe
+    const elementos100 = getAllByText(/100/);
+    expect(elementos100.length).toBeGreaterThan(0);
   });
 
   it('debe calcular el total correctamente', () => {
