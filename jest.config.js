@@ -21,6 +21,7 @@ const customJestConfig = {
     '!**/*.config.js',
     '!**/node_modules/**',
   ],
+  collectCoverage: true,
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html', 'json'],
   coverageThreshold: {
