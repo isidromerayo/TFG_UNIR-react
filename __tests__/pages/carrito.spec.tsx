@@ -1,4 +1,6 @@
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import '@testing-library/jest-dom';
+import { render, fireEvent } from '@testing-library/react';
 import Carrito from '../../pages/carrito';
 import Swal from 'sweetalert2';
 import { useCartStore } from '../../store/useCartStore';
@@ -6,7 +8,7 @@ import { getToken } from '../../services/session';
 
 // Mock de Swal.fire
 jest.mock('sweetalert2', () => ({
-  fire: jest.fn().mockResolvedValue({ isConfirmed: false })
+  fire: (jest.fn() as any).mockResolvedValue({ isConfirmed: false })
 }));
 
 // Mock de useRouter
@@ -78,7 +80,7 @@ describe('Carrito Page', () => {
   });
 
   it('debe llamar a Swal.fire cuando el usuario no está logueado al comprar', () => {
-    (getToken as jest.Mock).mockReturnValue(null);
+    (getToken as jest.MockedFunction<typeof getToken>).mockReturnValue('');
     const mockProduct = {
       id: 1,
       titulo: 'Curso Test',
