@@ -9,6 +9,28 @@ const createJestConfig = nextJest({
 const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testEnvironment: 'jest-environment-jsdom',
+  collectCoverage: false, // Enable only when --coverage flag is used
+  collectCoverageFrom: [
+    'src/**/*.{js,jsx,ts,tsx}',
+    'pages/**/*.{js,jsx,ts,tsx}',
+    'components/**/*.{js,jsx,ts,tsx}',
+    '!src/**/*.d.ts',
+    '!pages/_app.tsx',
+    '!pages/_document.tsx',
+    '!pages/api/**',
+    '!**/*.config.js',
+    '!**/node_modules/**',
+  ],
+  coverageDirectory: 'coverage',
+  coverageReporters: ['text', 'lcov', 'html', 'json'],
+  coverageThreshold: {
+    global: {
+      branches: 4,    // Current: 4.61%
+      functions: 23,  // Current: 23.88%
+      lines: 18,      // Current: 18.39%
+      statements: 19, // Current: 19.55%
+    },
+  },
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
