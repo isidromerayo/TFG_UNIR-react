@@ -1,17 +1,18 @@
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import HeaderComponent from "../../components/HeaderComponent";
+import { useRouter } from "next/router";
 
 const mockPush = jest.fn();
 
 jest.mock("next/router", () => ({
-  useRouter: () => ({
+  useRouter: jest.fn(() => ({
     route: "/",
     push: mockPush,
     query: {},
     pathname: "/",
     asPath: "/",
-  }),
+  })),
 }));
 
 jest.mock("next/link", () => {
@@ -67,6 +68,13 @@ jest.mock("sweetalert2", () => ({
 
 describe("HeaderComponent", () => {
   beforeEach(() => {
+    (useRouter as jest.Mock).mockImplementation(() => ({
+      route: "/",
+      push: mockPush,
+      query: {},
+      pathname: "/",
+      asPath: "/",
+    }));
     jest.clearAllMocks();
     mockPush.mockClear();
   });
