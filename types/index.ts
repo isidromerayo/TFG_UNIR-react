@@ -35,7 +35,12 @@ export interface Curso {
   fechaCreacion: string;
   fechaActualizacion: string;
   instructo?: boolean;
-  instructor?: Instructor;
+  instructor?: {
+    id: number;
+    nombre: string;
+    apellidos: string;
+    descripcion?: string;
+  };
 }
 
 export interface CursoEmbedded {
@@ -48,6 +53,7 @@ export interface CursoEmbedded {
 export interface Categoria {
   id: number;
   nombre: string;
+  descripcion?: string;
 }
 
 export interface CategoriaEmbedded {
@@ -69,6 +75,7 @@ export interface Valoracion {
   id: number;
   comentario: string;
   puntuacion: number;
+  fecha?: string;
   curso?: Curso;
   alumno?: Usuario;
 }

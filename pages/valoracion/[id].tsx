@@ -32,7 +32,10 @@ function Valoracion({ data }: {readonly data: ValoracionPageData }) {
               <span className="">{curso.titulo}</span>
             </Link> actualizado <span className="">{curso.fechaActualizacion}</span> valoración media <span className="destacar-info">{curso.valoracionMedia}</span>,
             profesor/a <span>
-              {curso.instructor.nombre + ' ' + curso.instructor.apellidos}</span>
+              {curso.instructor ? (
+                `${curso.instructor.nombre} ${curso.instructor.apellidos}`
+              ) : 'Instructor no disponible'}
+            </span>
           </div>
         </section>
 

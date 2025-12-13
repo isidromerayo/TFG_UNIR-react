@@ -1,10 +1,17 @@
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import HeaderComponent from "../../components/HeaderComponent";
-import { useRouter } from "next/router";
+
+const mockPush = jest.fn();
 
 jest.mock("next/router", () => ({
-  useRouter: jest.fn(),
+  useRouter: () => ({
+    route: "/",
+    push: mockPush,
+    query: {},
+    pathname: "/",
+    asPath: "/",
+  }),
 }));
 
 jest.mock("next/link", () => {
@@ -59,18 +66,9 @@ jest.mock("sweetalert2", () => ({
 }));
 
 describe("HeaderComponent", () => {
-  const mockPush = jest.fn();
-
   beforeEach(() => {
-    (useRouter as jest.Mock).mockImplementation(() => ({
-      route: "/",
-      push: mockPush,
-      query: {},
-      pathname: "/",
-      asPath: "/",
-    }));
-    mockPush.mockClear();
     jest.clearAllMocks();
+    mockPush.mockClear();
   });
 
   it("debe renderizar el header tras cargar categorías", async () => {
@@ -141,5 +139,47 @@ describe("HeaderComponent", () => {
     await waitFor(() => {
       expect(mockPush).toHaveBeenCalledWith("/");
     });
+  });
+
+  it("debe hacer warn y dejar categorías vacías si la respuesta no trae un array", async () => {
+    const api = (await import("../../utils/api")).default as any;
+    api.get.mockResolvedValue({ data: { _embedded: { categorias: null } } });
+
+    const services = (await import("../../services")) as any;
+    services.getToken.mockReturnValue(null);
+
+    const { logger } = (await import("../../utils/logger")) as any;
+
+    render(<HeaderComponent />);
+
+    await waitFor(() => {
+      expect(screen.getByText(/Home/i)).toBeInTheDocument();
+    });
+
+    expect(logger.warn).toHaveBeenCalled();
+  });
+
+  it("debe manejar error 404 mostrando mensaje de no se encontraron categorías", async () => {
+    const api = (await import("../../utils/api")).default as any;
+    api.get.mockRejectedValue({
+      message: "not found",
+      response: {
+        status: 404,
+        data: {},
+      },
+    });
+
+    const services = (await import("../../services")) as any;
+    services.getToken.mockReturnValue(null);
+
+    const { logger } = (await import("../../utils/logger")) as any;
+
+    render(<HeaderComponent />);
+
+    await waitFor(() => {
+      expect(screen.getByText(/Home/i)).toBeInTheDocument();
+    });
+
+    expect(logger.error).toHaveBeenCalledWith("No se encontraron categorías");
   });
 });
