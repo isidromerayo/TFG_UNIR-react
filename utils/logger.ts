@@ -24,11 +24,13 @@ class Logger {
   private shouldLog(level: LogLevel): boolean {
     if (!this.config.enabled) return false;
     
-    const levels: LogLevel[] = ['log', 'warn', 'error', 'debug'];
+    // Orden de severidad: error (más severo) > warn > log > debug (menos severo)
+    const levels: LogLevel[] = ['error', 'warn', 'log', 'debug'];
     const currentLevelIndex = levels.indexOf(this.config.level);
     const messageLevelIndex = levels.indexOf(level);
     
-    return messageLevelIndex >= currentLevelIndex;
+    // Si el nivel del mensaje es más severo o igual al nivel configurado, loggear
+    return messageLevelIndex <= currentLevelIndex;
   }
 
   log(...args: unknown[]): void {

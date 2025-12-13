@@ -113,6 +113,9 @@ describe('Logger', () => {
       jest.resetModules();
       logger = require('../../utils/logger').logger;
 
+      // Limpiar llamadas anteriores
+      jest.clearAllMocks();
+
       logger.error('error message');
       logger.warn('warn message');
       logger.log('log message');
@@ -128,6 +131,9 @@ describe('Logger', () => {
       process.env.NEXT_PUBLIC_LOG_LEVEL = 'warn';
       jest.resetModules();
       logger = require('../../utils/logger').logger;
+
+      // Limpiar llamadas anteriores
+      jest.clearAllMocks();
 
       logger.error('error message');
       logger.warn('warn message');
@@ -145,6 +151,9 @@ describe('Logger', () => {
       jest.resetModules();
       logger = require('../../utils/logger').logger;
 
+      // Limpiar llamadas anteriores
+      jest.clearAllMocks();
+
       logger.error('error message');
       logger.warn('warn message');
       logger.log('log message');
@@ -160,6 +169,9 @@ describe('Logger', () => {
       process.env.NEXT_PUBLIC_LOG_LEVEL = 'debug';
       jest.resetModules();
       logger = require('../../utils/logger').logger;
+
+      // Limpiar llamadas anteriores
+      jest.clearAllMocks();
 
       logger.error('error message');
       logger.warn('warn message');

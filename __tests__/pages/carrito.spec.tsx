@@ -53,8 +53,9 @@ describe('Carrito Page', () => {
     useCartStore.getState().addToCart(mockProduct);
 
     const { getByText } = render(<Carrito />);
-    expect(getByText('Curso Test')).toBeInTheDocument();
-    expect(getByText('100')).toBeInTheDocument();
+    // El texto puede estar dividido, usamos un matcher más flexible
+    expect(getByText(/Curso Test/i)).toBeInTheDocument();
+    expect(getByText(/100/)).toBeInTheDocument();
   });
 
   it('debe calcular el total correctamente', () => {
