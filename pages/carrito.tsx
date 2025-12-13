@@ -4,16 +4,18 @@ import { useCartStore } from '../store/useCartStore';
 import { getToken } from '../services/session';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/router';
+import { CartItem } from '../types';
+import { logger } from '../utils/logger';
 
 const Carrito: NextPage = () => {
 
-    const [cartState, setCartState] = useState<any[]>([])
+    const [cartState, setCartState] = useState<CartItem[]>([])
     const [loading, setLoading] = useState<boolean>(true);
 
     const router = useRouter()
     
     const cart = useCartStore(state => state.cart); 
-    const totalCompra = cart.reduce((acc, product:any) => acc + product.precio * (product.quantity as number), 0);
+    const totalCompra = cart.reduce((acc, product: CartItem) => acc + product.precio * (product.quantity as number), 0);
     const removeFromCart = useCartStore(state => state.removeFromCart)
     const removeAllFromCart = useCartStore(state => state.clearCart)
 
@@ -22,7 +24,7 @@ const Carrito: NextPage = () => {
         setLoading(false)
        }, [cart])
 
-       const deleteCursoCarrito = (product:any):void => {
+       const deleteCursoCarrito = (product: CartItem):void => {
             removeFromCart(product)
        }
 
@@ -38,13 +40,13 @@ const Carrito: NextPage = () => {
                 showCancelButton: true
               }).then((result) => {
                 if (result.isConfirmed) {
-                  console.log("inicio de transacción de compra")
+                  logger.debug("inicio de transacción de compra")
                   removeAllFromCart();
                   router.push("/mis-cursos");
                   Swal.fire('Compra','Procesada la compra correctamente');
                 }
               }).catch((error) => {
-                console.log(error)
+                logger.error('Error en compra:', error)
               });
           }
 
@@ -56,7 +58,7 @@ const Carrito: NextPage = () => {
             <div className="pagina-datos container">
                 <h1>Carrito</h1>
                 <section className="detalle-curso">
-                {cartState.length == 0 ?
+                {cartState.length === 0 ?
                 <div className="sin-resultados">No hay productos en el carrito</div>
                 :
                 (    

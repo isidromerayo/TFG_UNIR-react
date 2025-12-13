@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API_URL } from './constants';
+import { logger } from './logger';
 
 // Custom retry configuration
 const RETRY_CONFIG = {
@@ -44,12 +45,12 @@ api.interceptors.request.use(
     (config) => {
         // Add trailing slash if needed
         if (!config.url?.endsWith('/')) {
-            console.log('URL:', config.url);
+            logger.debug('URL:', config.url);
         }
         return config;
     },
     (error) => {
-        console.error('Request Error:', error);
+        logger.error('Request Error:', error);
         return Promise.reject(new Error(error.message));
     }
 );
@@ -62,20 +63,20 @@ api.interceptors.response.use(
     (error) => {
         if (error.response) {
             // Server responded with error status
-            console.error('Error Response:', {
+            logger.error('Error Response:', {
                 url: error.config?.url,
                 status: error.response.status,
                 data: error.response.data
             });
         } else if (error.request) {
             // Request made but no response
-            console.error('Network Error:', {
+            logger.error('Network Error:', {
                 url: error.config?.url,
                 message: 'No se pudo conectar con el servidor. Por favor, verifique su conexión a internet.'
             });
         } else {
             // Request setup error
-            console.error('Request Error:', {
+            logger.error('Request Error:', {
                 url: error.config?.url,
                 message: error.message
             });

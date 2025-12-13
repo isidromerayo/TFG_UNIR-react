@@ -1,7 +1,7 @@
 import Link from "next/link";
+import { HomePageData, Curso, Valoracion } from '../types';
 
-
-export default function HomeComponent({data} : { data:any }) {
+export default function HomeComponent({data} : { data: HomePageData }) {
     const { cursos_mas_valorados, valoraciones_cursos, cursos_actualizados } = data;
 
     return (
@@ -14,7 +14,7 @@ export default function HomeComponent({data} : { data:any }) {
                             <h1>Cursos destacados</h1>
                         </div>
                         {
-                            cursos_mas_valorados.map((datos: any) => (
+                            cursos_mas_valorados.map((datos: Curso) => (
                                 <div className="col-lg-4 col-md-6 service-item d-flex" key={datos.id}>
                                     <div>
                                         <h4>{datos.titulo}</h4>
@@ -42,7 +42,7 @@ export default function HomeComponent({data} : { data:any }) {
                             <h1>Opiniones</h1>
                         </div>
                         {
-                            valoraciones_cursos.map((datos: any) => (
+                            valoraciones_cursos.map((datos: Valoracion) => (
                                 <div className="col-lg-4 col-md-6 service-item d-flex" key={datos.id}>
                                     <div>
                                         <p className="description">Valoración: <b>{datos.puntuacion}/5</b></p>
@@ -68,7 +68,7 @@ export default function HomeComponent({data} : { data:any }) {
                         </div>
 
                         {
-                            cursos_actualizados.map((datos: any) => (
+                            cursos_actualizados.map((datos: Curso) => (
                                 <div className="col-lg-4 col-md-6 service-item d-flex" key={datos.id}>
                                     <div>
                                         <h4 className="title">{datos.titulo} </h4>

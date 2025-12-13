@@ -3,11 +3,13 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { API_URL } from '../../utils'
 import axios from 'axios'
+import { Categoria as CategoriaType, Curso } from '../../types'
+import { NextPageContext } from '../../types'
 
-function Categoria({ data }: { data: any} ) {
+function Categoria({ data }: { data: CategoriaType } ) {
 
   const router = useRouter()
-  const [cursos, setCursos] = useState<any[]>([])
+  const [cursos, setCursos] = useState<Curso[]>([])
   const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
@@ -25,7 +27,7 @@ function Categoria({ data }: { data: any} ) {
       <div className="container pagina-datos">
         <h1>Categoria <span className="destacar-palabra"> {data.nombre}</span>, sus cursos...</h1>
         <div>
-          {cursos.length == 0 ? (<div className="sin-resultados">
+          {cursos.length === 0 ? (<div className="sin-resultados">
             Sin cursos en esta categoría
           </div>) : ''}
 
@@ -50,8 +52,7 @@ function Categoria({ data }: { data: any} ) {
 }
 
 // This gets called on every request
-export async function getServerSideProps({query}:{query:any}) {
-  // Fetch data from external API - change any to the type of data you are fetching
+export async function getServerSideProps({query}: NextPageContext) {
   const categoria_id = parseInt(query.id, 10);
   if (isNaN(categoria_id)) {
     return { notFound: true };

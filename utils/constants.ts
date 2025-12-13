@@ -1,4 +1,5 @@
-export const API_URL = "http://localhost:8080/api";
+// API URL from environment variable with fallback
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api";
 
 // Remove trailing slash as it's handled by the API instance
 

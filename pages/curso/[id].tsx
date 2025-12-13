@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import { API_URL } from '../../utils'
 import Swal from 'sweetalert2';
 import { useCartStore } from '../../store/useCartStore';
+import { Curso as CursoType } from '../../types';
+import { NextPageContext } from '../../types';
 
-function Curso({ data }: { data: any; }) {
+function Curso({ data }: { data: CursoType }) {
 
   const curso = data;
   const [loading, setLoading] = useState<boolean>(true);
@@ -42,7 +44,7 @@ function Curso({ data }: { data: any; }) {
   );
 }
 
-export async function getServerSideProps({ query }:{query:any}) {
+export async function getServerSideProps({ query }: NextPageContext) {
   const curso_id = query.id;
   if (!/^\d+$/.test(curso_id)) {
     return { notFound: true };

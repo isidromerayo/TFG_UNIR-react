@@ -1,6 +1,7 @@
 
 import { NextPage } from 'next'
 import { getToken } from '../services';
+import { NextRequestResponse } from '../types';
 
 const MisCursos: NextPage = () => {
 
@@ -14,7 +15,7 @@ const MisCursos: NextPage = () => {
     )
 }
 
-export async function getServerSideProps({ req, res }:{req:any, res:any}) {
+export async function getServerSideProps({ req, res }: NextRequestResponse) {
     const token = getToken();
     if (!token) {
       res.writeHead(307, { Location: "/acceso" });

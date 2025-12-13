@@ -4,21 +4,11 @@ import HomeComponent from '../components/HomeComponent'
 import { API_URL } from '../utils'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { Curso, Valoracion, HomePageData } from '../types'
+import { logger } from '../utils/logger'
 
 const Home: NextPage = () => {
   
-
-  interface Curso {
-    id: number;
-    titulo: string;
-    // Add other curso properties as needed
-  }
-
-  interface Valoracion {
-    id: number;
-    comentario: string;
-    // Add other valoracion properties as needed
-  }
 
   const [valorados, setValorados] = useState<Curso[]>([]);
   const [valoraciones, setValoraciones] = useState<Valoracion[]>([]);
@@ -43,7 +33,7 @@ const Home: NextPage = () => {
         setValoraciones(result_valoraciones.data._embedded?.valoraciones || []);
         setActualizados(result_actualizaciones.data._embedded?.cursos || []);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        logger.error('Error fetching data:', error);
         // Set empty arrays as fallback
         setValorados([]);
         setValoraciones([]);
@@ -56,8 +46,11 @@ const Home: NextPage = () => {
     fetchData();
   }, [])
   
-    //const { cursos_mas_valorados, valoraciones_cursos, cursos_actualizados } = data; 
-    const data: any = {cursos_mas_valorados: valorados, valoraciones_cursos:valoraciones, cursos_actualizados:actualizados};
+    const data: HomePageData = {
+      cursos_mas_valorados: valorados, 
+      valoraciones_cursos: valoraciones, 
+      cursos_actualizados: actualizados
+    };
 
   return loading ? (
     <div>...Data Loading.....</div>

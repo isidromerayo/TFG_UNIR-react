@@ -3,11 +3,12 @@ import Link from 'next/link'
 import { API_URL } from '../utils'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Categoria } from '../types';
 
 const Categorias: NextPage = () => {
 
 
-  const [categorias, setCategorias] = useState<any[]>([]);
+  const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {

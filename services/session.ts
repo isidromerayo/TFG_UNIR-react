@@ -1,4 +1,5 @@
 import { TOKEN, USER } from '../utils/constants'
+import { logger } from '../utils/logger'
 
 export function setToken(token: string): void {
     if (typeof window !== 'undefined') {
@@ -31,7 +32,7 @@ export function getUser(): string | null {
             const user = localStorage.getItem(USER);
             return user ? JSON.parse(user) : null;
         } catch (error) {
-            console.error('Error parsing user data:', error);
+            logger.error('Error parsing user data:', error);
             return null;
         }
     }

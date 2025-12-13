@@ -8,14 +8,12 @@ import { removeToken, getToken, removeUser } from '../services'
 import api from '../utils/api';
 import MenuCategoriaComponent from "./MenuCategoriaComponent";
 import Image from 'next/image';
+import { Categoria } from '../types';
+import { logger } from '../utils/logger';
+import { ApiError } from '../types';
 
 export default function HeaderComponent() {
     const { push } = useRouter();
-
-    interface Categoria {
-        id: number;
-        nombre: string;
-    }
 
     const [data, setData] = useState<Categoria[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -40,21 +38,22 @@ export default function HeaderComponent() {
                 if (Array.isArray(categories)) {
                     setData(categories);
                 } else {
-                    console.warn('No categories found in response:', response.data);
+                    logger.warn('No categories found in response:', response.data);
                     setData([]);
                 }
-            } catch (error: any) {
-                console.error('Failed to fetch categories:', {
-                    message: error.message,
-                    status: error.response?.status,
-                    data: error.response?.data
+            } catch (error) {
+                const apiError = error as ApiError;
+                logger.error('Failed to fetch categories:', {
+                    message: apiError.message,
+                    status: apiError.response?.status,
+                    data: apiError.response?.data
                 });
                 setData([]);
                 // Show error message to user
-                const errorMessage = error.response?.status === 404
+                const errorMessage = apiError.response?.status === 404
                     ? 'No se encontraron categorías'
                     : 'Error al cargar las categorías. Por favor, inténtelo de nuevo más tarde.';
-                console.error(errorMessage);
+                logger.error(errorMessage);
             } finally {
                 setLoading(false);
             }
