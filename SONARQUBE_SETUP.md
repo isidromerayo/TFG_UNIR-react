@@ -160,6 +160,7 @@ jobs:
 
 ## Resolución de Problemas
 
+<<<<<<< HEAD
 ### Error: "The folder 'src' does not exist" en SonarQube Scan
 **Causa**: Configuración incorrecta de directorios en `sonar-project.properties` para proyecto Next.js
 
