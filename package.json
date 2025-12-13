@@ -8,8 +8,8 @@
     "start": "next start",
     "test": "jest --watch",
     "lint": "next lint",
-    "test-headless": "jest --watch=false --browsers=ChromeHeadless",
-    "test-headless-cc": "jest --no-watch --coverage --browsers=ChromeHeadless",
+    "test-headless": "jest --watchAll=false",
+    "test-headless-cc": "jest --watchAll=false --coverage",
     "security": "./scripts/security-check.sh",
     "security:audit": "pnpm audit",
     "security:outdated": "pnpm outdated"
