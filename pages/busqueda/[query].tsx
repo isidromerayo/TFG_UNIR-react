@@ -2,10 +2,12 @@ import { API_URL } from "../../utils";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
+import { Curso } from '../../types';
+import { NextPageContext } from '../../types';
 
 function Busqueda({ query_string }: { query_string: string; }) {
 
-    const [cursos, setCursos] = useState<any[]>();
+    const [cursos, setCursos] = useState<Curso[] | undefined>();
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
@@ -22,7 +24,7 @@ function Busqueda({ query_string }: { query_string: string; }) {
     ) : (
         <div className="container pagina-datos">
             <h1>Búsqueda de nuestros cursos: <span className="destacar-palabra">{query_string}</span></h1>
-            {cursos == null || cursos.length == 0 ? (<div className="sin-resultados">
+            {cursos === null || cursos === undefined || cursos.length === 0 ? (<div className="sin-resultados">
                 No hay resultados para el texto indicado, revise o refine la palabra de búsqueda...
                 <p>
                     <Link href="/">volver al inicio</Link>
@@ -30,7 +32,7 @@ function Busqueda({ query_string }: { query_string: string; }) {
             </div>) : ''}
             {/* iterar */}
             {cursos ?
-                cursos.map((curso:any) => (
+                cursos.map((curso: Curso) => (
                     <section className="listado-categorias" key={curso.id}>
                         <div>
                             <h2>{curso.titulo}</h2>
@@ -47,8 +49,11 @@ function Busqueda({ query_string }: { query_string: string; }) {
     );
 }
 
-export async function getServerSideProps({query}:{query:any}) {
+export async function getServerSideProps({query}: NextPageContext) {
     const query_string = query.query;
+    if (!query_string || typeof query_string !== 'string') {
+      return { notFound: true };
+    }
     return { props: { query_string } }
   }
 

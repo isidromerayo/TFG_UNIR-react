@@ -1,13 +1,14 @@
 import { create } from "zustand"
+import { CartItem } from '../types'
 
 interface State {
-    cart: any[]
+    cart: CartItem[]
     totalPrice: number
    }
 
 interface Actions {
-    addToCart: (item: any) => void
-    removeFromCart: (item: any) => void
+    addToCart: (item: CartItem) => void
+    removeFromCart: (item: CartItem) => void
     clearCart: () => void
    }
 
@@ -20,9 +21,9 @@ const INITIAL_STATE: State = {
 export const useCartStore = create<State & Actions>((set, get) => ({
     cart: INITIAL_STATE.cart,
     totalPrice: INITIAL_STATE.totalPrice,
-    addToCart: (product: any) => {
+    addToCart: (product: CartItem) => {
      const cart = get().cart
-     const cartItem = cart.find((item:any) => item.id === product.id)
+     const cartItem = cart.find((item: CartItem) => item.id === product.id)
    
      if (cartItem) {
    
@@ -35,10 +36,16 @@ export const useCartStore = create<State & Actions>((set, get) => ({
       }))
      }
     },
-    removeFromCart: (product: any) => {
+    removeFromCart: (product: CartItem) => {
+     const cartItem = get().cart.find((item: CartItem) => item.id === product.id);
+     if (!cartItem) {
+       // Producto no está en el carrito, no hacer nada
+       return;
+     }
+     const quantity = cartItem.quantity;
      set(state => ({
-      cart: state.cart.filter((item:any) => item.id !== product.id),
-      totalPrice: state.totalPrice - product.precio,
+      cart: state.cart.filter((item: CartItem) => item.id !== product.id),
+      totalPrice: state.totalPrice - (product.precio * quantity),
      }))
     },
     clearCart: () => {

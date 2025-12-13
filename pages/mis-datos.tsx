@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import { NextPage } from 'next'
 import { getToken, getUser } from '../services'
+import { Usuario } from '../types'
 
 const MisDatos: NextPage = () => {
 
-  const [usuario, setUsuario] = useState<any>(null)
+  const [usuario, setUsuario] = useState<Usuario | null>(null)
 
   useEffect(() => {
     setUsuario(getUser())
@@ -27,7 +28,9 @@ const MisDatos: NextPage = () => {
   )
 }
 
-export async function getServerSideProps({ req, res }: { req: any, res: any }) {
+import { NextRequestResponse } from '../types'
+
+export async function getServerSideProps({ req, res }: NextRequestResponse) {
   const token = getToken();
   if (!token) {
     res.writeHead(307, { Location: "/acceso" });

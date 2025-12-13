@@ -8,6 +8,8 @@ import { useForm, SubmitHandler} from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from "yup";
 import { useRouter } from 'next/router';
+import { logger } from '../utils/logger';
+import { ApiError } from '../types';
 
 interface Inputs {
   nombre: string,
@@ -53,21 +55,22 @@ const Registro: NextPage = () => {
         icon: 'success'
       });
       router.push('/acceso');
-    } catch (error: any) {
-      console.error('Error en registro:', error);
+    } catch (error) {
+      const apiError = error as ApiError;
+      logger.error('Error en registro:', apiError);
       let errorMessage = 'Ha habido problemas con su registro';
       
-      if (error.response?.data?.message) {
-        errorMessage += ': ' + error.response.data.message;
-      } else if (error.response?.data?.errors?.[0]?.message) {
-        errorMessage += ': ' + error.response.data.errors[0].message;
-      } else if (error.response?.status === 400) {
+      if (apiError.response?.data?.message) {
+        errorMessage += ': ' + apiError.response.data.message;
+      } else if (apiError.response?.data?.errors?.[0]?.message) {
+        errorMessage += ': ' + apiError.response.data.errors[0].message;
+      } else if (apiError.response?.status === 400) {
         errorMessage += ': Los datos proporcionados no son válidos';
-      } else if (error.response?.status === 409) {
+      } else if (apiError.response?.status === 409) {
         errorMessage += ': El usuario ya existe';
-      } else if (error.code === 'ECONNABORTED') {
+      } else if (apiError.code === 'ECONNABORTED') {
         errorMessage += ': Tiempo de espera agotado';
-      } else if (!error.response) {
+      } else if (!apiError.response) {
         errorMessage += ': Error de conexión con el servidor. Por favor, inténtelo de nuevo.';
       }
 

@@ -1,7 +1,14 @@
 import { API_URL } from '../../utils'
 import Link from 'next/link';
+import { Valoracion as ValoracionType, Curso, Usuario, NextPageContext } from '../../types';
 
-function Valoracion({ data }: {readonly data: any; }) {
+interface ValoracionPageData {
+  valoracion: ValoracionType;
+  curso: Curso;
+  alumno: Usuario;
+}
+
+function Valoracion({ data }: {readonly data: ValoracionPageData }) {
 
   const { valoracion, curso, alumno } = data;
 
@@ -25,7 +32,10 @@ function Valoracion({ data }: {readonly data: any; }) {
               <span className="">{curso.titulo}</span>
             </Link> actualizado <span className="">{curso.fechaActualizacion}</span> valoración media <span className="destacar-info">{curso.valoracionMedia}</span>,
             profesor/a <span>
-              {curso.instructor.nombre + ' ' + curso.instructor.apellidos}</span>
+              {curso.instructor ? (
+                `${curso.instructor.nombre} ${curso.instructor.apellidos}`
+              ) : 'Instructor no disponible'}
+            </span>
           </div>
         </section>
 
@@ -33,7 +43,7 @@ function Valoracion({ data }: {readonly data: any; }) {
   );
 }
 
-export async function getServerSideProps({ query }:{query:any}) {
+export async function getServerSideProps({ query }: NextPageContext) {
   const id = query.id;
 
   // Only allow numeric ids (update pattern as needed for your data model)
@@ -48,7 +58,7 @@ export async function getServerSideProps({ query }:{query:any}) {
   const curso = await res2.json()
   const res3 = await fetch(`${API_URL}valoraciones/${id}/estudiante`)
   const alumno = await res3.json()
-  const data:any = { valoracion: valoracion, curso: curso, alumno: alumno }
+  const data: ValoracionPageData = { valoracion: valoracion, curso: curso, alumno: alumno }
 
   return { props: {data} }
 }

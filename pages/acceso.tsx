@@ -5,6 +5,7 @@ import { setUser , setToken } from '../services/'
 import { API_URL } from '../utils/'
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { FormInputEvent, FormSubmitEvent } from '../types';
 
 const Acceso: NextPage = () => {
 
@@ -17,7 +18,7 @@ const Acceso: NextPage = () => {
   
   const { push } = useRouter();
 
-  const handleInput = (e:any) => {
+  const handleInput = (e: FormInputEvent) => {
     const fieldName = e.target.name;
     const fieldValue = e.target.value;
 
@@ -28,7 +29,7 @@ const Acceso: NextPage = () => {
   }
 
 
-  const submitForm = (e:any) => {
+  const submitForm = (e: FormSubmitEvent) => {
     e.preventDefault();
 
     axios.post(`${API_URL}auth`, formData).then(response => {
