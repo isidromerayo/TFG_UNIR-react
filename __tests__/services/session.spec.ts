@@ -1,6 +1,16 @@
 import { setToken, getToken, removeToken, setUser, getUser, removeUser } from '../../services/session';
 import { TOKEN, USER } from '../../utils/constants';
 
+// Mock del logger para evitar logs en los tests
+jest.mock('../../utils/logger', () => ({
+  logger: {
+    log: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    debug: jest.fn()
+  }
+}));
+
 // Mock de localStorage
 const localStorageMock = (() => {
   let store: Record<string, string> = {};
@@ -110,13 +120,6 @@ describe('Session Service', () => {
     });
 
     it('debe manejar correctamente un JSON de usuario inválido', () => {
-      // Mock del logger para evitar mostrar el error en la consola
-      jest.mock('../../utils/logger', () => ({
-        logger: {
-          error: jest.fn()
-        }
-      }));
-      
       // Guardamos un JSON inválido
       localStorage.setItem(USER, '{invalid-json');
       
@@ -125,9 +128,9 @@ describe('Session Service', () => {
       const user = getUser();
       expect(user).toBeNull();
       
-      // Nota: No verificamos que se llamó a logger.error porque el logger
-      // puede estar deshabilitado en ciertos entornos. Lo importante es
-      // que la función maneje el error y retorne null.
+      // Nota: El logger está mockeado al principio del archivo para evitar
+      // logs en los tests. Lo importante es que la función maneje el error
+      // y retorne null.
     });
 
     it('debe eliminar un usuario de localStorage', () => {
