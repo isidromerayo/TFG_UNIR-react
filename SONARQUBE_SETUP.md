@@ -18,6 +18,10 @@ sonar.projectKey=isidromerayo_TFG_UNIR-react
 sonar.organization=isidromerayo
 sonar.projectName=TFG UNIR React Frontend
 sonar.projectVersion=1.0
+
+# Source and test directories (Next.js structure)
+sonar.sources=pages,components,services,store,utils
+sonar.tests=__tests__
 ```
 
 ### `jest.config.js`
@@ -155,6 +159,17 @@ jobs:
 - valoracion/[id].tsx
 
 ## Resolución de Problemas
+
+<<<<<<< HEAD
+### Error: "The folder 'src' does not exist" en SonarQube Scan
+**Causa**: Configuración incorrecta de directorios en `sonar-project.properties` para proyecto Next.js
+
+**Solución**:
+```properties
+# Configuración correcta para Next.js (no usar 'src' si no existe)
+sonar.sources=pages,components,services,store,utils
+sonar.tests=__tests__
+```
 
 ### Error: "Organization not found" en GitHub Actions
 **Causa**: Falta la propiedad `sonar.organization` en `sonar-project.properties`
