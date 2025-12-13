@@ -35,12 +35,7 @@ export interface Curso {
   fechaCreacion: string;
   fechaActualizacion: string;
   instructo?: boolean;
-  instructor?: {
-    id: number;
-    nombre: string;
-    apellidos: string;
-    descripcion?: string;
-  };
+  instructor?: Instructor;
 }
 
 export interface CursoEmbedded {
@@ -67,7 +62,7 @@ export interface Instructor {
   id: number;
   nombre: string;
   apellidos: string;
-  descripcion: string;
+  descripcion?: string;
 }
 
 // Rating/Valoracion types

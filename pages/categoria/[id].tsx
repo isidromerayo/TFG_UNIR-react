@@ -53,8 +53,8 @@ function Categoria({ data }: { data: CategoriaType } ) {
 
 // This gets called on every request
 export async function getServerSideProps({query}: NextPageContext) {
-  const categoria_id = query.id ? parseInt(query.id, 10) : NaN;
-  if (!query.id || isNaN(categoria_id)) {
+  const categoria_id = query.id ? Number.parseInt(query.id, 10) : Number.NaN;
+  if (!query.id || Number.isNaN(categoria_id)) {
     return { notFound: true };
   }
   const res = await fetch(`${API_URL}/categorias/${categoria_id}`)

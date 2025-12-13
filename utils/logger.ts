@@ -11,7 +11,7 @@ interface LoggerConfig {
 }
 
 class Logger {
-  private config: LoggerConfig;
+  private readonly config: LoggerConfig;
 
   constructor() {
     // Only log in development or when explicitly enabled
