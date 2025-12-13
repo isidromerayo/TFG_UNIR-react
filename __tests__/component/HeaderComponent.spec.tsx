@@ -5,13 +5,13 @@ import HeaderComponent from "../../components/HeaderComponent";
 const mockPush = jest.fn();
 
 jest.mock("next/router", () => ({
-  useRouter: jest.fn(() => ({
+  useRouter: () => ({
     route: "/",
     push: mockPush,
     query: {},
     pathname: "/",
     asPath: "/",
-  }))
+  }),
 }));
 
 jest.mock("next/link", () => {
@@ -67,13 +67,6 @@ jest.mock("sweetalert2", () => ({
 
 describe("HeaderComponent", () => {
   beforeEach(() => {
-    (useRouter as jest.Mock).mockImplementation(() => ({
-      route: "/",
-      push: mockPush,
-      query: {},
-      pathname: "/",
-      asPath: "/",
-    }));
     jest.clearAllMocks();
     mockPush.mockClear();
   });
