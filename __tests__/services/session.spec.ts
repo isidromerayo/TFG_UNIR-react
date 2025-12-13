@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { setToken, getToken, removeToken, setUser, getUser, removeUser } from '../../services/session';
 import { TOKEN, USER } from '../../utils/constants';
 
@@ -128,9 +129,9 @@ describe('Session Service', () => {
       const user = getUser();
       expect(user).toBeNull();
       
-      // Nota: El logger está mockeado al principio del archivo para evitar
-      // logs en los tests. Lo importante es que la función maneje el error
-      // y retorne null.
+      // Nota: No verificamos que se llamó a logger.error porque el logger
+      // puede estar deshabilitado en ciertos entornos. Lo importante es
+      // que la función maneje el error y retorne null.
     });
 
     it('debe eliminar un usuario de localStorage', () => {
