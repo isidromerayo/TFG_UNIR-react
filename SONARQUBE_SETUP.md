@@ -84,10 +84,22 @@ jobs:
         fetch-depth: 0  # ⚠️ Requerido por SonarQube
     
     - name: Setup Node.js & pnpm
-      # ... configuración de entorno
+      # ... configuración completa de entorno con caché
+    
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+    
+    - name: Lint
+      run: pnpm lint
+    
+    - name: Build
+      run: pnpm build
     
     - name: Run tests with coverage
       run: pnpm run test-headless-cc
+    
+    - name: Audit vulnerabilities
+      run: pnpm audit || true
     
     - name: SonarQube Scan
       uses: SonarSource/sonarqube-scan-action@v6
