@@ -35,7 +35,12 @@ export interface Curso {
   fechaCreacion: string;
   fechaActualizacion: string;
   instructo?: boolean;
-  instructor?: Instructor;
+  instructor?: {
+    id: number;
+    nombre: string;
+    apellidos: string;
+    descripcion?: string;
+  };
 }
 
 export interface CursoEmbedded {

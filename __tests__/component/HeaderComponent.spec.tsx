@@ -1,7 +1,6 @@
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import HeaderComponent from "../../components/HeaderComponent";
-import { useRouter } from "next/router";
 
 const mockPush = jest.fn();
 
@@ -12,7 +11,7 @@ jest.mock("next/router", () => ({
     query: {},
     pathname: "/",
     asPath: "/",
-  })),
+  }))
 }));
 
 jest.mock("next/link", () => {
