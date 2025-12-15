@@ -89,7 +89,7 @@ describe('Carrito Page', () => {
 
     const { getByRole } = render(<Carrito />);
     const comprarButton = getByRole('button', { name: /comprar/i });
-    
+
     fireEvent.click(comprarButton);
 
     expect(Swal.fire).toHaveBeenCalledWith({
@@ -109,7 +109,7 @@ describe('Carrito Page', () => {
 
     const { getByRole } = render(<Carrito />);
     const borrarButton = getByRole('button', { name: /borrar/i });
-    
+
     fireEvent.click(borrarButton);
 
     expect(useCartStore.getState().cart).toHaveLength(0);
