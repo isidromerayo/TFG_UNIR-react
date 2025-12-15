@@ -8,9 +8,8 @@ import { removeToken, getToken, removeUser } from '../services'
 import api from '../utils/api';
 import MenuCategoriaComponent from "./MenuCategoriaComponent";
 import Image from 'next/image';
-import { Categoria } from '../types';
+import { Categoria, ApiError } from '../types';
 import { logger } from '../utils/logger';
-import { ApiError } from '../types';
 
 export default function HeaderComponent() {
     const { push } = useRouter();
@@ -32,7 +31,7 @@ export default function HeaderComponent() {
                         'Content-Type': 'application/json'
                     }
                 });
-                
+
                 // Check if we have a valid response with categories
                 const categories = response.data?._embedded?.categorias;
                 if (Array.isArray(categories)) {
@@ -82,11 +81,11 @@ export default function HeaderComponent() {
 
     return loading ? (
         <div>...Data Loading.....</div>
-      ) : (
+    ) : (
         <>
-    <header id="header" className="header d-flex align-items-center fixed-top color-react-azulclaro">
-        <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
-            
+            <header id="header" className="header d-flex align-items-center fixed-top color-react-azulclaro">
+                <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
+
                     <Link href="/" className="logo d-flex align-items-center fix-home-menu">
                         <Image src="/react.svg" alt="Logo React" className="unir-logo" width={40} height={40} />
                         <Image src="/assets/img/Unir_2021_logo.svg" alt="Logo UNIR" className="unir-logo" width={100} height={40} />
@@ -100,7 +99,7 @@ export default function HeaderComponent() {
                             <li><Link href="/" className="active">Home</Link></li>
                             <li className="dropdown"><Link href="/categorias"><span>Categorias</span><i className="bi bi-chevron-down dropdown-indicator"></i></Link>
                                 <ul>
-                                    <MenuCategoriaComponent data={data}/>
+                                    <MenuCategoriaComponent data={data} />
                                     <li><Link href="/categorias">...</Link></li>
                                 </ul>
 

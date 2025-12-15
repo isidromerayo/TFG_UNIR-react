@@ -67,7 +67,7 @@ export interface Instructor {
   id: number;
   nombre: string;
   apellidos: string;
-  descripcion: string;
+  descripcion?: string;
 }
 
 // Rating/Valoracion types

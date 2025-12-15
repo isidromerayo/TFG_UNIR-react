@@ -11,7 +11,7 @@ interface LoggerConfig {
 }
 
 class Logger {
-  private config: LoggerConfig;
+  private readonly config: LoggerConfig;
 
   constructor() {
     // Only log in development or when explicitly enabled
@@ -25,12 +25,12 @@ class Logger {
 
   private shouldLog(level: LogLevel): boolean {
     if (!this.config.enabled) return false;
-    
+
     // Orden de severidad: error (más severo) > warn > log > debug (menos severo)
     const levels: LogLevel[] = ['error', 'warn', 'log', 'debug'];
     const currentLevelIndex = levels.indexOf(this.config.level);
     const messageLevelIndex = levels.indexOf(level);
-    
+
     // Si el nivel del mensaje es más severo o igual al nivel configurado, loggear
     return messageLevelIndex <= currentLevelIndex;
   }

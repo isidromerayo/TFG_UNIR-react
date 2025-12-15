@@ -6,7 +6,7 @@ import axios from 'axios'
 import { Categoria as CategoriaType, Curso } from '../../types'
 import { NextPageContext } from '../../types'
 
-function Categoria({ data }: { data: CategoriaType } ) {
+function Categoria({ data }: { data: CategoriaType }) {
 
   const router = useRouter()
   const [cursos, setCursos] = useState<Curso[]>([])
@@ -24,45 +24,45 @@ function Categoria({ data }: { data: CategoriaType } ) {
     <div>...Data Loading.....</div>
   ) : (
 
-      <div className="container pagina-datos">
-        <h1>Categoria <span className="destacar-palabra"> {data.nombre}</span>, sus cursos...</h1>
-        <div>
-          {cursos.length === 0 ? (<div className="sin-resultados">
-            Sin cursos en esta categoría
-          </div>) : ''}
+    <div className="container pagina-datos">
+      <h1>Categoria <span className="destacar-palabra"> {data.nombre}</span>, sus cursos...</h1>
+      <div>
+        {cursos.length === 0 ? (<div className="sin-resultados">
+          Sin cursos en esta categoría
+        </div>) : ''}
 
-          {cursos.map(curso => (
-            <section className="listado-categorias" key={curso.id}>
-              <div>
-                <h2> {curso.titulo} </h2>
-              </div>
-              <div>
-                Valoración media:  {curso.valoracionMedia} / precio: {curso.precio}
-              </div>
-              <div>
-                <Link href={`/curso/${curso.id}`}><span>detalle del curso</span><i
-                  className="bi bi-arrow-right"></i></Link>
-              </div>
-            </section>
-          ))}
-        </div>
-
+        {cursos.map(curso => (
+          <section className="listado-categorias" key={curso.id}>
+            <div>
+              <h2> {curso.titulo} </h2>
+            </div>
+            <div>
+              Valoración media:  {curso.valoracionMedia} / precio: {curso.precio}
+            </div>
+            <div>
+              <Link href={`/curso/${curso.id}`}><span>detalle del curso</span><i
+                className="bi bi-arrow-right"></i></Link>
+            </div>
+          </section>
+        ))}
       </div>
+
+    </div>
   )
 }
 
 // This gets called on every request
-export async function getServerSideProps({query}: NextPageContext) {
-  const categoria_id = query.id ? parseInt(query.id, 10) : NaN;
-  if (!query.id || isNaN(categoria_id)) {
+export async function getServerSideProps({ query }: NextPageContext) {
+  const categoria_id = query.id ? Number.parseInt(query.id, 10) : Number.NaN;
+  if (!query.id || Number.isNaN(categoria_id)) {
     return { notFound: true };
   }
   const res = await fetch(`${API_URL}/categorias/${categoria_id}`)
   const data = await res.json()
- 
+
   // Pass data to the page via props
   return { props: { data } }
 }
- 
+
 
 export default Categoria
