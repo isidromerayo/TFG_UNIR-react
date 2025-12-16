@@ -1,10 +1,10 @@
 import axios from 'axios'
 import { NextPage } from 'next'
-import React, {  } from 'react'
+import React, { } from 'react'
 import { API_URL } from '../utils/constants'
 import Swal from 'sweetalert2'
 
-import { useForm, SubmitHandler} from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from "yup";
 import { useRouter } from 'next/router';
@@ -29,8 +29,8 @@ const Registro: NextPage = () => {
     password: Yup.string().required().min(4),
 
   })
-  
-  const { register, reset, handleSubmit, formState:{ errors } } = useForm({
+
+  const { register, reset, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schemaForm)
   });
 
@@ -59,7 +59,7 @@ const Registro: NextPage = () => {
       const apiError = error as ApiError;
       logger.error('Error en registro:', apiError);
       let errorMessage = 'Ha habido problemas con su registro';
-      
+
       if (apiError.response?.data?.message) {
         errorMessage += ': ' + apiError.response.data.message;
       } else if (apiError.response?.data?.errors?.[0]?.message) {
@@ -90,27 +90,27 @@ const Registro: NextPage = () => {
           <div className="row">
             <div className="col-md-6 form-group">
               <label htmlFor="nombre" className="label">Nombre (*)</label>
-              <input type="text" className="form-control" {...register("nombre")}
+              <input type="text" id="nombre" className="form-control" {...register("nombre")}
                 placeholder="indique su nombre" aria-label="indique su nombre" />
               <span className="error-form">{errors.nombre?.message}</span>
             </div>
             <div className="col-md-8 form-group">
               <label htmlFor="apellidos" className="label">Apellidos (*)</label>
-              <input type="text" className="form-control"  {...register("apellidos")}
+              <input type="text" id="apellidos" className="form-control"  {...register("apellidos")}
                 placeholder="indique sus apellidos" aria-label="indique sus apellidos" />
               <span className="error-form">{errors.apellidos?.message}</span>
 
             </div>
             <div className="col-md-8 form-group">
               <label htmlFor="email" className="label">Correo electrónico (*)</label>
-              <input type="email" className="form-control"  {...register("email")}
+              <input type="email" id="email" className="form-control"  {...register("email")}
                 placeholder="indique su correo electrónico" aria-label="indique su correo electrónico" />
               <span className="error-form">{errors.email?.message}</span>
 
             </div>
             <div className="col-md-6 form-group">
               <label htmlFor="pass" className="label">Contraseña (*)</label>
-              <input type="password" className="form-control"  {...register("password")}
+              <input type="password" id="pass" className="form-control"  {...register("password")}
                 placeholder="indique su contraseña" aria-label="indique su contraseña" />
               <span className="error-form">{errors.password?.message}</span>
 
