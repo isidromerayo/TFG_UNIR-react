@@ -25,8 +25,8 @@
     "next": "^15.5.9",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "react-hook-form": "^7.58.1",
-    "sweetalert2": "^11.4.8",
+    "react-hook-form": "^7.69.0",
+    "sweetalert2": "^11.26.17",
     "typescript": "5.9.3",
     "yup": "^1.6.1",
     "zustand": "^5.0.5"
