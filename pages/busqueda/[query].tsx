@@ -2,8 +2,7 @@ import { API_URL } from "../../utils";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
-import { Curso } from '../../types';
-import { NextPageContext } from '../../types';
+import { Curso, NextPageContext } from '../../types';
 
 function Busqueda({ query_string }: { query_string: string; }) {
 

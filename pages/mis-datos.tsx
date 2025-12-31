@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { NextPage } from 'next'
 import { getToken, getUser } from '../services'
-import { Usuario } from '../types'
+import { Usuario, NextRequestResponse } from '../types'
 
 const MisDatos: NextPage = () => {
 
@@ -28,7 +28,6 @@ const MisDatos: NextPage = () => {
   )
 }
 
-import { NextRequestResponse } from '../types'
 
 export async function getServerSideProps({ req, res }: NextRequestResponse) {
   const token = getToken();

@@ -3,8 +3,7 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { API_URL } from '../../utils'
 import axios from 'axios'
-import { Categoria as CategoriaType, Curso } from '../../types'
-import { NextPageContext } from '../../types'
+import { Categoria as CategoriaType, Curso, NextPageContext } from '../../types'
 
 function Categoria({ data }: { data: CategoriaType }) {
 
