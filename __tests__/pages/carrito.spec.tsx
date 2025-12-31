@@ -127,4 +127,58 @@ describe('Carrito Page', () => {
     const { getByRole } = render(<Carrito />);
     expect(getByRole('button', { name: /comprar/i })).toBeInTheDocument();
   });
+
+  it('debe procesar la compra cuando el usuario confirma y está logueado', async () => {
+    (getToken as jest.Mock).mockReturnValue('valid-token');
+    (Swal.fire as jest.Mock).mockResolvedValue({ isConfirmed: true });
+    
+    const mockProduct = {
+      id: 1,
+      titulo: 'Curso Test',
+      precio: 100,
+      quantity: 1
+    };
+    useCartStore.getState().addToCart(mockProduct);
+
+    const { getByRole } = render(<Carrito />);
+    const comprarButton = getByRole('button', { name: /comprar/i });
+
+    fireEvent.click(comprarButton);
+
+    await waitFor(() => {
+      expect(Swal.fire).toHaveBeenCalledWith({
+        title: '¿Estas seguro de realizar la compra?',
+        text: "No se puede deshacer",
+        showCancelButton: true
+      });
+    });
+
+    await waitFor(() => {
+      expect(mockPush).toHaveBeenCalledWith('/mis-cursos');
+      expect(Swal.fire).toHaveBeenCalledWith('Compra', 'Procesada la compra correctamente');
+    });
+  });
+
+  it('debe manejar errores durante la compra', async () => {
+    (getToken as jest.Mock).mockReturnValue('valid-token');
+    // Simulamos que Swal.fire lanza un error
+    (Swal.fire as jest.Mock).mockRejectedValue(new Error('Swal error'));
+    
+    const mockProduct = {
+      id: 1,
+      titulo: 'Curso Test',
+      precio: 100,
+      quantity: 1
+    };
+    useCartStore.getState().addToCart(mockProduct);
+
+    const { getByRole } = render(<Carrito />);
+    const comprarButton = getByRole('button', { name: /comprar/i });
+
+    fireEvent.click(comprarButton);
+
+    await waitFor(() => {
+      expect(Swal.fire).toHaveBeenCalled();
+    });
+  });
 }); 

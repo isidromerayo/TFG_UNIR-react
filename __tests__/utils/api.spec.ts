@@ -26,11 +26,9 @@ describe('API Utils', () => {
     });
 
     it('debe tener validateStatus configurado correctamente', () => {
-      // validateStatus es una función, verificamos que existe
       expect(api.defaults.validateStatus).toBeDefined();
       expect(typeof api.defaults.validateStatus).toBe('function');
       
-      // Verificamos que acepta códigos 200-299 y 304
       const validateStatus = api.defaults.validateStatus as (status: number) => boolean;
       expect(validateStatus(200)).toBe(true);
       expect(validateStatus(299)).toBe(true);
@@ -51,10 +49,25 @@ describe('API Utils', () => {
 
   describe('Logger Integration', () => {
     it('debe tener logger disponible para uso en interceptors', () => {
-      // Verificamos que el logger está mockeado y disponible
       expect(logger).toBeDefined();
       expect(logger.error).toBeDefined();
       expect(logger.debug).toBeDefined();
+    });
+  });
+
+  describe('API Instance', () => {
+    it('debe ser una instancia de axios', () => {
+      expect(api).toBeDefined();
+      expect(typeof api.get).toBe('function');
+      expect(typeof api.post).toBe('function');
+      expect(typeof api.put).toBe('function');
+      expect(typeof api.delete).toBe('function');
+    });
+
+    it('debe tener configuración de retry', () => {
+      // Verificamos que los interceptors están configurados
+      expect(api.interceptors.response.handlers.length).toBeGreaterThan(0);
+      expect(api.interceptors.request.handlers.length).toBeGreaterThan(0);
     });
   });
 });
