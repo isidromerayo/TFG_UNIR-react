@@ -44,15 +44,6 @@ jobs:
     - name: Run Jest tests with coverage
       run: pnpm test-headless-cc
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v4
-      with:
-        file: ./coverage/lcov.info
-        flags: jest,unittests
-        name: jest-coverage
-        fail_ci_if_error: false
-        token: ${{ secrets.CODECOV_TOKEN }}
-
     - name: Upload Jest coverage artifact
       uses: actions/upload-artifact@v4
       with:

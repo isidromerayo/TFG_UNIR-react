@@ -66,15 +66,6 @@ jobs:
           echo "✅ pnpm audit found no vulnerabilities"
         fi
 
-    - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v4
-      with:
-        file: ./coverage/lcov.info
-        flags: unittests
-        name: codecov-umbrella
-        fail_ci_if_error: false
-        token: ${{ secrets.CODECOV_TOKEN }}
-
     - name: Comment coverage on PR
       if: github.event_name == 'pull_request'
       uses: romeovs/lcov-reporter-action@v0.3.1

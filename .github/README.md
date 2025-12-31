@@ -47,21 +47,12 @@ coverageThreshold: {
 ```
 
 ### Reportes Generados
-- **LCOV**: Para Codecov y herramientas externas
+- **LCOV**: Para SonarQube y comentarios en PRs
 - **HTML**: Reporte visual local (`coverage/lcov-report/index.html`)
 - **JSON**: Para integración con SonarQube
 - **Text Summary**: Para logs de CI
 
 ## Integración con Servicios Externos
-
-### Codecov
-```yaml
-- name: Upload coverage to Codecov
-  uses: codecov/codecov-action@v4
-  with:
-    file: ./coverage/lcov.info
-    token: ${{ secrets.CODECOV_TOKEN }}
-```
 
 ### SonarQube
 ```yaml
@@ -70,6 +61,13 @@ coverageThreshold: {
   env:
     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 ```
+
+**SonarQube maneja automáticamente**:
+- ✅ **Cobertura de código**: Análisis completo de LCOV
+- ✅ **Calidad de código**: Métricas y code smells
+- ✅ **Seguridad**: Vulnerabilidades y hotspots
+- ✅ **Mantenibilidad**: Deuda técnica y duplicación
+- ✅ **Reliability**: Bugs y issues
 
 ### Coverage Comments en PRs
 ```yaml
@@ -85,15 +83,14 @@ coverageThreshold: {
 Para que los workflows funcionen completamente, configurar estos secrets en GitHub:
 
 ```bash
-# Codecov (opcional)
-CODECOV_TOKEN=your_codecov_token
-
-# SonarQube (opcional)
+# SonarQube (requerido para análisis de calidad)
 SONAR_TOKEN=your_sonar_token
 
 # GitHub Token (automático)
 GITHUB_TOKEN # Proporcionado automáticamente por GitHub
 ```
+
+**Nota**: SonarQube maneja automáticamente la cobertura de código, métricas de calidad, seguridad y mantenibilidad. No se requieren servicios adicionales.
 
 ## Scripts de Testing
 
