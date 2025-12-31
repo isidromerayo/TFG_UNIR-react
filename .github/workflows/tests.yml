@@ -86,7 +86,14 @@ jobs:
       run: pnpm install --frozen-lockfile
 
     - name: Run Cypress component tests
-      run: pnpm cypress:component
+      run: pnpm cypress:component:coverage
+
+    - name: Upload Cypress coverage artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: cypress-coverage
+        path: coverage/cypress/
+        retention-days: 7
 
     - name: Upload Cypress artifacts
       if: always()
@@ -158,26 +165,69 @@ jobs:
   coverage-report:
     name: Coverage Report
     runs-on: ubuntu-latest
-    needs: [unit-tests]
+    needs: [unit-tests, component-tests]
     if: github.event_name == 'pull_request'
     
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Download coverage artifact
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10
+
+    - name: Download Jest coverage artifact
       uses: actions/download-artifact@v4
       with:
         name: jest-coverage
         path: coverage/
 
+    - name: Download Cypress coverage artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: cypress-coverage
+        path: coverage/cypress/
+      continue-on-error: true
+
+    - name: Install lcov-result-merger
+      run: npm install -g lcov-result-merger
+
+    - name: Merge coverage reports
+      run: |
+        mkdir -p coverage/merged
+        
+        # Copy Jest coverage
+        if [ -f "coverage/lcov.info" ]; then
+          cp coverage/lcov.info coverage/merged/jest-lcov.info
+        fi
+        
+        # Copy Cypress coverage
+        if [ -f "coverage/cypress/lcov.info" ]; then
+          cp coverage/cypress/lcov.info coverage/merged/cypress-lcov.info
+        fi
+        
+        # Merge if both exist
+        if [ -f "coverage/merged/jest-lcov.info" ] && [ -f "coverage/merged/cypress-lcov.info" ]; then
+          lcov-result-merger 'coverage/merged/*-lcov.info' coverage/merged/lcov.info
+        elif [ -f "coverage/merged/jest-lcov.info" ]; then
+          cp coverage/merged/jest-lcov.info coverage/merged/lcov.info
+        elif [ -f "coverage/merged/cypress-lcov.info" ]; then
+          cp coverage/merged/cypress-lcov.info coverage/merged/lcov.info
+        fi
+
     - name: Comment coverage on PR
       uses: romeovs/lcov-reporter-action@v0.3.1
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        lcov-file: ./coverage/lcov.info
+        lcov-file: ./coverage/merged/lcov.info
         delete-old-comments: true
-        title: "📊 Code Coverage Report"
+        title: "📊 Merged Coverage Report (Jest + Cypress)"
 
   test-summary:
     name: Test Summary

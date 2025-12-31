@@ -52,6 +52,11 @@ coverageThreshold: {
 - **JSON**: Para integración con SonarQube
 - **Text Summary**: Para logs de CI
 
+### Cobertura Fusionada (Jest + Cypress)
+- **Jest**: Tests unitarios (`coverage/lcov.info`)
+- **Cypress**: Tests de componentes (`coverage/cypress/lcov.info`)
+- **Fusionada**: Reporte combinado (`coverage/merged/lcov.info`)
+
 ## Integración con Servicios Externos
 
 ### SonarQube
@@ -75,8 +80,10 @@ coverageThreshold: {
   uses: romeovs/lcov-reporter-action@v0.3.1
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
-    lcov-file: ./coverage/lcov.info
+    lcov-file: ./coverage/merged/lcov.info
 ```
+
+**Ahora incluye cobertura fusionada de Jest + Cypress**
 
 ## Secrets Requeridos
 
@@ -105,6 +112,12 @@ pnpm test:coverage:ci
 # Todos los tests (Jest + Cypress)
 pnpm test:all
 
+# Cypress component tests con cobertura
+pnpm cypress:component:coverage
+
+# Abrir Cypress en modo interactivo
+pnpm cypress:component:open
+
 # Ver reporte de cobertura
 pnpm coverage:report
 ```
@@ -114,8 +127,11 @@ pnpm coverage:report
 # Jest con cobertura para CI
 pnpm test:coverage:ci
 
-# Cypress component tests
+# Cypress component tests (sin cobertura)
 pnpm cypress:component
+
+# Cypress component tests con cobertura
+pnpm cypress:component:coverage
 
 # Cypress E2E tests
 pnpm cypress:e2e
@@ -131,11 +147,16 @@ artifacts/
 │   ├── lcov.info
 │   ├── coverage-final.json
 │   └── lcov-report/
+├── cypress-coverage/       # Reportes de cobertura Cypress
+│   ├── lcov.info
+│   ├── coverage-final.json
+│   └── lcov-report/
 ├── cypress-artifacts/      # Screenshots y videos Cypress
 │   ├── screenshots/
 │   └── videos/
 └── test-results/          # Resultados combinados
     ├── coverage/
+    │   └── merged/        # Cobertura fusionada Jest + Cypress
     └── cypress/
 ```
 

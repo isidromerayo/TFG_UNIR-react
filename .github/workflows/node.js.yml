@@ -53,6 +53,33 @@ jobs:
     - name: Run Jest tests with coverage
       run: pnpm test-headless-cc
 
+    - name: Run Cypress component tests with coverage
+      run: pnpm cypress:component:coverage
+
+    - name: Merge coverage reports
+      run: |
+        # Create merged coverage directory
+        mkdir -p coverage/merged
+        
+        # Copy Jest coverage
+        if [ -d "coverage" ] && [ -f "coverage/lcov.info" ]; then
+          cp coverage/lcov.info coverage/merged/jest-lcov.info || true
+        fi
+        
+        # Copy Cypress coverage
+        if [ -d "coverage/cypress" ] && [ -f "coverage/cypress/lcov.info" ]; then
+          cp coverage/cypress/lcov.info coverage/merged/cypress-lcov.info || true
+        fi
+        
+        # Merge coverage files if both exist
+        if [ -f "coverage/merged/jest-lcov.info" ] && [ -f "coverage/merged/cypress-lcov.info" ]; then
+          npx lcov-result-merger 'coverage/merged/*-lcov.info' coverage/merged/lcov.info
+        elif [ -f "coverage/merged/jest-lcov.info" ]; then
+          cp coverage/merged/jest-lcov.info coverage/merged/lcov.info
+        elif [ -f "coverage/merged/cypress-lcov.info" ]; then
+          cp coverage/merged/cypress-lcov.info coverage/merged/lcov.info
+        fi
+
     - name: Run Cypress component tests
       run: pnpm cypress:component
 
@@ -71,7 +98,7 @@ jobs:
       uses: romeovs/lcov-reporter-action@v0.3.1
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        lcov-file: ./coverage/lcov.info
+        lcov-file: ./coverage/merged/lcov.info
         delete-old-comments: true
 
     - name: SonarQube Scan

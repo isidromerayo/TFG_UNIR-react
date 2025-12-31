@@ -1,0 +1,41 @@
+{
+  "extends": "@istanbuljs/nyc-config-typescript",
+  "all": true,
+  "include": [
+    "components/**/*.{js,jsx,ts,tsx}",
+    "pages/**/*.{js,jsx,ts,tsx}",
+    "app/**/*.{js,jsx,ts,tsx}",
+    "services/**/*.{js,jsx,ts,tsx}",
+    "store/**/*.{js,jsx,ts,tsx}",
+    "utils/**/*.{js,jsx,ts,tsx}"
+  ],
+  "exclude": [
+    "**/*.test.{js,jsx,ts,tsx}",
+    "**/*.spec.{js,jsx,ts,tsx}",
+    "**/*.cy.{js,jsx,ts,tsx}",
+    "**/*.d.ts",
+    "**/node_modules/**",
+    "**/.next/**",
+    "**/coverage/**",
+    "**/cypress/**",
+    "next.config.js",
+    "jest.config.js",
+    "cypress.config.ts"
+  ],
+  "extension": [
+    ".js",
+    ".jsx",
+    ".ts",
+    ".tsx"
+  ],
+  "reporter": [
+    "lcov",
+    "text-summary",
+    "cobertura",
+    "json"
+  ],
+  "report-dir": "coverage/cypress",
+  "cache": false,
+  "instrument": false,
+  "sourceMap": false
+}
