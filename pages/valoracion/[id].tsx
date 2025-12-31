@@ -52,11 +52,11 @@ export async function getServerSideProps({ query }: NextPageContext) {
     return { notFound: true };
   }
 
-  const res = await fetch(`${API_URL}valoraciones/${id}`)
+  const res = await fetch(`${API_URL}/valoraciones/${id}`)
   const valoracion = await res.json()
-  const res2 = await fetch(`${API_URL}valoraciones/${id}/curso`)
+  const res2 = await fetch(`${API_URL}/valoraciones/${id}/curso`)
   const curso = await res2.json()
-  const res3 = await fetch(`${API_URL}valoraciones/${id}/estudiante`)
+  const res3 = await fetch(`${API_URL}/valoraciones/${id}/estudiante`)
   const alumno = await res3.json()
   const data: ValoracionPageData = { valoracion: valoracion, curso: curso, alumno: alumno }
 

@@ -1,5 +1,12 @@
 import HeaderComponent from '../../components/HeaderComponent'
 
+// Extend Window interface to include __coverage__
+declare global {
+  interface Window {
+    __coverage__?: any;
+  }
+}
+
 describe('Coverage Instrumentation Test', () => {
   it('should have coverage instrumentation available', () => {
     // Mock Next.js router

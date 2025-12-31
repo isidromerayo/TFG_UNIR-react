@@ -7,9 +7,13 @@ class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <meta charSet="utf-8" />
+          {/* eslint-disable-next-line @next/next/no-css-tags */}
           <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css" />
+          {/* eslint-disable-next-line @next/next/no-css-tags */}
           <link rel="stylesheet" href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+          {/* eslint-disable-next-line @next/next/no-css-tags */}
           <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css" />
+          {/* eslint-disable-next-line @next/next/no-css-tags */}
           <link rel="stylesheet" href="/assets/css/main.css" />
         </Head>
         <body>
