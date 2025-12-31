@@ -5,19 +5,34 @@ import type { Curso } from '../../types';
 import { CartItem } from '../../types';
 import Swal from 'sweetalert2';
 import { useCartStore } from '../../store/useCartStore';
-import type { NextPageContext } from '../../types';
 
-interface CursoPageProps {
-  data?: Curso;
-}
-
-function Curso({ data }: CursoPageProps) {
+export default function CursoPage() {
+  const router = useRouter();
+  const { id } = router.query;
+  const [data, setData] = useState<Curso | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const addToCart = useCartStore(state => state.addToCart);
 
   useEffect(() => {
-    setLoading(false);
-  }, []);
+    if (id && typeof id === 'string' && /^\d+$/.test(id)) {
+      const fetchData = async () => {
+        try {
+          const res = await fetch(`${API_URL}/cursos/${id}`);
+          if (res.ok) {
+            const cursoData = await res.json();
+            setData(cursoData);
+          }
+        } catch (error) {
+          console.error('Error fetching curso:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchData();
+    } else {
+      setLoading(false);
+    }
+  }, [id]);
 
   const addCursoCarrito = () => {
     if (data) {
@@ -36,8 +51,12 @@ function Curso({ data }: CursoPageProps) {
     }
   };
 
-  if (loading || !data) {
+  if (loading) {
     return <div>...Data Loading.....</div>;
+  }
+
+  if (!data) {
+    return <div>Curso no encontrado</div>;
   }
 
   return (
@@ -71,24 +90,3 @@ function Curso({ data }: CursoPageProps) {
     </div>
   );
 }
-
-export async function getServerSideProps({ query }: NextPageContext) {
-  const curso_id = query.id;
-  if (!curso_id || !/^\d+$/.test(curso_id)) {
-    return { notFound: true };
-  }
-  
-  try {
-    const res = await fetch(`${API_URL}/cursos/${curso_id}`)
-    if (!res.ok) {
-      return { notFound: true };
-    }
-    const data = await res.json()
-    return { props: { data } }
-  } catch (error) {
-    console.error('Error fetching curso:', error);
-    return { notFound: true };
-  }
-}
-
-export default Curso;
