@@ -25,15 +25,47 @@ const customJestConfig = {
   ],
   collectCoverage: true,
   coverageDirectory: 'coverage',
-  coverageReporters: ['text', 'lcov', 'html', 'json'],
+  coverageReporters: ['text', 'lcov', 'html', 'json', 'json-summary', 'text-summary'],
   coverageThreshold: {
     global: {
-      branches: 4,    // Current: 4.61%
-      functions: 23,  // Current: 23.88%
-      lines: 18,      // Current: 18.39%
-      statements: 19, // Current: 19.55%
+      branches: 45,   // Jest calcula: 45.63% - ajustado a 45%
+      functions: 59,  // Jest calcula: 59.37% - ajustado a 59%
+      lines: 63,      // Jest calcula: 63.05% - ajustado a 63%
+      statements: 63, // Jest calcula: 63.88% - ajustado a 63%
+    },
+    // Individual file thresholds más conservadores
+    './components/**/*.{js,jsx,ts,tsx}': {
+      branches: 50,   // Reducido para SliderComponent
+      functions: 85,  
+      lines: 85,      
+      statements: 85, 
+    },
+    './services/**/*.{js,jsx,ts,tsx}': {
+      branches: 60,
+      functions: 85,
+      lines: 85,
+      statements: 85,
+    },
+    './store/**/*.{js,jsx,ts,tsx}': {
+      branches: 90,
+      functions: 100,
+      lines: 100,
+      statements: 100,
     },
   },
+  // Add test result processor for better CI integration
+  testResultsProcessor: 'jest-sonar-reporter',
+  // Coverage path ignore patterns
+  coveragePathIgnorePatterns: [
+    '/node_modules/',
+    '/.next/',
+    '/coverage/',
+    '/cypress/',
+    '/dist/',
+    '/__tests__/',
+    '/jest.config.js',
+    '/jest.setup.js',
+  ],
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
