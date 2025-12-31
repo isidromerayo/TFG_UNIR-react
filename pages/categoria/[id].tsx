@@ -57,11 +57,18 @@ export async function getServerSideProps({ query }: NextPageContext) {
   if (!query.id || Number.isNaN(categoria_id)) {
     return { notFound: true };
   }
-  const res = await fetch(`${API_URL}/categorias/${categoria_id}`)
-  const data = await res.json()
-
-  // Pass data to the page via props
-  return { props: { data } }
+  
+  try {
+    const res = await fetch(`${API_URL}/categorias/${categoria_id}`)
+    if (!res.ok) {
+      return { notFound: true };
+    }
+    const data = await res.json()
+    return { props: { data } }
+  } catch (error) {
+    console.error('Error fetching categoria:', error);
+    return { notFound: true };
+  }
 }
 
 

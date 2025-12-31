@@ -7,7 +7,11 @@ import Swal from 'sweetalert2';
 import { useCartStore } from '../../store/useCartStore';
 import type { NextPageContext } from '../../types';
 
-function Curso({ data }: { data: Curso }) {
+interface CursoPageProps {
+  data?: Curso;
+}
+
+function Curso({ data }: CursoPageProps) {
   const [loading, setLoading] = useState<boolean>(true);
   const addToCart = useCartStore(state => state.addToCart);
 
@@ -32,7 +36,7 @@ function Curso({ data }: { data: Curso }) {
     }
   };
 
-  if (loading) {
+  if (loading || !data) {
     return <div>...Data Loading.....</div>;
   }
 
@@ -73,10 +77,18 @@ export async function getServerSideProps({ query }: NextPageContext) {
   if (!curso_id || !/^\d+$/.test(curso_id)) {
     return { notFound: true };
   }
-  const res = await fetch(`${API_URL}/cursos/${curso_id}`)
-  const data = await res.json()
-
-  return { props: { data } }
+  
+  try {
+    const res = await fetch(`${API_URL}/cursos/${curso_id}`)
+    if (!res.ok) {
+      return { notFound: true };
+    }
+    const data = await res.json()
+    return { props: { data } }
+  } catch (error) {
+    console.error('Error fetching curso:', error);
+    return { notFound: true };
+  }
 }
 
-export default Curso
+export default Curso;

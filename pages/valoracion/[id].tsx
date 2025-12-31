@@ -48,19 +48,34 @@ export async function getServerSideProps({ query }: NextPageContext) {
 
   // Only allow numeric ids (update pattern as needed for your data model)
   if (!id || !/^\d+$/.test(id)) {
-    // Optionally handle error, e.g., redirect, show empty data, or error page
     return { notFound: true };
   }
 
-  const res = await fetch(`${API_URL}/valoraciones/${id}`)
-  const valoracion = await res.json()
-  const res2 = await fetch(`${API_URL}/valoraciones/${id}/curso`)
-  const curso = await res2.json()
-  const res3 = await fetch(`${API_URL}/valoraciones/${id}/estudiante`)
-  const alumno = await res3.json()
-  const data: ValoracionPageData = { valoracion: valoracion, curso: curso, alumno: alumno }
-
-  return { props: {data} }
+  try {
+    const res = await fetch(`${API_URL}/valoraciones/${id}`)
+    if (!res.ok) {
+      return { notFound: true };
+    }
+    const valoracion = await res.json()
+    
+    const res2 = await fetch(`${API_URL}/valoraciones/${id}/curso`)
+    if (!res2.ok) {
+      return { notFound: true };
+    }
+    const curso = await res2.json()
+    
+    const res3 = await fetch(`${API_URL}/valoraciones/${id}/estudiante`)
+    if (!res3.ok) {
+      return { notFound: true };
+    }
+    const alumno = await res3.json()
+    
+    const data: ValoracionPageData = { valoracion: valoracion, curso: curso, alumno: alumno }
+    return { props: {data} }
+  } catch (error) {
+    console.error('Error fetching valoracion:', error);
+    return { notFound: true };
+  }
 }
 
 
