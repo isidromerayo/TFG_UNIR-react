@@ -5,15 +5,34 @@ import type { Curso } from '../../types';
 import { CartItem } from '../../types';
 import Swal from 'sweetalert2';
 import { useCartStore } from '../../store/useCartStore';
-import type { NextPageContext } from '../../types';
 
-function Curso({ data }: { data: Curso }) {
+export default function CursoPage() {
+  const router = useRouter();
+  const { id } = router.query;
+  const [data, setData] = useState<Curso | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const addToCart = useCartStore(state => state.addToCart);
 
   useEffect(() => {
-    setLoading(false);
-  }, []);
+    if (id && typeof id === 'string' && /^\d+$/.test(id)) {
+      const fetchData = async () => {
+        try {
+          const res = await fetch(`${API_URL}/cursos/${id}`);
+          if (res.ok) {
+            const cursoData = await res.json();
+            setData(cursoData);
+          }
+        } catch (error) {
+          console.error('Error fetching curso:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchData();
+    } else {
+      setLoading(false);
+    }
+  }, [id]);
 
   const addCursoCarrito = () => {
     if (data) {
@@ -34,6 +53,10 @@ function Curso({ data }: { data: Curso }) {
 
   if (loading) {
     return <div>...Data Loading.....</div>;
+  }
+
+  if (!data) {
+    return <div>Curso no encontrado</div>;
   }
 
   return (
@@ -67,16 +90,3 @@ function Curso({ data }: { data: Curso }) {
     </div>
   );
 }
-
-export async function getServerSideProps({ query }: NextPageContext) {
-  const curso_id = query.id;
-  if (!curso_id || !/^\d+$/.test(curso_id)) {
-    return { notFound: true };
-  }
-  const res = await fetch(`${API_URL}/cursos/${curso_id}`)
-  const data = await res.json()
-
-  return { props: { data } }
-}
-
-export default Curso

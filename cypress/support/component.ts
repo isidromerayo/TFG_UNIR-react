@@ -16,8 +16,9 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 
-// Code coverage disabled for CI compatibility
-// import '@cypress/code-coverage/support'
+// Always import code coverage support
+// The task configuration will determine if it's active
+import '@cypress/code-coverage/support'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

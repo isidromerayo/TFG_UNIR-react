@@ -1,0 +1,58 @@
+{
+  "presets": ["next/babel"],
+  "plugins": [
+    ["istanbul", {
+      "exclude": [
+        "**/*.test.{js,jsx,ts,tsx}",
+        "**/*.spec.{js,jsx,ts,tsx}",
+        "**/*.cy.{js,jsx,ts,tsx}",
+        "**/cypress/**",
+        "**/coverage/**",
+        "**/node_modules/**",
+        "**/.next/**",
+        "pages/_app.tsx",
+        "pages/_document.tsx",
+        "pages/api/**",
+        "*.config.js",
+        "*.config.ts"
+      ]
+    }]
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        ["istanbul", {
+          "exclude": [
+            "**/*.test.{js,jsx,ts,tsx}",
+            "**/*.spec.{js,jsx,ts,tsx}",
+            "**/*.cy.{js,jsx,ts,tsx}",
+            "**/cypress/**",
+            "**/coverage/**",
+            "**/node_modules/**",
+            "**/.next/**",
+            "pages/_app.tsx",
+            "pages/_document.tsx",
+            "pages/api/**",
+            "*.config.js",
+            "*.config.ts"
+          ]
+        }]
+      ]
+    },
+    "test": {
+      "plugins": [
+        ["istanbul", {
+          "exclude": [
+            "**/*.test.{js,jsx,ts,tsx}",
+            "**/*.spec.{js,jsx,ts,tsx}",
+            "**/*.cy.{js,jsx,ts,tsx}",
+            "**/cypress/**",
+            "**/coverage/**",
+            "**/node_modules/**",
+            "**/.next/**"
+          ]
+        }]
+      ]
+    }
+  }
+}
