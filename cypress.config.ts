@@ -3,7 +3,8 @@ import { defineConfig } from "cypress";
 export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
-      require('@cypress/code-coverage/task')(on, config)
+      // Code coverage disabled for CI compatibility
+      // require('@cypress/code-coverage/task')(on, config)
       return config
     },
   },
@@ -14,17 +15,9 @@ export default defineConfig({
       bundler: "webpack",
     },
     setupNodeEvents(on, config) {
-      require('@cypress/code-coverage/task')(on, config)
+      // Code coverage disabled for CI compatibility
+      // require('@cypress/code-coverage/task')(on, config)
       return config
-    },
-    env: {
-      codeCoverage: {
-        exclude: [
-          'cypress/**/*.*',
-          '**/*.spec.*',
-          '**/*.test.*'
-        ]
-      }
     }
   },
 });
