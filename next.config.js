@@ -6,7 +6,9 @@ const nextConfig = {
   },
   // Configure static file serving
   assetPrefix: '',
-  basePath: ''
+  basePath: '',
+  // Fix workspace root detection warning
+  outputFileTracingRoot: __dirname
 }
 
 module.exports = nextConfig
