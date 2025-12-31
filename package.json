@@ -10,6 +10,11 @@
     "lint": "next lint",
     "test-headless": "jest --watchAll=false",
     "test-headless-cc": "jest --watchAll=false --coverage",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "cypress:component": "cypress run --component",
+    "cypress:e2e": "cypress run --e2e",
+    "test:all": "pnpm test-headless && pnpm cypress:component",
     "security": "./scripts/security-check.sh",
     "security:audit": "pnpm audit",
     "security:outdated": "pnpm outdated"
