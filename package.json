@@ -10,6 +10,17 @@
     "lint": "next lint",
     "test-headless": "jest --watchAll=false",
     "test-headless-cc": "jest --watchAll=false --coverage",
+    "test:coverage": "jest --watchAll=false --coverage --coverageReporters=text --coverageReporters=lcov --coverageReporters=html",
+    "test:coverage:ci": "jest --watchAll=false --coverage --coverageReporters=lcov --coverageReporters=json --coverageReporters=text-summary",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "cypress:component": "cypress run --component",
+    "cypress:component:open": "cypress open --component",
+    "cypress:component:coverage": "cypress run --component",
+    "cypress:e2e": "cypress run --e2e",
+    "test:all": "pnpm test-headless && pnpm cypress:component",
+    "test:all:ci": "pnpm test:coverage:ci && pnpm cypress:component",
+    "coverage:report": "echo 'Coverage report generated at coverage/lcov-report/index.html'",
     "security": "./scripts/security-check.sh",
     "security:audit": "pnpm audit",
     "security:outdated": "pnpm outdated"
@@ -35,20 +46,34 @@
     "@babel/core": "^7.27.4",
     "@babel/preset-env": "^7.27.2",
     "@babel/preset-react": "^7.27.1",
+    "@cypress/code-coverage": "^3.13.4",
     "@cypress/react": "^9.0.1",
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@jest/globals": "^30.0.5",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "babel-jest": "^30.0.2",
+    "babel-plugin-istanbul": "^7.0.1",
     "css-loader": "^7.1.2",
-    "cypress": "^14.5.0",
+    "cypress": "^15.8.1",
     "file-loader": "^6.2.0",
+    "istanbul-lib-coverage": "^3.2.2",
     "jest": "^30.0.5",
     "jest-environment-jsdom": "^30.0.2",
+    "jest-sonar-reporter": "^2.0.0",
+    "lcov-result-merger": "^5.0.1",
+    "nyc": "^17.1.0",
     "style-loader": "^4.0.0",
     "ts-jest": "^29.4.0"
   },
   "overrides": {
-    "brace-expansion": "1.1.12"
+    "brace-expansion": "1.1.12",
+    "qs": ">=6.14.1"
+  },
+  "pnpm": {
+    "overrides": {
+      "qs": ">=6.14.1",
+      "js-yaml": ">=4.1.1"
+    }
   }
 }

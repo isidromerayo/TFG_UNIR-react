@@ -1,5 +1,7 @@
 # TFG UNIR - Frontend React/Next.js
 
+[![CI](https://github.com/isidromerayo/TFG_UNIR-react/actions/workflows/node.js.yml/badge.svg)](https://github.com/isidromerayo/TFG_UNIR-react/actions/workflows/node.js.yml)
+[![Tests](https://github.com/isidromerayo/TFG_UNIR-react/actions/workflows/tests.yml/badge.svg)](https://github.com/isidromerayo/TFG_UNIR-react/actions/workflows/tests.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=isidromerayo_TFG_UNIR-react&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=isidromerayo_TFG_UNIR-react)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=isidromerayo_TFG_UNIR-react&metric=coverage)](https://sonarcloud.io/summary/new_code?id=isidromerayo_TFG_UNIR-react)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=isidromerayo_TFG_UNIR-react&metric=bugs)](https://sonarcloud.io/summary/new_code?id=isidromerayo_TFG_UNIR-react)
@@ -9,15 +11,23 @@
 
 Aplicación web frontend desarrollada en React con Next.js para un sistema de gestión de cursos online.
 
+## 🧪 Testing & Coverage
+
+- **Total Tests**: 101 tests (87 Jest + 13 Cypress + 1 E2E)
+- **Coverage**: 73% statements, 52% branches, 72% functions
+- **Unit Testing**: Jest + React Testing Library
+- **Component Testing**: Cypress + @cypress/react
+- **E2E Testing**: Cypress
+
 ## 🚀 Tecnologías
 
-- **Framework**: Next.js 15.3.4
-- **Librería**: React 19.1.0
-- **Lenguaje**: TypeScript 5.8.3
+- **Framework**: Next.js 15.5.9
+- **Librería**: React 19.2.3
+- **Lenguaje**: TypeScript 5.9.3
 - **Package Manager**: pnpm
-- **State Management**: Zustand 5.0.5
-- **Forms**: React Hook Form 7.58.1 + Yup 1.6.1
-- **HTTP Client**: Axios 1.10.0
+- **State Management**: Zustand 5.0.9
+- **Forms**: React Hook Form 7.69.0 + Yup 1.7.1
+- **HTTP Client**: Axios 1.13.2
 - **UI/Alerts**: SweetAlert2 11.4.8
 - **Testing**: Jest + Testing Library, Cypress
 

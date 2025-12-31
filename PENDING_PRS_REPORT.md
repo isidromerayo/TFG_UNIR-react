@@ -86,7 +86,7 @@ git commit -m "security: update next to 15.4.8 (fix critical vulnerability SNYK-
 
 ### PR #11: [Snyk] Upgrade @types/node
 
-**Estado**: 🟡 ABIERTA  
+**Estado**: � ABIERTA  
 **Prioridad**: Baja  
 **Creada**: Hace 2 meses  
 **Paquete**: @types/node
@@ -156,7 +156,7 @@ git commit -m "security: update next to 15.4.8 (fix critical vulnerability SNYK-
 
 | Prioridad | Cantidad | Estado |
 |-----------|----------|--------|
-| 🔥 Crítica | 1 | Pendiente (PR #15) |
+| � Crítica | 1 | Pendiente (PR #15) |
 | 🟡 Media | 2 | Resueltas en migración |
 | 🟢 Baja | 6 | Mayoría resueltas en migración |
 
