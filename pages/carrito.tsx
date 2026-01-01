@@ -15,7 +15,7 @@ const Carrito: NextPage = () => {
     const router = useRouter()
     
     const cart = useCartStore(state => state.cart); 
-    const totalCompra = cart.reduce((acc, product: CartItem) => acc + product.precio * (product.quantity as number), 0);
+    const totalCompra = cart.reduce((acc, product: CartItem) => acc + product.precio * product.quantity, 0);
     const removeFromCart = useCartStore(state => state.removeFromCart)
     const removeAllFromCart = useCartStore(state => state.clearCart)
 
