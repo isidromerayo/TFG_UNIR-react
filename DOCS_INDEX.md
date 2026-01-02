@@ -20,6 +20,12 @@
    - Verificación de instalación
    - Problemas comunes
 
+4. **[SONARQUBE_SETUP.md](./SONARQUBE_SETUP.md)** - Configuración de SonarQube
+   - Archivos de configuración
+   - Comandos de cobertura
+   - Integración CI/CD
+   - Métricas actuales
+
 ---
 
 ## 🔄 Migración a pnpm
@@ -112,8 +118,9 @@ TFG_UNIR-react/
 │   ├── RESUMEN_MIGRACION_PNPM.md     # Resumen ejecutivo
 │   └── QUICKSTART_PNPM.md            # Guía rápida
 │
-├── Seguridad/
-│   ├── SECURITY_SETUP.md             # Configuración
+├── Seguridad y Calidad/
+│   ├── SECURITY_SETUP.md             # Configuración de seguridad
+│   ├── SONARQUBE_SETUP.md            # Configuración de SonarQube
 │   ├── SECURITY_AUDIT_ANALYSIS.md    # Análisis de herramientas
 │   ├── AUDIT_REPORT.md               # Reporte de auditoría
 │   ├── DEPENDENCY_UPDATE_GUIDE.md    # Guía de actualizaciones

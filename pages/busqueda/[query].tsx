@@ -10,8 +10,9 @@ function Busqueda({ query_string }: { query_string: string; }) {
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        const fetchData = async (query_string: string) => {
-            const result_cursos = await axios(`${API_URL}/cursos/search/findByTituloContaining?titulo=${query_string}`);
+        const fetchData = async (query: string) => {
+            const encodedQuery = encodeURIComponent(query);
+            const result_cursos = await axios(`${API_URL}/cursos/search/findByTituloContaining?titulo=${encodedQuery}`);
             setCursos(result_cursos.data._embedded.cursos);
         };
         setLoading(false);
@@ -48,12 +49,12 @@ function Busqueda({ query_string }: { query_string: string; }) {
     );
 }
 
-export async function getServerSideProps({query}: NextPageContext) {
+export async function getServerSideProps({ query }: NextPageContext) {
     const query_string = query.query;
     if (!query_string || typeof query_string !== 'string') {
-      return { notFound: true };
+        return { notFound: true };
     }
     return { props: { query_string } }
-  }
+}
 
-  export default Busqueda
+export default Busqueda
