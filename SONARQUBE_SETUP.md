@@ -39,17 +39,26 @@ Patrones de archivos a ignorar completamente por SonarQube.
 
 ### Ejecutar Tests con Cobertura
 ```bash
-# Generar reporte de cobertura completo
+# Generar reporte de cobertura de Jest (unitarios)
 pnpm run test-headless-cc
+
+# Generar reporte de cobertura de Cypress (componentes)
+pnpm run cypress:component:coverage
+
+# Mezclar todos los reportes de cobertura
+pnpm run coverage:merge
 ```
 
 ### Verificar Archivos de Cobertura
 ```bash
-# Ver archivo LCOV generado
+# Ver reporte de Jest
 cat coverage/lcov.info
 
-# Abrir reporte HTML
-open coverage/index.html
+# Ver reporte de Cypress
+cat coverage/cypress/lcov.info
+
+# Ver reporte fusionado (el que usa Sonar)
+cat coverage/merged/lcov.info
 ```
 
 ## Integración con SonarQube Cloud
@@ -57,8 +66,9 @@ open coverage/index.html
 ### Configuración en CI/CD
 Para que SonarQube Cloud reciba la cobertura correctamente:
 
-1. **Ejecutar tests con cobertura** antes del análisis de SonarQube
-2. **Verificar que existe** `coverage/lcov.info`
+1. **Ejecutar tests con cobertura** (Jest y Cypress) antes del análisis de SonarQube
+2. **Fusionar los reportes** usando `pnpm run coverage:merge`
+3. **Verificar que existe** `coverage/merged/lcov.info`
 3. **Configurar las variables** de entorno necesarias
 
 ### Variables de Entorno Requeridas

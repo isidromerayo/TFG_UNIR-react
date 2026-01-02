@@ -87,14 +87,20 @@ pnpm test-headless
 pnpm test-headless-cc
 ```
 
-### Tests E2E (Cypress)
+### Tests E2E & Componentes (Cypress)
 
 ```bash
-# Interactivo
+# Interactivo (E2E)
 pnpm run cypress:open
 
-# Headless
+# Headless (E2E)
 pnpm run cypress:run
+
+# Interactivo (Componentes)
+pnpm run cypress:component:open
+
+# Headless (Componentes)
+pnpm run cypress:component
 ```
 
 ## 📁 Estructura del Proyecto
@@ -128,6 +134,9 @@ TFG_UNIR-react/
 | `pnpm test-headless` | Tests headless |
 | `pnpm test-headless-cc` | Tests con coverage |
 | `pnpm lint` | Linter de Next.js |
+| `pnpm cypress:open` | Abrir Cypress interactivo (E2E) |
+| `pnpm cypress:run` | Ejecutar Cypress headless (E2E) |
+| `pnpm cypress:component` | Ejecutar tests de componentes (Cypress) |
 
 ## 📚 Documentación
 
