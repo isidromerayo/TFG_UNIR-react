@@ -15,9 +15,10 @@ export default function CursoPage() {
 
   useEffect(() => {
     if (id && typeof id === 'string' && /^\d+$/.test(id)) {
+      const sanitizedId = parseInt(id, 10);
       const fetchData = async () => {
         try {
-          const res = await fetch(`${API_URL}/cursos/${id}`);
+          const res = await fetch(`${API_URL}/cursos/${sanitizedId}`);
           if (res.ok) {
             const cursoData = await res.json();
             setData(cursoData);
@@ -78,9 +79,9 @@ export default function CursoPage() {
           </p>
         )}
         <p>
-          <button 
-            type="button" 
-            className="btn btn-primary borrar-form" 
+          <button
+            type="button"
+            className="btn btn-primary borrar-form"
             onClick={addCursoCarrito}
           >
             Comprar curso
