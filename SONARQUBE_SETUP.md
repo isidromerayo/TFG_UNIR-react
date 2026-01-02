@@ -120,11 +120,11 @@ jobs:
 
 ## Métricas de Cobertura Actuales
 
-- **Cobertura de Statements**: 19.55%
-- **Cobertura de Branches**: 4.61%
-- **Cobertura de Functions**: 23.88%
-- **Cobertura de Lines**: 18.39%
-- **Tests**: 25 tests pasando
+- **Cobertura de Statements**: 82.92%
+- **Cobertura de Branches**: 61.97%
+- **Cobertura de Functions**: 78.12%
+- **Cobertura de Lines**: 83.21%
+- **Tests**: 103 tests pasando
 
 ### Estado de Tests por Archivo
 **Componentes con tests completos**:

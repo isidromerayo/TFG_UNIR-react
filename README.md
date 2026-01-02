@@ -11,13 +11,7 @@
 
 Aplicación web frontend desarrollada en React con Next.js para un sistema de gestión de cursos online.
 
-## 🧪 Testing & Coverage
-
-- **Total Tests**: 101 tests (87 Jest + 13 Cypress + 1 E2E)
-- **Coverage**: 73% statements, 52% branches, 72% functions
-- **Unit Testing**: Jest + React Testing Library
-- **Component Testing**: Cypress + @cypress/react
-- **E2E Testing**: Cypress
+> 📊 **Estado de Cobertura**: El proyecto mantiene un objetivo de cobertura superior al **80% en código nuevo**, validado a través de SonarQube, utilizando una combinación de Jest para lógica/estructura y Cypress para componentes críticos y flujos E2E.
 
 ## 🚀 Tecnologías
 
@@ -138,12 +132,15 @@ TFG_UNIR-react/
 ## 📚 Documentación
 
 - **[AGENTS.md](./AGENTS.md)** - Contexto completo del proyecto para agentes IA
+- **[SONARQUBE_SETUP.md](./SONARQUBE_SETUP.md)** - Configuración de SonarQube y métricas
 - **[MIGRATION_TO_PNPM.md](./MIGRATION_TO_PNPM.md)** - Guía de migración a pnpm
 - **[CHANGELOG_PNPM.md](./CHANGELOG_PNPM.md)** - Changelog de la migración
 - **[AUDIT_REPORT.md](./AUDIT_REPORT.md)** - Reporte de auditoría de seguridad
 - **[SECURITY_AUDIT_ANALYSIS.md](./SECURITY_AUDIT_ANALYSIS.md)** - Análisis de herramientas de auditoría
 - **[DEPENDENCY_UPDATE_GUIDE.md](./DEPENDENCY_UPDATE_GUIDE.md)** - Guía de actualización de dependencias
 - **[PENDING_PRS_REPORT.md](./PENDING_PRS_REPORT.md)** - Análisis de PRs pendientes
+- **[PULL_REQUEST.md](./PULL_REQUEST.md)** - Guía para la creación de Pull Requests
+- **[DOCS_INDEX.md](./DOCS_INDEX.md)** - Índice general de la documentación
 
 ## � Se/guridad y Mantenimiento
 
