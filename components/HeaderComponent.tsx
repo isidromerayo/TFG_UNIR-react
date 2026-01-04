@@ -72,7 +72,6 @@ export default function HeaderComponent() {
     function logout() {
         removeToken()
         removeUser()
-        isLogin = false
         Swal.fire('Acceso', 'Cierre de sesion correcta');
         push('/')
     }
