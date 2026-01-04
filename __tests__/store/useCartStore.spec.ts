@@ -36,14 +36,16 @@ describe('useCartStore', () => {
       expect(totalPrice).toBe(mockProduct.precio);
     });
 
-    it('no debe añadir el mismo producto dos veces', () => {
+    it('debe incrementar la cantidad si se añade el mismo producto dos veces', () => {
       act(() => {
         useCartStore.getState().addToCart(mockProduct);
         useCartStore.getState().addToCart(mockProduct);
       });
 
-      const { cart } = useCartStore.getState();
+      const { cart, totalPrice } = useCartStore.getState();
       expect(cart).toHaveLength(1);
+      expect(cart[0].quantity).toBe(2);
+      expect(totalPrice).toBe(mockProduct.precio * 2);
     });
   });
 
@@ -105,6 +107,22 @@ describe('useCartStore', () => {
 
       const { cart } = useCartStore.getState();
       expect(cart).toHaveLength(1);
+    });
+
+    it('no debe hacer nada si se intenta eliminar un producto de un carrito vacío', () => {
+      const otroProducto = { ...mockProduct, id: 2 };
+      
+      act(() => {
+        const precioAntes = useCartStore.getState().totalPrice;
+        useCartStore.getState().removeFromCart(otroProducto);
+        const precioDespues = useCartStore.getState().totalPrice;
+        // El precio no debe cambiar
+        expect(precioDespues).toBe(precioAntes);
+      });
+
+      const { cart, totalPrice } = useCartStore.getState();
+      expect(cart).toHaveLength(0);
+      expect(totalPrice).toBe(0);
     });
 
     it('debe manejar correctamente múltiples productos con diferentes quantities', () => {
