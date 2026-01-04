@@ -139,6 +139,17 @@ describe('API Utils', () => {
             expect(api.interceptors.request.handlers[0]).toBeDefined();
             expect(typeof api.interceptors.request.handlers[0].rejected).toBe('function');
         });
+
+        it('debe loguear y lanzar error en request rejected', () => {
+            const requestHandler = api.interceptors.request.handlers[0];
+            const error = new Error('request failed');
+
+            const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+
+            expect(() => requestHandler.rejected(error)).toThrow('request failed');
+
+            consoleErrorSpy.mockRestore();
+        });
     });
 
     describe('Response Interceptor - Handler Functions', () => {
@@ -178,6 +189,42 @@ describe('API Utils', () => {
             expect(api.interceptors.response).toBeDefined();
             expect(typeof api.interceptors.response.use).toBe('function');
             expect(typeof api.interceptors.response.eject).toBe('function');
+        });
+    });
+
+    describe('Retry Interceptor - Minimal Behavior', () => {
+        it('debe lanzar error cuando no existe config en el error', async () => {
+            const retryHandler = api.interceptors.response.handlers[0];
+            expect(retryHandler).toBeDefined();
+            expect(typeof retryHandler.rejected).toBe('function');
+
+            await expect(retryHandler.rejected({ message: 'boom' })).rejects.toThrow('boom');
+        });
+    });
+
+    describe('Request Interceptor - URL Handling', () => {
+        it('debe manejar URL sin trailing slash en request interceptor', async () => {
+            const requestHandler = api.interceptors.request.handlers[0];
+            expect(requestHandler).toBeDefined();
+            expect(typeof requestHandler.fulfilled).toBe('function');
+
+            const config = { url: 'api/cursos' };
+            const result = await requestHandler.fulfilled(config);
+            
+            expect(result).toBe(config);
+        });
+    });
+
+    describe('Response Interceptor - Success Path', () => {
+        it('debe manejar respuesta exitosa en response interceptor', async () => {
+            const responseHandler = api.interceptors.response.handlers[1];
+            expect(responseHandler).toBeDefined();
+            expect(typeof responseHandler.fulfilled).toBe('function');
+
+            const mockResponse = { data: { success: true }, status: 200 };
+            const result = await responseHandler.fulfilled(mockResponse);
+            
+            expect(result).toBe(mockResponse);
         });
     });
 });
