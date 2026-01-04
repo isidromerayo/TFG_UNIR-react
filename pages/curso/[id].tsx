@@ -15,7 +15,7 @@ export default function CursoPage() {
 
   useEffect(() => {
     if (id && typeof id === 'string' && /^\d+$/.test(id)) {
-      const sanitizedId = parseInt(id, 10);
+      const sanitizedId = Number.parseInt(id, 10);
       const fetchData = async () => {
         try {
           const res = await fetch(`${API_URL}/cursos/${sanitizedId}`);

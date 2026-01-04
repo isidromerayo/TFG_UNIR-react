@@ -1,156 +1,156 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
-  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/store/useCartStore.spec.ts">
-    <testCase name="useCartStore debe inicializar con un carrito vacío" duration="12"/>
-    <testCase name="useCartStore addToCart debe añadir un producto al carrito" duration="4"/>
-    <testCase name="useCartStore addToCart no debe añadir el mismo producto dos veces" duration="2"/>
-    <testCase name="useCartStore removeFromCart debe eliminar un producto del carrito" duration="2"/>
-    <testCase name="useCartStore removeFromCart debe calcular correctamente el totalPrice considerando la quantity al eliminar" duration="3"/>
-    <testCase name="useCartStore removeFromCart no debe hacer nada si el producto no está en el carrito" duration="18"/>
-    <testCase name="useCartStore removeFromCart debe manejar correctamente múltiples productos con diferentes quantities" duration="5"/>
-    <testCase name="useCartStore clearCart debe vaciar el carrito completamente" duration="13"/>
-    <testCase name="useCartStore debe calcular correctamente el precio total" duration="1"/>
-  </file>
-  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/pages/index.spec.tsx">
-    <testCase name="Home Page renders loading state initially" duration="69"/>
-    <testCase name="Home Page renders data after fetch" duration="45"/>
-    <testCase name="Home Page handles fetch error and logs it" duration="61"/>
-  </file>
-  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/pages/acceso.spec.tsx">
-    <testCase name="Acceso Page debería llamar a Swal.fire al loguear correctamente" duration="455"/>
-  </file>
-  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/pages/carrito.spec.tsx">
-    <testCase name="Carrito Page debe mostrar mensaje cuando el carrito está vacío" duration="73"/>
-    <testCase name="Carrito Page debe mostrar los productos del carrito" duration="27"/>
-    <testCase name="Carrito Page debe calcular el total correctamente" duration="18"/>
-    <testCase name="Carrito Page debe llamar a Swal.fire cuando el usuario no está logueado al comprar" duration="259"/>
-    <testCase name="Carrito Page debe permitir eliminar un producto del carrito" duration="55"/>
-    <testCase name="Carrito Page debe mostrar el botón de comprar cuando hay productos" duration="39"/>
-    <testCase name="Carrito Page debe procesar la compra cuando el usuario confirma y está logueado" duration="48"/>
-    <testCase name="Carrito Page debe manejar errores durante la compra" duration="42"/>
-  </file>
-  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/component/HeaderComponent.spec.tsx">
-    <testCase name="HeaderComponent debe renderizar el header tras cargar categorías" duration="164"/>
-    <testCase name="HeaderComponent debe mostrar Registro/Acceso cuando getToken devuelve null" duration="30"/>
-    <testCase name="HeaderComponent debe ejecutar logout y navegar a / al clicar desconectar" duration="112"/>
-    <testCase name="HeaderComponent debe hacer warn y dejar categorías vacías si la respuesta no trae un array" duration="33"/>
-    <testCase name="HeaderComponent debe manejar error 404 mostrando mensaje de no se encontraron categorías" duration="46"/>
-  </file>
-  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/component/SliderComponent.spec.tsx">
-    <testCase name="SliderComponent debe renderizar el componente correctamente" duration="331"/>
-    <testCase name="SliderComponent debe redirigir a la página de búsqueda al enviar el formulario" duration="68"/>
-    <testCase name="SliderComponent debe manejar correctamente los espacios en blanco en la búsqueda" duration="50"/>
-    <testCase name="SliderComponent debe manejar correctamente una búsqueda vacía" duration="47"/>
-  </file>
   <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/utils/logger.spec.ts">
-    <testCase name="Logger en modo desarrollo debe loggear mensajes en desarrollo" duration="17"/>
+    <testCase name="Logger en modo desarrollo debe loggear mensajes en desarrollo" duration="678"/>
     <testCase name="Logger en modo desarrollo debe loggear warnings en desarrollo" duration="10"/>
-    <testCase name="Logger en modo desarrollo debe loggear errors en desarrollo" duration="5"/>
-    <testCase name="Logger en modo desarrollo debe loggear debug en desarrollo" duration="10"/>
-    <testCase name="Logger en modo desarrollo debe aceptar múltiples argumentos" duration="17"/>
-    <testCase name="Logger en modo producción no debe loggear en producción por defecto" duration="12"/>
-    <testCase name="Logger en modo producción debe loggear si NEXT_PUBLIC_ENABLE_LOGGING está activado" duration="9"/>
-    <testCase name="Logger niveles de log debe respetar el nivel de log &quot;error&quot;" duration="6"/>
-    <testCase name="Logger niveles de log debe respetar el nivel de log &quot;warn&quot;" duration="9"/>
-    <testCase name="Logger niveles de log debe respetar el nivel de log &quot;log&quot;" duration="18"/>
-    <testCase name="Logger niveles de log debe respetar el nivel de log &quot;debug&quot;" duration="6"/>
+    <testCase name="Logger en modo desarrollo debe loggear errors en desarrollo" duration="7"/>
+    <testCase name="Logger en modo desarrollo debe loggear debug en desarrollo" duration="8"/>
+    <testCase name="Logger en modo desarrollo debe aceptar múltiples argumentos" duration="7"/>
+    <testCase name="Logger en modo producción no debe loggear en producción por defecto" duration="7"/>
+    <testCase name="Logger en modo producción debe loggear si NEXT_PUBLIC_ENABLE_LOGGING está activado" duration="8"/>
+    <testCase name="Logger niveles de log debe respetar el nivel de log &quot;error&quot;" duration="8"/>
+    <testCase name="Logger niveles de log debe respetar el nivel de log &quot;warn&quot;" duration="8"/>
+    <testCase name="Logger niveles de log debe respetar el nivel de log &quot;log&quot;" duration="7"/>
+    <testCase name="Logger niveles de log debe respetar el nivel de log &quot;debug&quot;" duration="14"/>
   </file>
   <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/services/session.spec.ts">
-    <testCase name="Session Service Token Management debe guardar un token en localStorage" duration="5"/>
-    <testCase name="Session Service Token Management debe obtener un token de localStorage" duration="2"/>
-    <testCase name="Session Service Token Management debe devolver una cadena vacía cuando no hay ventana (SSR)" duration="6"/>
+    <testCase name="Session Service Token Management debe guardar un token en localStorage" duration="10"/>
+    <testCase name="Session Service Token Management debe obtener un token de localStorage" duration="1"/>
+    <testCase name="Session Service Token Management debe devolver una cadena vacía cuando no hay ventana (SSR)" duration="2"/>
     <testCase name="Session Service Token Management debe eliminar un token de localStorage" duration="2"/>
-    <testCase name="Session Service User Management debe guardar un usuario en localStorage" duration="5"/>
-    <testCase name="Session Service User Management debe obtener un usuario de localStorage" duration="8"/>
+    <testCase name="Session Service User Management debe guardar un usuario en localStorage" duration="3"/>
+    <testCase name="Session Service User Management debe obtener un usuario de localStorage" duration="3"/>
     <testCase name="Session Service User Management debe devolver null cuando no hay usuario" duration="2"/>
     <testCase name="Session Service User Management debe devolver null cuando no hay ventana (SSR)" duration="1"/>
-    <testCase name="Session Service User Management debe manejar correctamente un JSON de usuario inválido" duration="133"/>
-    <testCase name="Session Service User Management debe eliminar un usuario de localStorage" duration="1"/>
+    <testCase name="Session Service User Management debe manejar correctamente un JSON de usuario inválido" duration="66"/>
+    <testCase name="Session Service User Management debe eliminar un usuario de localStorage" duration="10"/>
   </file>
-  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/pages/mis-datos.spec.tsx">
-    <testCase name="MisDatos Page renders user data when user is logged in" duration="84"/>
-    <testCase name="MisDatos Page renders nothing when user is not logged in" duration="9"/>
-    <testCase name="MisDatos Page getServerSideProps redirects to /acceso if no token provided" duration="10"/>
-    <testCase name="MisDatos Page getServerSideProps does not redirect if token is provided" duration="8"/>
+  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/store/useCartStore.spec.ts">
+    <testCase name="useCartStore debe inicializar con un carrito vacío" duration="51"/>
+    <testCase name="useCartStore addToCart debe añadir un producto al carrito" duration="11"/>
+    <testCase name="useCartStore addToCart no debe añadir el mismo producto dos veces" duration="3"/>
+    <testCase name="useCartStore removeFromCart debe eliminar un producto del carrito" duration="4"/>
+    <testCase name="useCartStore removeFromCart debe calcular correctamente el totalPrice considerando la quantity al eliminar" duration="6"/>
+    <testCase name="useCartStore removeFromCart no debe hacer nada si el producto no está en el carrito" duration="2"/>
+    <testCase name="useCartStore removeFromCart debe manejar correctamente múltiples productos con diferentes quantities" duration="5"/>
+    <testCase name="useCartStore clearCart debe vaciar el carrito completamente" duration="6"/>
+    <testCase name="useCartStore debe calcular correctamente el precio total" duration="2"/>
   </file>
-  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/pages/categorias.spec.tsx">
-    <testCase name="Categorias Page renders loading state initially" duration="91"/>
-    <testCase name="Categorias Page renders categories after fetch" duration="73"/>
-  </file>
-  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/pages/404.spec.tsx">
-    <testCase name="404 Page renders the 404 page content" duration="90"/>
-  </file>
-  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/component/HomeComponent.spec.tsx">
-    <testCase name="HomeComponent debe renderizar las 3 secciones y sus elementos" duration="168"/>
-    <testCase name="HomeComponent debe renderizar las secciones aunque no haya datos" duration="21"/>
-  </file>
-  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/pages/categoria.spec.tsx">
-    <testCase name="Categoria Page debe tener getServerSideProps definido" duration="214"/>
-    <testCase name="Categoria Page getServerSideProps debe retornar notFound para id inválido" duration="7"/>
-    <testCase name="Categoria Page getServerSideProps debe retornar props para id válido" duration="4"/>
-  </file>
-  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/pages/mis-cursos.spec.tsx">
-    <testCase name="MisCursos Page Component renders correctly" duration="50"/>
-    <testCase name="MisCursos Page getServerSideProps redirects to /acceso if no token" duration="8"/>
-    <testCase name="MisCursos Page getServerSideProps returns empty props if token exists" duration="13"/>
+  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/component/SliderComponent.spec.tsx">
+    <testCase name="SliderComponent debe renderizar el componente correctamente" duration="522"/>
+    <testCase name="SliderComponent debe redirigir a la página de búsqueda al enviar el formulario" duration="45"/>
+    <testCase name="SliderComponent debe manejar correctamente los espacios en blanco en la búsqueda" duration="29"/>
+    <testCase name="SliderComponent debe manejar correctamente una búsqueda vacía" duration="34"/>
   </file>
   <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/utils/api.spec.ts">
-    <testCase name="API Utils API Configuration debe tener la configuración base correcta" duration="18"/>
-    <testCase name="API Utils API Configuration debe tener validateStatus configurado correctamente" duration="4"/>
-    <testCase name="API Utils API Configuration debe tener withCredentials configurado como false" duration="6"/>
+    <testCase name="API Utils API Configuration debe tener la configuración base correcta" duration="12"/>
+    <testCase name="API Utils API Configuration debe tener validateStatus configurado correctamente" duration="3"/>
+    <testCase name="API Utils API Configuration debe tener withCredentials configurado como false" duration="1"/>
     <testCase name="API Utils API Configuration debe tener interceptors configurados" duration="1"/>
-    <testCase name="API Utils Logger Integration debe tener logger disponible para uso en interceptors" duration="20"/>
-    <testCase name="API Utils API Instance debe ser una instancia de axios" duration="2"/>
-    <testCase name="API Utils API Instance debe tener configuración de retry" duration="11"/>
+    <testCase name="API Utils Logger Integration debe tener logger disponible para uso en interceptors" duration="8"/>
+    <testCase name="API Utils API Instance debe ser una instancia de axios" duration="11"/>
+    <testCase name="API Utils API Instance debe tener configuración de retry" duration="2"/>
   </file>
-  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/pages/registro.spec.tsx">
-    <testCase name="Registro Page renders registro form correctly" duration="696"/>
-    <testCase name="Registro Page shows validation errors when submitting empty form" duration="199"/>
-    <testCase name="Registro Page successfully registers a user" duration="179"/>
-    <testCase name="Registro Page handles registration error with message" duration="153"/>
-    <testCase name="Registro Page handles registration error with errors array" duration="64"/>
-    <testCase name="Registro Page handles 400 error" duration="104"/>
-    <testCase name="Registro Page handles 409 error" duration="73"/>
-    <testCase name="Registro Page handles timeout error" duration="118"/>
-    <testCase name="Registro Page handles generic connection error" duration="70"/>
-    <testCase name="Registro Page handles 500 error" duration="160"/>
-    <testCase name="Registro Page resets form when clicking borrar" duration="67"/>
+  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/component/HeaderComponent.spec.tsx">
+    <testCase name="HeaderComponent debe renderizar el header tras cargar categorías" duration="255"/>
+    <testCase name="HeaderComponent debe mostrar Registro/Acceso cuando getToken devuelve null" duration="64"/>
+    <testCase name="HeaderComponent debe ejecutar logout y navegar a / al clicar desconectar" duration="84"/>
+    <testCase name="HeaderComponent debe hacer warn y dejar categorías vacías si la respuesta no trae un array" duration="90"/>
+    <testCase name="HeaderComponent debe manejar error 404 mostrando mensaje de no se encontraron categorías" duration="45"/>
   </file>
-  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/utils/constants.spec.ts">
-    <testCase name="Constants debe usar NEXT_PUBLIC_API_URL de las variables de entorno" duration="15"/>
-    <testCase name="Constants debe usar el valor por defecto si NEXT_PUBLIC_API_URL no está definido" duration="6"/>
-    <testCase name="Constants debe exportar las constantes de localStorage correctamente" duration="19"/>
+  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/pages/index.spec.tsx">
+    <testCase name="Home Page renders loading state initially" duration="67"/>
+    <testCase name="Home Page renders data after fetch" duration="48"/>
+    <testCase name="Home Page handles fetch error and logs it" duration="41"/>
   </file>
-  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/component/LayoutComponent.spec.tsx">
-    <testCase name="LayoutComponent debe renderizar header, main con children y footer" duration="64"/>
+  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/pages/carrito.spec.tsx">
+    <testCase name="Carrito Page debe mostrar mensaje cuando el carrito está vacío" duration="108"/>
+    <testCase name="Carrito Page debe mostrar los productos del carrito" duration="46"/>
+    <testCase name="Carrito Page debe calcular el total correctamente" duration="31"/>
+    <testCase name="Carrito Page debe llamar a Swal.fire cuando el usuario no está logueado al comprar" duration="219"/>
+    <testCase name="Carrito Page debe permitir eliminar un producto del carrito" duration="59"/>
+    <testCase name="Carrito Page debe mostrar el botón de comprar cuando hay productos" duration="51"/>
+    <testCase name="Carrito Page debe procesar la compra cuando el usuario confirma y está logueado" duration="82"/>
+    <testCase name="Carrito Page debe manejar errores durante la compra" duration="64"/>
   </file>
-  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/component/MenuCategoriaComponent.spec.tsx">
-    <testCase name="MenuCategoriaComponent debe renderizar una lista de categorías" duration="62"/>
-    <testCase name="MenuCategoriaComponent debe devolver null si data no es un array" duration="14"/>
-  </file>
-  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/utils/index.spec.ts">
-    <testCase name="Utils Index should export constants" duration="6"/>
-    <testCase name="Utils Index should export logger" duration="2"/>
-  </file>
-  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/pages/curso.spec.tsx">
-    <testCase name="Curso Page debe tener el componente por defecto definido" duration="207"/>
-    <testCase name="Curso Page debe ser un componente React válido" duration="3"/>
-    <testCase name="Curso Page debe exportar el componente como default" duration="1"/>
+  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/pages/mis-datos.spec.tsx">
+    <testCase name="MisDatos Page renders user data when user is logged in" duration="89"/>
+    <testCase name="MisDatos Page renders nothing when user is not logged in" duration="9"/>
+    <testCase name="MisDatos Page getServerSideProps redirects to /acceso if no token provided" duration="9"/>
+    <testCase name="MisDatos Page getServerSideProps does not redirect if token is provided" duration="6"/>
   </file>
   <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/pages/valoracion.spec.tsx">
-    <testCase name="Valoracion Page debe tener getServerSideProps definido" duration="78"/>
-    <testCase name="Valoracion Page getServerSideProps debe retornar notFound para id inválido" duration="4"/>
-    <testCase name="Valoracion Page getServerSideProps debe retornar props para id válido" duration="3"/>
+    <testCase name="Valoracion Page debe tener getServerSideProps definido" duration="248"/>
+    <testCase name="Valoracion Page getServerSideProps debe retornar notFound para id inválido" duration="8"/>
+    <testCase name="Valoracion Page getServerSideProps debe retornar props para id válido" duration="9"/>
   </file>
-  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/component/FooterComponent.spec.tsx">
-    <testCase name="Footer Component renders a footer" duration="54"/>
+  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/component/HomeComponent.spec.tsx">
+    <testCase name="HomeComponent debe renderizar las 3 secciones y sus elementos" duration="141"/>
+    <testCase name="HomeComponent debe renderizar las secciones aunque no haya datos" duration="36"/>
   </file>
-  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/sum.spec.ts">
-    <testCase name="dummy adds 1 + 2 to equal 3" duration="3"/>
+  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/pages/mis-cursos.spec.tsx">
+    <testCase name="MisCursos Page Component renders correctly" duration="184"/>
+    <testCase name="MisCursos Page getServerSideProps redirects to /acceso if no token" duration="11"/>
+    <testCase name="MisCursos Page getServerSideProps returns empty props if token exists" duration="2"/>
+  </file>
+  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/pages/categorias.spec.tsx">
+    <testCase name="Categorias Page renders loading state initially" duration="40"/>
+    <testCase name="Categorias Page renders categories after fetch" duration="41"/>
+  </file>
+  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/pages/categoria.spec.tsx">
+    <testCase name="Categoria Page debe tener getServerSideProps definido" duration="259"/>
+    <testCase name="Categoria Page getServerSideProps debe retornar notFound para id inválido" duration="23"/>
+    <testCase name="Categoria Page getServerSideProps debe retornar props para id válido" duration="2"/>
+  </file>
+  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/pages/registro.spec.tsx">
+    <testCase name="Registro Page renders registro form correctly" duration="305"/>
+    <testCase name="Registro Page shows validation errors when submitting empty form" duration="156"/>
+    <testCase name="Registro Page successfully registers a user" duration="134"/>
+    <testCase name="Registro Page handles registration error with message" duration="169"/>
+    <testCase name="Registro Page handles registration error with errors array" duration="99"/>
+    <testCase name="Registro Page handles 400 error" duration="135"/>
+    <testCase name="Registro Page handles 409 error" duration="167"/>
+    <testCase name="Registro Page handles timeout error" duration="81"/>
+    <testCase name="Registro Page handles generic connection error" duration="58"/>
+    <testCase name="Registro Page handles 500 error" duration="74"/>
+    <testCase name="Registro Page resets form when clicking borrar" duration="195"/>
+  </file>
+  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/pages/acceso.spec.tsx">
+    <testCase name="Acceso Page debería llamar a Swal.fire al loguear correctamente" duration="252"/>
+  </file>
+  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/utils/constants.spec.ts">
+    <testCase name="Constants debe usar NEXT_PUBLIC_API_URL de las variables de entorno" duration="8"/>
+    <testCase name="Constants debe usar el valor por defecto si NEXT_PUBLIC_API_URL no está definido" duration="4"/>
+    <testCase name="Constants debe exportar las constantes de localStorage correctamente" duration="25"/>
   </file>
   <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/pages/busqueda.spec.tsx">
-    <testCase name="Busqueda Page debe tener getServerSideProps definido" duration="73"/>
-    <testCase name="Busqueda Page getServerSideProps debe retornar notFound para query inválido" duration="2"/>
+    <testCase name="Busqueda Page debe tener getServerSideProps definido" duration="194"/>
+    <testCase name="Busqueda Page getServerSideProps debe retornar notFound para query inválido" duration="5"/>
     <testCase name="Busqueda Page getServerSideProps debe retornar props para query válido" duration="1"/>
+  </file>
+  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/component/LayoutComponent.spec.tsx">
+    <testCase name="LayoutComponent debe renderizar header, main con children y footer" duration="207"/>
+  </file>
+  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/component/MenuCategoriaComponent.spec.tsx">
+    <testCase name="MenuCategoriaComponent debe renderizar una lista de categorías" duration="158"/>
+    <testCase name="MenuCategoriaComponent debe devolver null si data no es un array" duration="6"/>
+  </file>
+  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/pages/curso.spec.tsx">
+    <testCase name="Curso Page debe tener el componente por defecto definido" duration="339"/>
+    <testCase name="Curso Page debe ser un componente React válido" duration="1"/>
+    <testCase name="Curso Page debe exportar el componente como default" duration="2"/>
+  </file>
+  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/utils/index.spec.ts">
+    <testCase name="Utils Index should export constants" duration="5"/>
+    <testCase name="Utils Index should export logger" duration="2"/>
+  </file>
+  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/pages/404.spec.tsx">
+    <testCase name="404 Page renders the 404 page content" duration="56"/>
+  </file>
+  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/sum.spec.ts">
+    <testCase name="dummy adds 1 + 2 to equal 3" duration="2"/>
+  </file>
+  <file path="/home/isidromerayo/projects/TFG_UNIR-multi/TFG_UNIR-react/__tests__/component/FooterComponent.spec.tsx">
+    <testCase name="Footer Component renders a footer" duration="23"/>
   </file>
 </testExecutions>
