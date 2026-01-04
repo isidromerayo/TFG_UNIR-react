@@ -24,13 +24,13 @@ const api = axios.create({
 // Add retry functionality to axios
 api.interceptors.response.use(undefined, async (err) => {
     const { config } = err;
-    if (!config) return Promise.reject(new Error(err.message));
+    if (!config) throw new Error(err.message);
 
     // Use a symbol to store retry count to avoid type conflicts
     const retryCount = config._retryCount || 0;
     
     if (retryCount >= RETRY_CONFIG.maxRetries) {
-        return Promise.reject(new Error(err.message));
+        throw new Error(err.message);
     }
 
     config._retryCount = retryCount + 1;
@@ -51,7 +51,7 @@ api.interceptors.request.use(
     },
     (error) => {
         logger.error('Request Error:', error);
-        return Promise.reject(new Error(error.message));
+        throw new Error(error.message);
     }
 );
 
@@ -81,7 +81,7 @@ api.interceptors.response.use(
                 message: error.message
             });
         }
-        return Promise.reject(new Error(error.message));
+        throw new Error(error.message);
     }
 );
 
