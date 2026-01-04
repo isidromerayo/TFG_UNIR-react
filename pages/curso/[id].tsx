@@ -5,6 +5,7 @@ import type { Curso } from '../../types';
 import { CartItem } from '../../types';
 import Swal from 'sweetalert2';
 import { useCartStore } from '../../store/useCartStore';
+import { logger } from '../../utils/logger';
 
 export default function CursoPage() {
   const router = useRouter();
@@ -24,7 +25,7 @@ export default function CursoPage() {
             setData(cursoData);
           }
         } catch (error) {
-          console.error('Error fetching curso:', error);
+          logger.error('Error fetching curso:', error);
         } finally {
           setLoading(false);
         }
