@@ -61,7 +61,7 @@ api.interceptors.response.use(
         return response;
     },
     (error) => {
-        let errorMessage = 'Unknown error';
+        let errorMessage;
         
         if (error.response) {
             // Server responded with error status
