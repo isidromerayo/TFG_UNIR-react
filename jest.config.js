@@ -55,6 +55,8 @@ const customJestConfig = {
   },
   // Add test result processor for better CI integration
   testResultsProcessor: 'jest-sonar-reporter',
+  testResultsProcessor: 'jest-sonar-reporter',
+  outputDirectory: 'test-results',
   // Coverage path ignore patterns
   coveragePathIgnorePatterns: [
     '/node_modules/',
