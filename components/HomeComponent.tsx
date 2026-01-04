@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { HomePageData, Curso, Valoracion } from '../types';
 
-export default function HomeComponent({data} : { data: HomePageData }) {
+export default function HomeComponent({data}: Readonly<{ data: HomePageData }>) {
     const { cursos_mas_valorados, valoraciones_cursos, cursos_actualizados } = data;
 
     return (

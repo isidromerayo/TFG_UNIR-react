@@ -24,13 +24,13 @@ const api = axios.create({
 // Add retry functionality to axios
 api.interceptors.response.use(undefined, async (err) => {
     const { config } = err;
-    if (!config) return Promise.reject(new Error(err.message));
+    if (!config) throw new Error(err.message);
 
     // Use a symbol to store retry count to avoid type conflicts
     const retryCount = config._retryCount || 0;
     
     if (retryCount >= RETRY_CONFIG.maxRetries) {
-        return Promise.reject(new Error(err.message));
+        throw new Error(err.message);
     }
 
     config._retryCount = retryCount + 1;
@@ -51,7 +51,7 @@ api.interceptors.request.use(
     },
     (error) => {
         logger.error('Request Error:', error);
-        return Promise.reject(new Error(error.message));
+        throw new Error(error.message);
     }
 );
 
@@ -61,8 +61,11 @@ api.interceptors.response.use(
         return response;
     },
     (error) => {
+        let errorMessage;
+        
         if (error.response) {
             // Server responded with error status
+            errorMessage = error.response.data?.message || 'Server Error';
             logger.error('Error Response:', {
                 url: error.config?.url,
                 status: error.response.status,
@@ -70,18 +73,23 @@ api.interceptors.response.use(
             });
         } else if (error.request) {
             // Request made but no response
+            errorMessage = 'No se pudo conectar con el servidor. Por favor, verifique su conexión a internet.';
             logger.error('Network Error:', {
                 url: error.config?.url,
-                message: 'No se pudo conectar con el servidor. Por favor, verifique su conexión a internet.'
+                message: errorMessage
             });
         } else {
             // Request setup error
+            errorMessage = error.message || 'Request setup error';
             logger.error('Request Error:', {
                 url: error.config?.url,
-                message: error.message
+                message: errorMessage
             });
         }
-        return Promise.reject(new Error(error.message));
+        
+        // Asignar el mensaje al error antes de lanzarlo
+        error.message = errorMessage;
+        throw new Error(errorMessage);
     }
 );
 

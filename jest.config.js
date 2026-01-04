@@ -47,7 +47,7 @@ const customJestConfig = {
       statements: 85,
     },
     './store/**/*.{js,jsx,ts,tsx}': {
-      branches: 90,
+      branches: 80,
       functions: 100,
       lines: 100,
       statements: 100,

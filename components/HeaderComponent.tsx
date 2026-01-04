@@ -67,14 +67,11 @@ export default function HeaderComponent() {
         };
     }, [])
 
-    let isLogin = false;
-
-    isLogin = (getToken() === null) ? false : true
+    const isLogin = getToken() !== null;
 
     function logout() {
         removeToken()
         removeUser()
-        isLogin = false
         Swal.fire('Acceso', 'Cierre de sesion correcta');
         push('/')
     }
@@ -105,25 +102,22 @@ export default function HeaderComponent() {
 
                             </li>
                             <li><Link href="/carrito" title="carrito de la compra"><i className="bi bi-cart4" title="carito de la compra" aria-hidden="true"> carrito</i></Link></li>
-                            {isLogin ? (
-                                <>
-                                    <li className="dropdown">
-                                        <Link href="/mis-datos" active-class="active">
-                                            <span><i className="bi bi-file-person iconos-menu"> Privado</i></span>
-                                            <i className="bi bi-chevron-down dropdown-indicator"></i></Link>
-                                        <ul>
-                                            <li><Link href="/mis-datos">Mis datos</Link></li>
-                                            <li><Link href="/mis-cursos">Mis cursos</Link></li>
-                                            <li><Link href="#" onClick={(e) => {
-                                                e.preventDefault();
-                                                logout();
-                                            }}>desconectar</Link></li>
-                                        </ul>
-                                    </li>
-
-                                </>
-
-                            ) : (
+                            {isLogin && (
+                                <li className="dropdown">
+                                    <Link href="/mis-datos" active-class="active">
+                                        <span><i className="bi bi-file-person iconos-menu"> Privado</i></span>
+                                        <i className="bi bi-chevron-down dropdown-indicator"></i></Link>
+                                    <ul>
+                                        <li><Link href="/mis-datos">Mis datos</Link></li>
+                                        <li><Link href="/mis-cursos">Mis cursos</Link></li>
+                                        <li><Link href="#" onClick={(e) => {
+                                            e.preventDefault();
+                                            logout();
+                                        }}>desconectar</Link></li>
+                                    </ul>
+                                </li>
+                            )}
+                            {!isLogin && (
                                 <>
                                     <li><Link href="/registro">Registro</Link></li>
                                     <li><Link href="/acceso" className="get-a-quote">Acceso</Link></li>

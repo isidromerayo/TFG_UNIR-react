@@ -1,26 +1,13 @@
-# AGENTS.md - Contexto del Proyecto Frontend React
+# 🤖 AGENTS.md - Contexto Completo del Proyecto React/Next.js
 
-## 📋 Información General del Proyecto
+## 📋 Información General
 
-### Descripción
-Aplicación web frontend desarrollada en React con Next.js para un sistema de gestión de cursos online. Permite a los usuarios navegar, buscar, comprar y gestionar cursos educativos.
-
-### Tecnologías Principales
-- **Framework**: Next.js 15.3.4
-- **Librería**: React 19.1.0
-- **Lenguaje**: TypeScript 5.8.3
-- **Package Manager**: pnpm (migrado desde npm)
-- **Testing**: Jest + Testing Library, Cypress
-- **State Management**: Zustand 5.0.5
-- **Forms**: React Hook Form 7.58.1 + Yup 1.6.1
-- **HTTP Client**: Axios 1.10.0
-- **UI/Alerts**: SweetAlert2 11.4.8
-
-### Versión
-- **Versión actual**: 0.1.0
-- **Generado con**: create-next-app
-- **React**: 19.1.0 (última versión estable)
-- **Next.js**: 15.3.4
+**Proyecto**: TFG UNIR - Frontend React/Next.js
+**Framework**: Next.js 15.5.9
+**Librería**: React 19.2.3
+**Lenguaje**: TypeScript 5.9.3
+**Package Manager**: pnpm 10.x
+**Propósito**: Aplicación web frontend para sistema de gestión de cursos online
 
 ## 🏗️ Arquitectura del Proyecto
 
@@ -186,23 +173,48 @@ pnpm update --interactive
 ## 🧪 Testing
 
 ### Unit Tests (Jest + Testing Library)
-- Framework: Jest 30.0.2
+- Framework: Jest 30.0.5
 - Testing Library: React 16.3.0
 - Environment: jsdom
 - Configuración: `jest.config.js`, `jest.setup.js`
+- **103 tests activos** ✅
 
 ### Comandos de Testing
 ```bash
 pnpm test                    # Tests con watch mode
-pnpm test-headless           # Tests headless (CI/CD)
-pnpm test-headless-cc        # Tests con code coverage
+pnpm run test-headless       # Tests headless (CI/CD)
+pnpm run test-headless-cc    # Tests con code coverage
 ```
 
-### E2E Tests (Cypress)
-- Cypress 14.5.0
+### E2E & Component Testing (Cypress)
+- Cypress 15.8.1
 - Configurado con `@cypress/react`
+- Integración de cobertura habilitada
 - Tests interactivos: `pnpm run cypress:open`
 - Tests CI/CD: `pnpm run cypress:run`
+- Tests de componentes: `pnpm run cypress:component`
+- Cobertura de componentes: `pnpm run cypress:component:coverage`
+
+### 🧪 Flujo de Desarrollo de Tests
+
+#### **Proceso para Añadir Tests**
+
+**1. Identificar Falta de Cobertura**
+```bash
+pnpm run test-headless-cc
+# Revisar reporte en coverage/index.html
+```
+
+**2. Ejecutar Tests Después de Cada Cambio**
+```bash
+# SIEMPRE ejecutar antes de commit
+pnpm run test-headless
+pnpm run cypress:component
+```
+
+#### **Métricas de Calidad de Testing**
+- **Objetivo**: >80% de cobertura en código nuevo.
+- **Estado Actual**: 82.92% (Statements), 83.21% (Lines).
 
 ### Estructura de Tests
 ```
@@ -399,22 +411,19 @@ git commit -m "descripción del cambio"
    ```bash
    pnpm lint
    ```
-   - Si falla: Arreglar el código
-   - Si pasa: Continuar al paso 2
+   - Si falla: Arreglar el código.
 
-2. **Ejecutar tests**:
+2. **Ejecutar tests (OBLIGATORIO)**:
    ```bash
-   pnpm test-headless
+   pnpm run test-headless && pnpm run cypress:component
    ```
-   - Si falla: Arreglar tests o código
-   - Si pasa: Continuar al paso 3
+   - Si falla: Arreglar tests o código.
 
 3. **Verificar build**:
    ```bash
    pnpm build
    ```
-   - Si falla: Arreglar errores de compilación
-   - Si pasa: Continuar al paso 4
+   - Si falla: Arreglar errores de compilación.
 
 4. **Solo entonces hacer commit**:
    ```bash
@@ -426,9 +435,7 @@ git commit -m "descripción del cambio"
 
 ```bash
 # Verificación completa (ejecutar antes de commit)
-pnpm lint && pnpm test-headless && pnpm build && echo "✅ Todo OK - Listo para commit"
-
-# Si falla, verás el error específico
+pnpm lint && pnpm run test-headless && pnpm run cypress:component && pnpm build && echo "✅ Todo OK - Listo para commit"
 ```
 
 ## 🤝 Contribución

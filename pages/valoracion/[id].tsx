@@ -52,7 +52,7 @@ export async function getServerSideProps({ query }: NextPageContext) {
     return { notFound: true };
   }
 
-  const sanitizedId = parseInt(id as string, 10);
+  const sanitizedId = Number.parseInt(id as string, 10);
 
   const res = await fetch(`${API_URL}/valoraciones/${sanitizedId}`)
   const valoracion = await res.json()

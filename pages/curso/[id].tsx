@@ -5,6 +5,7 @@ import type { Curso } from '../../types';
 import { CartItem } from '../../types';
 import Swal from 'sweetalert2';
 import { useCartStore } from '../../store/useCartStore';
+import { logger } from '../../utils/logger';
 
 export default function CursoPage() {
   const router = useRouter();
@@ -15,7 +16,7 @@ export default function CursoPage() {
 
   useEffect(() => {
     if (id && typeof id === 'string' && /^\d+$/.test(id)) {
-      const sanitizedId = parseInt(id, 10);
+      const sanitizedId = Number.parseInt(id, 10);
       const fetchData = async () => {
         try {
           const res = await fetch(`${API_URL}/cursos/${sanitizedId}`);
@@ -24,7 +25,7 @@ export default function CursoPage() {
             setData(cursoData);
           }
         } catch (error) {
-          console.error('Error fetching curso:', error);
+          logger.error('Error fetching curso:', error);
         } finally {
           setLoading(false);
         }
