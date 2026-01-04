@@ -227,4 +227,60 @@ describe('API Utils', () => {
             expect(result).toBe(mockResponse);
         });
     });
+
+    describe('Response Interceptor - Error Path', () => {
+        it('debe manejar error de servidor en response interceptor', async () => {
+            const responseHandler = api.interceptors.response.handlers[1];
+            expect(responseHandler).toBeDefined();
+            expect(typeof responseHandler.rejected).toBe('function');
+
+            const serverError = {
+                response: { status: 500, data: { message: 'Server Error' } },
+                config: { url: 'api/cursos' }
+            };
+
+            try {
+                await responseHandler.rejected(serverError);
+                fail('Expected error to be thrown');
+            } catch (error) {
+                expect(error.message).toBe('Server Error');
+            }
+        });
+
+        it('debe manejar error de red en response interceptor', async () => {
+            const responseHandler = api.interceptors.response.handlers[1];
+            expect(responseHandler).toBeDefined();
+            expect(typeof responseHandler.rejected).toBe('function');
+
+            const networkError = {
+                request: {},
+                config: { url: 'api/cursos' }
+            };
+
+            try {
+                await responseHandler.rejected(networkError);
+                fail('Expected error to be thrown');
+            } catch (error) {
+                expect(error.message).toBe('No se pudo conectar con el servidor. Por favor, verifique su conexión a internet.');
+            }
+        });
+
+        it('debe manejar error de configuración en response interceptor', async () => {
+            const responseHandler = api.interceptors.response.handlers[1];
+            expect(responseHandler).toBeDefined();
+            expect(typeof responseHandler.rejected).toBe('function');
+
+            const configError = {
+                message: 'Request failed',
+                config: { url: 'api/cursos' }
+            };
+
+            try {
+                await responseHandler.rejected(configError);
+                fail('Expected error to be thrown');
+            } catch (error) {
+                expect(error.message).toBe('Request failed');
+            }
+        });
+    });
 });

@@ -61,8 +61,11 @@ api.interceptors.response.use(
         return response;
     },
     (error) => {
+        let errorMessage = 'Unknown error';
+        
         if (error.response) {
             // Server responded with error status
+            errorMessage = error.response.data?.message || 'Server Error';
             logger.error('Error Response:', {
                 url: error.config?.url,
                 status: error.response.status,
@@ -70,18 +73,23 @@ api.interceptors.response.use(
             });
         } else if (error.request) {
             // Request made but no response
+            errorMessage = 'No se pudo conectar con el servidor. Por favor, verifique su conexión a internet.';
             logger.error('Network Error:', {
                 url: error.config?.url,
-                message: 'No se pudo conectar con el servidor. Por favor, verifique su conexión a internet.'
+                message: errorMessage
             });
         } else {
             // Request setup error
+            errorMessage = error.message || 'Request setup error';
             logger.error('Request Error:', {
                 url: error.config?.url,
-                message: error.message
+                message: errorMessage
             });
         }
-        throw new Error(error.message);
+        
+        // Asignar el mensaje al error antes de lanzarlo
+        error.message = errorMessage;
+        throw new Error(errorMessage);
     }
 );
 
