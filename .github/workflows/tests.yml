@@ -205,13 +205,13 @@ jobs:
         version: 10
 
     - name: Download Jest coverage artifact
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v7
       with:
         name: jest-coverage
         path: coverage/
 
     - name: Download Cypress coverage artifact
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v7
       with:
         name: cypress-coverage
         path: coverage/cypress/
