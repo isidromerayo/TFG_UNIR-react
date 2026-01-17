@@ -10,17 +10,23 @@
    - Scripts disponibles
    - Guías de desarrollo
 
-2. **[QUICKSTART_PNPM.md](./QUICKSTART_PNPM.md)** - Guía rápida de pnpm
+2. **[NEXTJS_16_UPGRADE.md](./NEXTJS_16_UPGRADE.md)** - Documentación de actualización a Next.js 16
+   - Cambios principales
+   - Proceso de actualización
+   - Validaciones realizadas
+   - Recursos útiles
+
+3. **[QUICKSTART_PNPM.md](./QUICKSTART_PNPM.md)** - Guía rápida de pnpm
    - Comandos esenciales
    - Equivalencias npm → pnpm
    - Tips y trucos
 
-3. **[CHECKLIST_EQUIPO.md](./CHECKLIST_EQUIPO.md)** - Checklist para el equipo
+4. **[CHECKLIST_EQUIPO.md](./CHECKLIST_EQUIPO.md)** - Checklist para el equipo
    - Pasos post-merge
    - Verificación de instalación
    - Problemas comunes
 
-4. **[SONARQUBE_SETUP.md](./SONARQUBE_SETUP.md)** - Configuración de SonarQube
+5. **[SONARQUBE_SETUP.md](./SONARQUBE_SETUP.md)** - Configuración de SonarQube
    - Archivos de configuración
    - Comandos de cobertura
    - Integración CI/CD
@@ -112,6 +118,9 @@ TFG_UNIR-react/
 ├── README.md                          # Documentación principal
 ├── DOCS_INDEX.md                      # Este archivo - Índice de documentación
 │
+├── Actualización a Next.js 16/
+│   └── NEXTJS_16_UPGRADE.md          # Guía de actualización
+│
 ├── Migración a pnpm/
 │   ├── MIGRATION_TO_PNPM.md          # Guía completa
 │   ├── CHANGELOG_PNPM.md             # Changelog
@@ -186,12 +195,13 @@ TFG_UNIR-react/
 
 | Categoría | Archivos | Tamaño Total |
 |-----------|----------|--------------|
+| Actualización Next.js 16 | 1 | ~8 KB |
 | Migración | 4 | ~17 KB |
 | Seguridad | 5 | ~40 KB |
 | Equipo | 1 | ~5 KB |
 | Agentes IA | 1 | ~15 KB |
 | Pull Request | 1 | ~12 KB |
-| **Total** | **12** | **~89 KB** |
+| **Total** | **13** | **~97 KB** |
 
 ---
 
@@ -227,6 +237,6 @@ Si encuentras errores en la documentación o necesitas aclaraciones:
 
 ---
 
-**Última actualización**: 6 de diciembre de 2025  
-**Versión**: 1.0.0  
+**Última actualización**: Enero 2026  
+**Versión**: 1.1.0  
 **Mantenedor**: @isidromerayo

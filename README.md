@@ -15,13 +15,13 @@ Aplicación web frontend desarrollada en React con Next.js para un sistema de ge
 
 ## 🚀 Tecnologías
 
-- **Framework**: Next.js 15.5.9
+- **Framework**: Next.js 16.1.1
 - **Librería**: React 19.2.3
 - **Lenguaje**: TypeScript 5.9.3
 - **Package Manager**: pnpm
-- **State Management**: Zustand 5.0.9
-- **Forms**: React Hook Form 7.69.0 + Yup 1.7.1
-- **HTTP Client**: Axios 1.13.2
+- **State Management**: Zustand 5.0.5
+- **Forms**: React Hook Form 7.70.0 + Yup 1.6.1
+- **HTTP Client**: Axios 1.12.0
 - **UI/Alerts**: SweetAlert2 11.4.8
 - **Testing**: Jest + Testing Library, Cypress
 
@@ -141,6 +141,7 @@ TFG_UNIR-react/
 ## 📚 Documentación
 
 - **[AGENTS.md](./AGENTS.md)** - Contexto completo del proyecto para agentes IA
+- **[NEXTJS_16_UPGRADE.md](./NEXTJS_16_UPGRADE.md)** - Documentación de actualización a Next.js 16
 - **[SONARQUBE_SETUP.md](./SONARQUBE_SETUP.md)** - Configuración de SonarQube y métricas
 - **[MIGRATION_TO_PNPM.md](./MIGRATION_TO_PNPM.md)** - Guía de migración a pnpm
 - **[CHANGELOG_PNPM.md](./CHANGELOG_PNPM.md)** - Changelog de la migración
