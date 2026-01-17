@@ -2,9 +2,9 @@ import { describe, it, expect } from '@jest/globals';
 
 describe('Busqueda Page', () => {
   it('debe tener getServerSideProps definido', async () => {
-    const module = await import('../../pages/busqueda/[query]');
-    expect(module.getServerSideProps).toBeDefined();
-    expect(typeof module.getServerSideProps).toBe('function');
+    const pageModule = await import('../../pages/busqueda/[query]');
+    expect(pageModule.getServerSideProps).toBeDefined();
+    expect(typeof pageModule.getServerSideProps).toBe('function');
   });
 
   it('getServerSideProps debe retornar notFound para query inválido', async () => {

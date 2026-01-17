@@ -9,9 +9,9 @@ describe('Valoracion Page', () => {
   });
 
   it('debe tener getServerSideProps definido', async () => {
-    const module = await import('../../pages/valoracion/[id]');
-    expect(module.getServerSideProps).toBeDefined();
-    expect(typeof module.getServerSideProps).toBe('function');
+    const pageModule = await import('../../pages/valoracion/[id]');
+    expect(pageModule.getServerSideProps).toBeDefined();
+    expect(typeof pageModule.getServerSideProps).toBe('function');
   });
 
   it('getServerSideProps debe retornar notFound para id inválido', async () => {

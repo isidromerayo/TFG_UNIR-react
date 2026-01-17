@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "test": "jest --watch",
-    "lint": "next lint",
+    "lint": "eslint .",
     "test-headless": "jest --watchAll=false",
     "test-headless-cc": "jest --watchAll=false --coverage",
     "test:coverage": "jest --watchAll=false --coverage --coverageReporters=text --coverageReporters=lcov --coverageReporters=html",
