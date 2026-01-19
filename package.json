@@ -47,8 +47,8 @@
     "zustand": "^5.0.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.27.4",
-    "@babel/preset-env": "^7.27.2",
+    "@babel/core": "^7.28.6",
+    "@babel/preset-env": "^7.28.6",
     "@babel/preset-react": "^7.27.1",
     "@cypress/code-coverage": "^3.13.4",
     "@cypress/react": "^9.0.1",
@@ -59,7 +59,7 @@
     "babel-jest": "^30.0.2",
     "babel-plugin-istanbul": "^7.0.1",
     "css-loader": "^7.1.2",
-    "cypress": "^15.8.1",
+    "cypress": "^15.9.0",
     "file-loader": "^6.2.0",
     "istanbul-lib-coverage": "^3.2.2",
     "jest": "^30.0.5",
