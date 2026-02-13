@@ -60,7 +60,7 @@ export const useCartStore = create<State & Actions>((set, get) => ({
     },
     clearCart: () => {
         set(
-            state => ({
+            () => ({
                 cart: [],
                 totalPrice: 0
             })

@@ -67,9 +67,6 @@ describe('useCartStore', () => {
     });
 
     it('debe calcular correctamente el totalPrice considerando la quantity al eliminar', () => {
-      // Añadimos un producto con quantity > 1 (simulando que se añadió manualmente)
-      const productoConQuantity = { ...mockProduct, quantity: 3 };
-      
       act(() => {
         // Primero añadimos el producto (quantity: 1)
         useCartStore.getState().addToCart(mockProduct);

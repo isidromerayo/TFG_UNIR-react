@@ -15,7 +15,8 @@ const MisCursos: NextPage = () => {
     )
 }
 
-export async function getServerSideProps({ req, res }: NextRequestResponse) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function getServerSideProps({ req: _req, res }: NextRequestResponse) {
     const token = getToken();
     if (!token) {
       res.writeHead(307, { Location: "/acceso" });

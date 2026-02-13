@@ -1,6 +1,6 @@
 import FooterComponent from "../../components/FooterComponent";
 import "@testing-library/jest-dom";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 
 describe('Footer Component', () => {  
     it("renders a footer", () => {
