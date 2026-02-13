@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router';
 import { setUser , setToken } from '../services/'
@@ -37,7 +37,7 @@ const Acceso: NextPage = () => {
       setUser(JSON.stringify(response.data));
       Swal.fire('Acceso', 'Logeado correctamente');
       push('/mis-cursos')
-  }).catch(error => {
+  }).catch(() => {
       Swal.fire('Problemas acceso', 'No se ha podido logear, revise usuario/contraseña', 'error');
 
   })

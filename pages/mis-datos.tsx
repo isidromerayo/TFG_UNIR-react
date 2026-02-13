@@ -29,7 +29,7 @@ const MisDatos: NextPage = () => {
 }
 
 
-export async function getServerSideProps({ req, res }: NextRequestResponse) {
+export function getServerSideProps({ res }: NextRequestResponse) {
   const token = getToken();
   if (!token) {
     res.writeHead(307, { Location: "/acceso" });
