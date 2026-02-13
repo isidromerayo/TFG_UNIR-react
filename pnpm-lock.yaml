@@ -68,11 +68,14 @@ importers:
         specifier: ^7.27.1
         version: 7.28.5(@babel/core@7.29.0)
       '@cypress/code-coverage':
-        specifier: ^3.13.4
-        version: 3.14.7(@babel/core@7.29.0)(@babel/preset-env@7.29.0(@babel/core@7.29.0))(babel-loader@10.0.0(@babel/core@7.29.0)(webpack@5.104.1))(cypress@15.9.0)(webpack@5.104.1)
+        specifier: ^4.0.0
+        version: 4.0.0(@babel/core@7.29.0)(@babel/preset-env@7.29.0(@babel/core@7.29.0))(babel-loader@10.0.0(@babel/core@7.29.0)(webpack@5.104.1))(cypress@15.10.0)(webpack@5.104.1)
       '@cypress/react':
         specifier: ^9.0.1
-        version: 9.0.1(@types/react-dom@19.2.3(@types/react@19.2.13))(@types/react@19.2.13)(cypress@15.9.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        version: 9.0.1(@types/react-dom@19.2.3(@types/react@19.2.13))(@types/react@19.2.13)(cypress@15.10.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@cypress/webpack-preprocessor':
+        specifier: ^7.0.2
+        version: 7.0.2(@babel/core@7.29.0)(@babel/preset-env@7.29.0(@babel/core@7.29.0))(babel-loader@10.0.0(@babel/core@7.29.0)(webpack@5.104.1))(webpack@5.104.1)
       '@istanbuljs/nyc-config-typescript':
         specifier: ^1.0.2
         version: 1.0.2(nyc@17.1.0)
@@ -95,8 +98,8 @@ importers:
         specifier: ^7.1.3
         version: 7.1.3(webpack@5.104.1)
       cypress:
-        specifier: ^15.9.0
-        version: 15.9.0
+        specifier: ^15.10.0
+        version: 15.10.0
       file-loader:
         specifier: ^6.2.0
         version: 6.2.0(webpack@5.104.1)
@@ -813,13 +816,14 @@ packages:
     resolution: {integrity: sha512-Vd/9EVDiu6PPJt9yAh6roZP6El1xHrdvIVGjyBsHR0RYwNHgL7FJPyIIW4fANJNG6FtyZfvlRPpFI4ZM/lubvw==}
     engines: {node: '>=18'}
 
-  '@cypress/code-coverage@3.14.7':
-    resolution: {integrity: sha512-0qk2aNKmrB0AwJtYSyK2+MWl/3NqDgZQ1OBSEh6oFnJwl/H2u3NTatV+FTCap22HTm+uxUS6SarU8gP9gFZ6Tw==}
+  '@cypress/code-coverage@4.0.0':
+    resolution: {integrity: sha512-f91ZfRfblyUudFA2nu0Z0ZTmza/QGkDCwdbQoO8zEpAjq2laRysWHn8nqM/9dOeJjH5oGnd0sYdqaGe5G1yxBw==}
+    engines: {node: '>=20'}
     peerDependencies:
       '@babel/core': ^7.0.1
       '@babel/preset-env': ^7.0.0
       babel-loader: ^8.3 || ^9 || ^10
-      cypress: '*'
+      cypress: '>=15.10.0'
       webpack: ^4 || ^5
 
   '@cypress/react@9.0.1':
@@ -845,6 +849,14 @@ packages:
       '@babel/preset-env': ^7.25.3
       babel-loader: ^8.3 || ^9 || ^10
       webpack: ^4 || ^5
+
+  '@cypress/webpack-preprocessor@7.0.2':
+    resolution: {integrity: sha512-J8B8UG8sAVbCIvWh57irEzyjCpcXC2CvoXHY7xrQqwiaNbtKLL/WRRELTYpZtD16zT8WG6wwUkAOnrfwHO3tsA==}
+    peerDependencies:
+      '@babel/core': ^7.28.0
+      '@babel/preset-env': ^7.26.0
+      babel-loader: ^9 || ^10
+      webpack: ^5
 
   '@cypress/xvfb@1.2.4':
     resolution: {integrity: sha512-skbBzPggOVYCbnGgV+0dmBdW/s77ZkAOXIC1knS8NagwDjBrNC1LuXtQJeiN6l+m7lzmHtaoUw/ctJKdqkG57Q==}
@@ -2086,8 +2098,8 @@ packages:
   csstype@3.2.3:
     resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
 
-  cypress@15.9.0:
-    resolution: {integrity: sha512-Ks6Bdilz3TtkLZtTQyqYaqtL/WT3X3APKaSLhTV96TmTyudzSjc6EJsJCHmBb7DxO+3R12q3Jkbjgm/iPgmwfg==}
+  cypress@15.10.0:
+    resolution: {integrity: sha512-OtUh7OMrfEjKoXydlAD1CfG2BvKxIqgWGY4/RMjrqQ3BKGBo5JFKoYNH+Tpcj4xKxWH4XK0Xri+9y8WkxhYbqQ==}
     engines: {node: ^20.1.0 || ^22.0.0 || >=24.0.0}
     hasBin: true
 
@@ -2955,10 +2967,6 @@ packages:
     resolution: {integrity: sha512-Pt/uge1Q9s+5VAZ+pCo16TYMWPBIl+oaNIjgLQxcX0itS6ueeaA+pEfThZpH8WxhFgCiEb8sAJY6MdUKgiIWaQ==}
     engines: {node: '>=8'}
 
-  istanbul-lib-instrument@4.0.3:
-    resolution: {integrity: sha512-BXgQl9kf4WTCPCCpmFGoJkz/+uhvm7h7PFKUYxh7qarQd3ER33vHG//qaE8eN25l07YqZPpHXU9I09l/RD5aGQ==}
-    engines: {node: '>=8'}
-
   istanbul-lib-instrument@6.0.3:
     resolution: {integrity: sha512-Vtgk7L/R2JHyyGW07spoFlB8/lpjiOLTjMdms6AFMraYt3BaJauod/NGrfnVG/y4Ix1JEuMRPDPEj2ua+zz1/Q==}
     engines: {node: '>=10'}
@@ -3266,9 +3274,6 @@ packages:
   lodash.once@4.1.1:
     resolution: {integrity: sha512-Sb487aTOCr9drQVL8pIxOzVhafOjZN9UU54hiN8PU3uAiSV7lx1yYNpbNmex2PK6dSJoNTSJUUswT651yww3Mg==}
 
-  lodash@4.17.21:
-    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-
   lodash@4.17.23:
     resolution: {integrity: sha512-LgVTMpQtIopCi79SJeDiP0TfWi5CNEc/L/aRdTh3yIvmZXTnheWpKjSZhnvMl8iXbC1tFg9gdHHDMLoV7CnG+w==}
 
@@ -3413,11 +3418,6 @@ packages:
 
   nwsapi@2.2.23:
     resolution: {integrity: sha512-7wfH4sLbt4M0gCDzGE6vzQBo0bfTKjU7Sfpqy/7gs1qBfYz2vEJH6vXcBKpO3+6Yu1telwd0t9HpyOoLEQQbIQ==}
-
-  nyc@15.1.0:
-    resolution: {integrity: sha512-jMW04n9SxKdKi1ZMGhvUTHBN0EICCRkHemEoE5jm6mTYcqcdas0ATzgUgejlQUHMvpnOZqGB5Xxsv9KxJW1j8A==}
-    engines: {node: '>=8.9'}
-    hasBin: true
 
   nyc@17.1.0:
     resolution: {integrity: sha512-U42vQ4czpKa0QdI1hu950XuNhYqgoM+ZF1HT+VuUHL9hPfDPVvNQyltmMqdE9bUHMVa+8yNbc3QKTj8zQhlVxQ==}
@@ -5334,29 +5334,29 @@ snapshots:
 
   '@csstools/css-tokenizer@3.0.4': {}
 
-  '@cypress/code-coverage@3.14.7(@babel/core@7.29.0)(@babel/preset-env@7.29.0(@babel/core@7.29.0))(babel-loader@10.0.0(@babel/core@7.29.0)(webpack@5.104.1))(cypress@15.9.0)(webpack@5.104.1)':
+  '@cypress/code-coverage@4.0.0(@babel/core@7.29.0)(@babel/preset-env@7.29.0(@babel/core@7.29.0))(babel-loader@10.0.0(@babel/core@7.29.0)(webpack@5.104.1))(cypress@15.10.0)(webpack@5.104.1)':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/preset-env': 7.29.0(@babel/core@7.29.0)
       '@cypress/webpack-preprocessor': 6.0.4(@babel/core@7.29.0)(@babel/preset-env@7.29.0(@babel/core@7.29.0))(babel-loader@10.0.0(@babel/core@7.29.0)(webpack@5.104.1))(webpack@5.104.1)
       babel-loader: 10.0.0(@babel/core@7.29.0)(webpack@5.104.1)
       chalk: 4.1.2
-      cypress: 15.9.0
+      cypress: 15.10.0
       dayjs: 1.11.13
       debug: 4.4.0
       execa: 4.1.0
       istanbul-lib-coverage: 3.2.2
       js-yaml: 4.1.1
-      nyc: 15.1.0
+      nyc: 17.1.0
       tinyglobby: 0.2.15
       webpack: 5.104.1
     transitivePeerDependencies:
       - supports-color
 
-  '@cypress/react@9.0.1(@types/react-dom@19.2.3(@types/react@19.2.13))(@types/react@19.2.13)(cypress@15.9.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+  '@cypress/react@9.0.1(@types/react-dom@19.2.3(@types/react@19.2.13))(@types/react@19.2.13)(cypress@15.10.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
       '@types/react-dom': 19.2.3(@types/react@19.2.13)
-      cypress: 15.9.0
+      cypress: 15.10.0
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
     optionalDependencies:
@@ -5390,8 +5390,21 @@ snapshots:
       babel-loader: 10.0.0(@babel/core@7.29.0)(webpack@5.104.1)
       bluebird: 3.7.1
       debug: 4.4.3(supports-color@8.1.1)
-      lodash: 4.17.21
-      semver: 7.7.3
+      lodash: 4.17.23
+      semver: 7.7.4
+      webpack: 5.104.1
+    transitivePeerDependencies:
+      - supports-color
+
+  '@cypress/webpack-preprocessor@7.0.2(@babel/core@7.29.0)(@babel/preset-env@7.29.0(@babel/core@7.29.0))(babel-loader@10.0.0(@babel/core@7.29.0)(webpack@5.104.1))(webpack@5.104.1)':
+    dependencies:
+      '@babel/core': 7.29.0
+      '@babel/preset-env': 7.29.0(@babel/core@7.29.0)
+      babel-loader: 10.0.0(@babel/core@7.29.0)(webpack@5.104.1)
+      bluebird: 3.7.1
+      debug: 4.4.3(supports-color@8.1.1)
+      lodash: 4.17.23
+      semver: 7.7.4
       webpack: 5.104.1
     transitivePeerDependencies:
       - supports-color
@@ -6736,7 +6749,7 @@ snapshots:
 
   csstype@3.2.3: {}
 
-  cypress@15.9.0:
+  cypress@15.10.0:
     dependencies:
       '@cypress/request': 3.0.10
       '@cypress/xvfb': 1.2.4(supports-color@8.1.1)
@@ -7773,15 +7786,6 @@ snapshots:
     dependencies:
       append-transform: 2.0.0
 
-  istanbul-lib-instrument@4.0.3:
-    dependencies:
-      '@babel/core': 7.29.0
-      '@istanbuljs/schema': 0.1.3
-      istanbul-lib-coverage: 3.2.2
-      semver: 6.3.1
-    transitivePeerDependencies:
-      - supports-color
-
   istanbul-lib-instrument@6.0.3:
     dependencies:
       '@babel/core': 7.29.0
@@ -8316,8 +8320,6 @@ snapshots:
 
   lodash.once@4.1.1: {}
 
-  lodash@4.17.21: {}
-
   lodash@4.17.23: {}
 
   log-symbols@4.1.0:
@@ -8350,7 +8352,7 @@ snapshots:
 
   make-dir@4.0.0:
     dependencies:
-      semver: 7.7.3
+      semver: 7.7.4
 
   make-error@1.3.6: {}
 
@@ -8440,38 +8442,6 @@ snapshots:
       path-key: 3.1.1
 
   nwsapi@2.2.23: {}
-
-  nyc@15.1.0:
-    dependencies:
-      '@istanbuljs/load-nyc-config': 1.1.0
-      '@istanbuljs/schema': 0.1.3
-      caching-transform: 4.0.0
-      convert-source-map: 1.9.0
-      decamelize: 1.2.0
-      find-cache-dir: 3.3.2
-      find-up: 4.1.0
-      foreground-child: 2.0.0
-      get-package-type: 0.1.0
-      glob: 7.2.3
-      istanbul-lib-coverage: 3.2.2
-      istanbul-lib-hook: 3.0.0
-      istanbul-lib-instrument: 4.0.3
-      istanbul-lib-processinfo: 2.0.3
-      istanbul-lib-report: 3.0.1
-      istanbul-lib-source-maps: 4.0.1
-      istanbul-reports: 3.2.0
-      make-dir: 3.1.0
-      node-preload: 0.2.1
-      p-map: 3.0.0
-      process-on-spawn: 1.1.0
-      resolve-from: 5.0.0
-      rimraf: 3.0.2
-      signal-exit: 3.0.7
-      spawn-wrap: 2.0.0
-      test-exclude: 6.0.0
-      yargs: 15.4.1
-    transitivePeerDependencies:
-      - supports-color
 
   nyc@17.1.0:
     dependencies:
