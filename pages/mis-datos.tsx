@@ -29,8 +29,7 @@ const MisDatos: NextPage = () => {
 }
 
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function getServerSideProps({ req: _req, res }: NextRequestResponse) {
+export function getServerSideProps({ res }: NextRequestResponse) {
   const token = getToken();
   if (!token) {
     res.writeHead(307, { Location: "/acceso" });
