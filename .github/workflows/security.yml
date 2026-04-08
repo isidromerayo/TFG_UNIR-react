@@ -128,7 +128,7 @@ jobs:
       # 6. Upload artifacts para análisis
       - name: Upload security reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: security-reports
           path: |
