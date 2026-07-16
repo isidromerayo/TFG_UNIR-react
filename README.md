@@ -15,14 +15,14 @@ Aplicación web frontend desarrollada en React con Next.js para un sistema de ge
 
 ## 🚀 Tecnologías
 
-- **Framework**: Next.js 16.1.1
-- **Librería**: React 19.2.3
+- **Framework**: Next.js 16.2.10
+- **Librería**: React 19.2.4
 - **Lenguaje**: TypeScript 5.9.3
 - **Package Manager**: pnpm
-- **State Management**: Zustand 5.0.5
-- **Forms**: React Hook Form 7.70.0 + Yup 1.6.1
-- **HTTP Client**: Axios 1.12.0
-- **UI/Alerts**: SweetAlert2 11.4.8
+- **State Management**: Zustand 5.0.11
+- **Forms**: React Hook Form 7.71.1 + Yup 1.6.1
+- **HTTP Client**: Axios 1.13.5
+- **UI/Alerts**: SweetAlert2 11.26.18
 - **Testing**: Jest + Testing Library, Cypress
 
 ## 📦 Instalación
@@ -30,7 +30,7 @@ Aplicación web frontend desarrollada en React con Next.js para un sistema de ge
 ### Prerequisitos
 
 - Node.js 20.x o superior
-- pnpm 8.0.0 o superior
+- pnpm 10.x o superior
 
 ### Instalar pnpm
 
@@ -152,27 +152,24 @@ TFG_UNIR-react/
 - **[PULL_REQUEST.md](./PULL_REQUEST.md)** - Guía para la creación de Pull Requests
 - **[DOCS_INDEX.md](./DOCS_INDEX.md)** - Índice general de la documentación
 
-## � Se/guridad y Mantenimiento
+## Seguridad y Mantenimiento
 
 ### Auditoría de Seguridad
 
 ```bash
-# Verificar vulnerabilidades
-pnpm audit
+# Verificar dependencias desactualizadas
+pnpm outdated
 
-# Auditoría con detalles en JSON
-pnpm audit --json
-
-# Auditoría con nivel específico
-pnpm audit --audit-level=moderate
+# Verificar vulnerabilidades (endpoint retirado - usar herramientas externas)
+# pnpm audit  # HTTP 410 - endpoint retirado por npm
 ```
 
-**Estado actual**: ✅ 0 vulnerabilidades conocidas
+**Estado actual**: Next.js actualizado a 16.2.10 (13 vulnerabilidades corregidas)
 
-⚠️ **Importante**: `pnpm audit` solo consulta la npm Advisory Database. Para una seguridad completa:
-- Revisar PRs de Snyk y Dependabot
-- Monitorear security advisories de paquetes críticos
-- Usar múltiples herramientas de auditoría
+⚠️ **Importante**: `pnpm audit` endpoint está retirado (HTTP 410). Usar:
+- `pnpm outdated` para verificar actualizaciones disponibles
+- GitHub Dependabot para alertas de seguridad
+- Herramientas externas como Snyk o OSV Scanner
 
 Ver [AUDIT_REPORT.md](./AUDIT_REPORT.md) para el reporte completo.  
 Ver [SECURITY_AUDIT_ANALYSIS.md](./SECURITY_AUDIT_ANALYSIS.md) para entender las limitaciones de `pnpm audit`.
@@ -251,7 +248,8 @@ El proyecto incluye un workflow de CI/CD configurado en `.github/workflows/node.
 6. **Lint** - Ejecuta el linter
 7. **Build** - Compila el proyecto
 8. **Test** - Ejecuta tests con coverage
-9. **Audit** - Verifica vulnerabilidades de seguridad
+9. **Coverage** - Fusiona reportes de cobertura
+10. **SonarQube** - Análisis de calidad de código
 
 #### Beneficios
 
@@ -304,6 +302,6 @@ Este proyecto es parte del TFG de UNIR - Frameworks frontend JavaScript: Anális
 
 ---
 
-**Versión**: 0.1.0  
+**Versión**: 0.2.0  
 **Node.js**: 20.x  
-**Package Manager**: pnpm
+**Package Manager**: pnpm 10.x
