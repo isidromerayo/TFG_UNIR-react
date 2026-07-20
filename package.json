@@ -30,21 +30,21 @@
     "security:outdated": "pnpm outdated"
   },
   "dependencies": {
-    "@hookform/resolvers": "^5.1.1",
+    "@hookform/resolvers": "^5.4.0",
     "@types/node": "25.2.3",
-    "@types/react": "^19.2.14",
+    "@types/react": "^19.2.17",
     "@types/react-dom": "^19.1.6",
-    "axios": "^1.15.2",
+    "axios": "^1.18.1",
     "eslint": "^9.39.2",
     "eslint-config-next": "^16.2.10",
     "next": "^16.2.10",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "react-hook-form": "^7.71.1",
-    "sweetalert2": "^11.26.18",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "react-hook-form": "^7.82.0",
+    "sweetalert2": "^11.26.25",
     "typescript": "5.9.3",
     "yup": "^1.6.1",
-    "zustand": "^5.0.11"
+    "zustand": "^5.0.14"
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",
