@@ -2,8 +2,8 @@
 
 ## Project
 
-- **Next.js 16.2.10** (Pages Router, not App Router)
-- **React 19.2.4**, TypeScript 5.9.3
+- **Next.js 16.x** (Pages Router, not App Router)
+- **React 19.x**, TypeScript 5.9.3
 - **pnpm** (not npm) — `.npmrc` has `shamefully-hoist=true`
 - Frontend for online course management system
 
@@ -39,7 +39,7 @@ Or individually:
 ```
 pages/          # Next.js Pages Router (file-based routing)
 components/     # Reusable React components (6 main)
-services/       # API client (Axios)
+services/       # API client (Axios) + session management
 store/          # Zustand state management
 utils/          # Helpers (logger, API, constants)
 __tests__/      # Jest unit tests (mirrors pages/components structure)
@@ -48,9 +48,10 @@ cypress/        # Cypress component tests
 
 Key files:
 - `pages/_app.tsx` — App wrapper
-- `pages/api/` — Backend API routes
 - `store/useCartStore.ts` — Cart state (Zustand)
-- `services/session.ts` — Auth/session management
+- `services/session.ts` — Auth/session management (localStorage)
+- `utils/api.ts` — Axios instance with retry/interceptors
+- `utils/constants.ts` — API_URL from env var
 
 ## Testing
 
@@ -61,7 +62,7 @@ Key files:
 ## CI/CD
 
 GitHub Actions in `.github/workflows/node.js.yml`:
-- Node.js 20.x, pnpm 10
+- Node.js 22.x, pnpm 10
 - Runs: lint → build → Jest tests → Cypress tests → coverage merge → audit
 - SonarQube integration for code quality
 
@@ -83,6 +84,6 @@ chore/deps-*          # Dependency updates
 
 ## Dependencies (versions as of last update)
 
-**Production**: next 16.2.10, react 19.2.4, axios 1.13.5, zustand 5.0.11, react-hook-form 7.71.1, yup 1.6.1, sweetalert2 11.26.18
+**Production**: next 16.2.12, react 19.2.8, axios 1.18.1, zustand 5.0.14, react-hook-form 7.83.0, yup 1.6.1, sweetalert2 11.26.25
 
-**Dev**: jest 30.2.0, cypress 15.10.0, typescript 5.9.3, eslint 9.39.2
+**Dev**: jest 30.2.0, cypress 15.19.0, typescript 5.9.3, eslint 9.39.3

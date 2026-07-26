@@ -15,21 +15,21 @@ Aplicación web frontend desarrollada en React con Next.js para un sistema de ge
 
 ## 🚀 Tecnologías
 
-- **Framework**: Next.js 16.2.10
-- **Librería**: React 19.2.4
+- **Framework**: Next.js 16.2.12
+- **Librería**: React 19.2.8
 - **Lenguaje**: TypeScript 5.9.3
 - **Package Manager**: pnpm
-- **State Management**: Zustand 5.0.11
-- **Forms**: React Hook Form 7.71.1 + Yup 1.6.1
-- **HTTP Client**: Axios 1.13.5
-- **UI/Alerts**: SweetAlert2 11.26.18
+- **State Management**: Zustand 5.0.14
+- **Forms**: React Hook Form 7.83.0 + Yup 1.6.1
+- **HTTP Client**: Axios 1.18.1
+- **UI/Alerts**: SweetAlert2 11.26.25
 - **Testing**: Jest + Testing Library, Cypress
 
 ## 📦 Instalación
 
 ### Prerequisitos
 
-- Node.js 20.x o superior
+- Node.js 22.x o superior
 - pnpm 10.x o superior
 
 ### Instalar pnpm
@@ -164,7 +164,7 @@ pnpm outdated
 # pnpm audit  # HTTP 410 - endpoint retirado por npm
 ```
 
-**Estado actual**: Next.js actualizado a 16.2.10 (13 vulnerabilidades corregidas)
+**Estado actual**: Next.js actualizado a 16.2.12 (18 vulnerabilidades corregidas)
 
 ⚠️ **Importante**: `pnpm audit` endpoint está retirado (HTTP 410). Usar:
 - `pnpm outdated` para verificar actualizaciones disponibles
@@ -303,5 +303,5 @@ Este proyecto es parte del TFG de UNIR - Frameworks frontend JavaScript: Anális
 ---
 
 **Versión**: 0.2.0  
-**Node.js**: 20.x  
+**Node.js**: 22.x  
 **Package Manager**: pnpm 10.x
