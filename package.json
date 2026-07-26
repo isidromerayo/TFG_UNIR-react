@@ -30,7 +30,7 @@
     "security:outdated": "pnpm outdated"
   },
   "dependencies": {
-    "@hookform/resolvers": "^5.2.2",
+    "@hookform/resolvers": "^5.5.7",
     "@types/node": "25.2.3",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.1.6",
