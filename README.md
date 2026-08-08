@@ -233,30 +233,44 @@ pnpm build
 
 ### GitHub Actions
 
-El proyecto incluye un workflow de CI/CD configurado en `.github/workflows/node.js.yml` que se ejecuta automáticamente en:
+El proyecto incluye los siguientes workflows configurados en `.github/workflows/`. Todos usan **Node.js 22.x** (vía `actions/setup-node@v7`) y `pnpm` 10.x, y fijan las actions a commits SHA completos para builds inmutables.
 
-- Push a `main`
-- Pull requests a `main`
+#### Pipeline (node.js.yml)
 
-#### Pipeline
+Se ejecuta en push a `main` y pull requests a `main`:
 
 1. **Checkout** - Descarga el código
-2. **Setup Node.js** - Configura Node.js 20.x
+2. **Setup Node.js** - Configura Node.js 22.x
 3. **Install pnpm** - Instala pnpm 10.x
 4. **Cache** - Cachea el store de pnpm para builds más rápidos
 5. **Install** - Instala dependencias con `--frozen-lockfile`
 6. **Lint** - Ejecuta el linter
 7. **Build** - Compila el proyecto
 8. **Test** - Ejecuta tests con coverage
-9. **Coverage** - Fusiona reportes de cobertura
-10. **SonarQube** - Análisis de calidad de código
+9. **Coverage** - Fusiona reportes de cobertura (umbral ≥ 80%)
+10. **SonarQube** - Análisis de calidad de código (SonarCloud)
+
+#### Tests (tests.yml)
+
+Ejecuta la suite de pruebas completa (Jest unitarias, tests de componentes Cypress) con fusión de cobertura, en push a `main`/`develop` y PRs.
+
+#### CodeQL (codeql.yml)
+
+Análisis estático de seguridad (`github/codeql-action`) con el análisis `javascript-typescript`, resultados en **Security → Code Scanning**.
+
+#### Security Workflow (security.yml)
+
+Auditoría de seguridad multi-herramienta (diaria 2 AM UTC, push y PRs a `main`):
+- pnpm audit, npm audit, outdated check, Snyk (opcional vía `SNYK_TOKEN`) y OSV Scanner (`google/osv-scanner-action/osv-scanner-action@<sha>`, serie v2.5.0)
+- Sube reportes como artifacts y crea issues/comentarios automáticos (permisos `issues: write` y `pull-requests: write`)
+- Pasos con secretos protegidos con `if: env.X != ''` (los secretos no son válidos en condiciones `if:`)
 
 #### Beneficios
 
 - ✅ Builds reproducibles con lockfile congelado
 - ✅ Instalación rápida con caché de pnpm
 - ✅ Verificación automática de calidad de código
-- ✅ Detección temprana de errores
+- ✅ Detección temprana de errores y vulnerabilidades
 
 ## 🔄 Migración a pnpm
 
