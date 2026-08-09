@@ -1,4 +1,4 @@
-# TFG UNIR - Frontend React/Next.js
+# TFG UNIR - React
 
 [![CI](https://github.com/isidromerayo/TFG_UNIR-react/actions/workflows/node.js.yml/badge.svg)](https://github.com/isidromerayo/TFG_UNIR-react/actions/workflows/node.js.yml)
 [![Tests](https://github.com/isidromerayo/TFG_UNIR-react/actions/workflows/tests.yml/badge.svg)](https://github.com/isidromerayo/TFG_UNIR-react/actions/workflows/tests.yml)
@@ -8,6 +8,53 @@
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=isidromerayo_TFG_UNIR-react&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=isidromerayo_TFG_UNIR-react)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=isidromerayo_TFG_UNIR-react&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=isidromerayo_TFG_UNIR-react)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=isidromerayo_TFG_UNIR-react&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=isidromerayo_TFG_UNIR-react)
+
+# Universidad Internacional de La Rioja
+
+## Escuela Superior de Ingeniería y Tecnología 
+
+### Grado en Ingeniería Informática
+
+#### TFG: Frameworks frontend JavaScript: Análisis y estudio práctico
+
+##### React
+
+## 📅 Ciclo de Vida de React
+
+React sigue **versionado semántico (SemVer)** y no publica fechas fijas de End of Life (EOL). La versión estable **"Latest"** es la recomendada para aplicaciones de producción; las correcciones de seguridad se backportean a todas las versiones mayores afectadas, sin un modelo formal de LTS como el de otros frameworks.
+
+### Estado de las Versiones
+
+| Versión | Estado | Fecha de Lanzamiento | Última release |
+|---------|--------|----------------------|----------------|
+| **React 19** | **Estable / Actual** | 5 de Diciembre 2024 | 19.2.8 (Julio 2026) |
+| **React 18** | Solo correcciones de seguridad | 29 de Marzo 2022 | 18.3.1 (Abril 2024) |
+
+### Política de Lanzamientos
+
+- **Major (x)**: Cambios incompatibles. Poco frecuentes (años de diferencia entre versiones mayores).
+- **Minor (y)**: Nuevas funcionalidades y mejoras no disruptivas.
+- **Patch (z)**: Correcciones críticas y parches de seguridad (sin efectos secundarios esperados).
+- **Canales de release**: `Latest` (estable), `Canary` (pre-release, usado por frameworks como Next.js) y `Experimental` (no apto para producción).
+
+### Cronología
+
+```mermaid
+timeline
+    title Historia Reciente de React
+    2022-03 : React 18 Released
+    2024-12 : React 19 Released (Actions, Forms, useOptimistic)
+    2025-10 : React Compiler v1.0 / React 19.2
+    2026-07 : React 19.2.8 (último parche)
+```
+
+### Implicaciones para este proyecto
+
+- **React 19.2.8** con **Next.js 16.2.12** (Pages Router).
+- El proyecto se mantiene en la versión `Latest` estable, por lo que recibe nuevas funcionalidades, correcciones y parches de seguridad sin necesidad de migraciones mayores.
+- **Fuente oficial**: [React versioning policy](https://react.dev/community/versioning-policy)
+
+## 🚀 Descripción
 
 Aplicación web frontend desarrollada en React con Next.js para un sistema de gestión de cursos online.
 
