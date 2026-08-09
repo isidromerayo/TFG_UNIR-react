@@ -1,7 +1,5 @@
 # TFG UNIR - React
 
-[![CI](https://github.com/isidromerayo/TFG_UNIR-react/actions/workflows/node.js.yml/badge.svg)](https://github.com/isidromerayo/TFG_UNIR-react/actions/workflows/node.js.yml)
-[![Tests](https://github.com/isidromerayo/TFG_UNIR-react/actions/workflows/tests.yml/badge.svg)](https://github.com/isidromerayo/TFG_UNIR-react/actions/workflows/tests.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=isidromerayo_TFG_UNIR-react&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=isidromerayo_TFG_UNIR-react)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=isidromerayo_TFG_UNIR-react&metric=coverage)](https://sonarcloud.io/summary/new_code?id=isidromerayo_TFG_UNIR-react)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=isidromerayo_TFG_UNIR-react&metric=bugs)](https://sonarcloud.io/summary/new_code?id=isidromerayo_TFG_UNIR-react)
@@ -19,40 +17,57 @@
 
 ##### React
 
-## 📅 Ciclo de Vida de React
+## 📅 Ciclo de Vida de Next.js y React
 
-React sigue **versionado semántico (SemVer)** y no publica fechas fijas de End of Life (EOL). La versión estable **"Latest"** es la recomendada para aplicaciones de producción; las correcciones de seguridad se backportean a todas las versiones mayores afectadas, sin un modelo formal de LTS como el de otros frameworks.
+Este proyecto combina dos tecnologías del ecosistema React con políticas de versionado distintas:
 
-### Estado de las Versiones
+- **Next.js** (framework) sigue **SemVer** con un **modelo LTS de dos fases**: cada versión mayor recibe soporte durante **2 años** desde su lanzamiento (Active LTS → Maintenance LTS → EOL).
+- **React** (librería) sigue **SemVer** y **no publica fechas fijas de End of Life (EOL)**. La versión estable `Latest` es la recomendada para producción; las correcciones de seguridad se backportean a los mayores antiguos todavía soportados.
+
+### Ciclo de Vida de Next.js
+
+Next.js publica **dos canales de release**: `stable` (producción) y `canary` (pre-release diario, no apto para producción). Cada versión mayor permanece en **Active LTS** hasta el lanzamiento del siguiente mayor y luego pasa a **Maintenance LTS** (solo correcciones críticas y parches de seguridad) durante el resto de la ventana de 2 años.
+
+| Versión | Estado | Fecha de Lanzamiento | Fin de Soporte | Última release |
+|---------|--------|----------------------|----------------|----------------|
+| **16.x** | **Active LTS** | 22 de Octubre 2025 | ~22 de Octubre 2027 | 16.3.0 (Agosto 2026) |
+| **15.x** | Maintenance LTS | 21 de Octubre 2024 | 21 de Octubre 2026 | 15.5.23 (Agosto 2026) |
+| **14.x** | End of Life (EOL) | 26 de Octubre 2023 | 26 de Octubre 2025 | 14.2.35 (Diciembre 2025) |
+
+### Ciclo de Vida de React
+
+React publica **tres canales de release**: `Latest` (estable), `Canary` (pre-release) y `Experimental` (no apto para producción). No existe un modelo formal de LTS; el canal `Latest` recibe nuevas funcionalidades, correcciones y parches, y los mayores antiguos reciben solo correcciones de seguridad.
 
 | Versión | Estado | Fecha de Lanzamiento | Última release |
 |---------|--------|----------------------|----------------|
 | **React 19** | **Estable / Actual** | 5 de Diciembre 2024 | 19.2.8 (Julio 2026) |
 | **React 18** | Solo correcciones de seguridad | 29 de Marzo 2022 | 18.3.1 (Abril 2024) |
 
-### Política de Lanzamientos
+### Política de Lanzamientos (SemVer)
 
-- **Major (x)**: Cambios incompatibles. Poco frecuentes (años de diferencia entre versiones mayores).
+- **Major (x)**: Cambios incompatibles. Poco frecuentes en React; aproximadamente anuales en Next.js.
 - **Minor (y)**: Nuevas funcionalidades y mejoras no disruptivas.
-- **Patch (z)**: Correcciones críticas y parches de seguridad (sin efectos secundarios esperados).
-- **Canales de release**: `Latest` (estable), `Canary` (pre-release, usado por frameworks como Next.js) y `Experimental` (no apto para producción).
+- **Patch (z)**: Correcciones críticas y parches de seguridad.
 
 ### Cronología
 
 ```mermaid
 timeline
-    title Historia Reciente de React
-    2022-03 : React 18 Released
+    title Historia Reciente del Ecosistema React
+    2024-10 : Next.js 15 Released
     2024-12 : React 19 Released (Actions, Forms, useOptimistic)
-    2025-10 : React Compiler v1.0 / React 19.2
+    2025-10 : Next.js 16 Released / React 19.2
     2026-07 : React 19.2.8 (último parche)
+    2026-08 : Next.js 16.3 (Instant Navigations)
 ```
 
 ### Implicaciones para este proyecto
 
-- **React 19.2.8** con **Next.js 16.2.12** (Pages Router).
-- El proyecto se mantiene en la versión `Latest` estable, por lo que recibe nuevas funcionalidades, correcciones y parches de seguridad sin necesidad de migraciones mayores.
-- **Fuente oficial**: [React versioning policy](https://react.dev/community/versioning-policy)
+- **Next.js 16.2.12** (Active LTS) con **React 19.2.8** (Latest) en modo **Pages Router**.
+- Next.js 16.2.12 está en **Active LTS**: recibe nuevas funcionalidades, correcciones y parches de seguridad. La última minor, **16.3.0**, ya está disponible y es compatible (el proyecto usa `^16.2.12`).
+- React 19.2.8 es la versión `Latest` estable: recibe nuevas funcionalidades y parches de seguridad.
+- Node.js 22.x cumple el requisito mínimo de Next.js 16 (Node.js 20.9+).
+- **Fuentes oficiales**: [Next.js Support Policy](https://nextjs.org/support-policy) · [React versioning policy](https://react.dev/community/versioning-policy)
 
 ## 🚀 Descripción
 
