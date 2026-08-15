@@ -23,9 +23,9 @@ export const useCartStore = create<State & Actions>((set, get) => ({
     totalPrice: INITIAL_STATE.totalPrice,
     addToCart: (product: CartItem) => {
      const cart = get().cart
-     const cartItem = cart.find((item: CartItem) => item.id === product.id)
+     const cartItemExists = cart.some((item: CartItem) => item.id === product.id)
    
-     if (cartItem) {
+     if (cartItemExists) {
       // Increment quantity if product already exists in cart
       const updatedCart = cart.map((item: CartItem) =>
         item.id === product.id
