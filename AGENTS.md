@@ -84,15 +84,6 @@ GitHub Actions in `.github/workflows/node.js.yml`:
 - Releases MUST use a `release/X.Y.Z` branch, merge it via PR, then create the Git tag from the updated `main` branch.
 - This policy applies to both human contributors and AI agents.
 
-## Commit Signature (MUST)
-
-- Commits made by an opencode agent carry a trailer in the commit message:
-  ```
-  Generated with opencode (opencode/big-pickle).
-  ```
-- The model identifier is dynamic (via `OPENCODE_MODEL` env var) so other models are attributed correctly.
-- A `prepare-commit-msg` hook in `.git/hooks/` adds the trailer automatically **only** when `OPENCODE=1` (i.e. the commit is made by the agent). Manual commits by the user are NOT signed.
-
 ## Plan Mode & Execution Records (MUST)
 
 - When in **plan mode**, state it explicitly in every response and do NOT execute changes until the user approves with `adelante` and the system switches to build mode.
