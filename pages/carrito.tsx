@@ -66,11 +66,11 @@ const Carrito: NextPage = () => {
             <h2>Cursos a comprar</h2>
             <ul>
             {cartState.map(product => (<li key={product.id} className='curso-carrito'> {product.titulo} - {product.precio} 
-            <button className="btn btn-warning borrar-curso-carrito" onClick={ () => deleteCursoCarrito(product)}>borrar</button></li>))}
+            <button type="button" className="btn btn-warning borrar-curso-carrito" onClick={ () => deleteCursoCarrito(product)}>borrar</button></li>))}
             </ul>
         <div className="total-carrito">Total: <span className="destacar-info">{ totalCompra }</span></div>
         <div className="boton-comprar">
-          <button className="btn btn-primary" onClick={realizarCompra}>comprar</button>
+          <button type="button" className="btn btn-primary" onClick={realizarCompra}>comprar</button>
 
         </div>
       </div>
