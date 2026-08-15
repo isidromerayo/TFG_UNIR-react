@@ -29,11 +29,7 @@ const Carrito: NextPage = () => {
        }
 
        const realizarCompra = ():void =>{
-            if (!getToken()) {
-            Swal.fire({ title: 'Debe tener iniciada sesión para comprar' })
-            router.push("/acceso");
-          }
-          else {
+            if (getToken()) {
             Swal.fire({
                 title: '¿Estas seguro de realizar la compra?',
                 text: "No se puede deshacer",
@@ -48,6 +44,10 @@ const Carrito: NextPage = () => {
               }).catch((error) => {
                 logger.error('Error en compra:', error)
               });
+          }
+          else {
+            Swal.fire({ title: 'Debe tener iniciada sesión para comprar' })
+            router.push("/acceso");
           }
 
        }
