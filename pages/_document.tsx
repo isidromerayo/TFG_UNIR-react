@@ -10,7 +10,7 @@ class MyDocument extends Document {
           {/* eslint-disable-next-line @next/next/no-css-tags */}
           <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css" />
           {/* eslint-disable-next-line @next/next/no-css-tags */}
-          <link rel="stylesheet" href="/assets/vendor/bootstrap-icons/bi-icons.css" />
+          <link rel="stylesheet" href="/assets/vendor/bootstrap-icons/bootstrap-icons.min.css" />
           {/* eslint-disable-next-line @next/next/no-css-tags */}
           <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css" />
           {/* eslint-disable-next-line @next/next/no-css-tags */}
