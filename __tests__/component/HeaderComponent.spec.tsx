@@ -1,6 +1,7 @@
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import HeaderComponent from "../../components/HeaderComponent";
+import { getToken } from "../../services";
 
 const mockPush = jest.fn();
 
@@ -117,6 +118,23 @@ describe("HeaderComponent", () => {
       expect(screen.getByText("Registro")).toBeInTheDocument();
       expect(screen.getByText("Acceso")).toBeInTheDocument();
     });
+  });
+
+  it("no debe mostrar el menú Privado cuando getToken devuelve cadena vacía", async () => {
+    const api = (await import("../../utils/api")).default as any;
+    api.get.mockResolvedValue({ data: { _embedded: { categorias: [] } } });
+
+    (getToken as jest.Mock).mockReturnValue("");
+
+    render(<HeaderComponent />);
+
+    await waitFor(() => {
+      expect(screen.getByText("Registro")).toBeInTheDocument();
+      expect(screen.getByText("Acceso")).toBeInTheDocument();
+    });
+
+    expect(screen.queryByText(/Privado/i)).not.toBeInTheDocument();
+    expect(screen.queryByText("desconectar")).not.toBeInTheDocument();
   });
 
   it("debe ejecutar logout y navegar a / al clicar desconectar", async () => {
