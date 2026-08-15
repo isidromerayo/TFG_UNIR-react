@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { NextPage } from 'next'
-import React, { } from 'react'
 import { API_URL } from '../utils/constants'
 import Swal from 'sweetalert2'
 
