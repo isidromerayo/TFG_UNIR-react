@@ -82,6 +82,13 @@ feature/*             # New features
 chore/deps-*          # Dependency updates
 ```
 
+## Git Workflow (MANDATORY)
+
+- **NEVER commit or push directly to `main`.** All work goes through a feature branch and a pull request.
+- Keep `main` in sync with `origin/main` (`git pull --rebase origin main`) before branching.
+- Open a PR with `gh pr create` and merge it via the GitHub UI / `gh pr merge` — never by direct push.
+- Only merge `main` (e.g. dependabot security fixes or release chores) through reviewed, green PRs.
+
 ## Dependencies (versions as of last update)
 
 **Production**: next 16.2.12, react 19.2.8, axios 1.18.1, zustand 5.0.14, react-hook-form 7.83.0, yup 1.6.1, sweetalert2 11.26.25
