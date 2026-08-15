@@ -32,7 +32,7 @@ const Acceso: NextPage = () => {
   const submitForm = (e: FormSubmitEvent) => {
     e.preventDefault();
 
-    axios.post(`${API_URL}auth`, formData).then(response => {
+    axios.post(`${API_URL}/auth`, formData).then(response => {
       setToken(response.data.token);
       setUser(JSON.stringify(response.data));
       Swal.fire('Acceso', 'Logeado correctamente');
