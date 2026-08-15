@@ -74,20 +74,32 @@ GitHub Actions in `.github/workflows/node.js.yml`:
 - **pnpm overrides**: `package.json` has overrides for transitive deps (ajv, minimatch, brace-expansion, etc.)
 - **Deprecated subdependencies**: glob@7.2.3, inflight@1.0.6, rimraf@3.0.2 (ignore in audits)
 
-## Branch Naming
+## Branch Policy (MUST)
 
-```
-fix/security-*        # Security fixes
-feature/*             # New features
-chore/deps-*          # Dependency updates
-```
+- **NEVER commit or push directly to `main` or `master`.**
+- All changes (code, docs, CI, dependency updates, security fixes and hotfixes) MUST go through a branch and a Pull Request.
+- Use descriptive branch prefixes: `feature/`, `fix/`, `docs/`, `ci/`, `chore/`, `security/`, `release/`.
+- Prefer **squash merge** for a clean linear history.
+- **NEVER force-push to `main` or `master`.**
+- Releases MUST use a `release/X.Y.Z` branch, merge it via PR, then create the Git tag from the updated `main` branch.
+- This policy applies to both human contributors and AI agents.
 
-## Git Workflow (MANDATORY)
+## Commit Signature (MUST)
 
-- **NEVER commit or push directly to `main`.** All work goes through a feature branch and a pull request.
-- Keep `main` in sync with `origin/main` (`git pull --rebase origin main`) before branching.
-- Open a PR with `gh pr create` and merge it via the GitHub UI / `gh pr merge` — never by direct push.
-- Only merge `main` (e.g. dependabot security fixes or release chores) through reviewed, green PRs.
+- Commits made by an opencode agent carry a trailer in the commit message:
+  ```
+  Generated with opencode (opencode/big-pickle).
+  ```
+- The model identifier is dynamic (via `OPENCODE_MODEL` env var) so other models are attributed correctly.
+- A `prepare-commit-msg` hook in `.git/hooks/` adds the trailer automatically **only** when `OPENCODE=1` (i.e. the commit is made by the agent). Manual commits by the user are NOT signed.
+
+## Plan Mode & Execution Records (MUST)
+
+- When in **plan mode**, state it explicitly in every response and do NOT execute changes until the user approves with `adelante` and the system switches to build mode.
+- All non-trivial plans MUST be saved to `docs/plans/` with the format `YYYY-MM-DD-brief-description.md`.
+- Plan files MUST include: date, tool/model used, objectives, file changes, verification steps, design decisions, and current status (planned/in progress/done).
+- Before executing a plan, confirm explicit user approval.
+- After execution, record the outcome and update the plan status.
 
 ## Dependencies (versions as of last update)
 
