@@ -119,6 +119,24 @@ describe("HeaderComponent", () => {
     });
   });
 
+  it("no debe mostrar el menú Privado cuando getToken devuelve cadena vacía", async () => {
+    const api = (await import("../../utils/api")).default as any;
+    api.get.mockResolvedValue({ data: { _embedded: { categorias: [] } } });
+
+    const services = (await import("../../services")) as any;
+    services.getToken.mockReturnValue("");
+
+    render(<HeaderComponent />);
+
+    await waitFor(() => {
+      expect(screen.getByText("Registro")).toBeInTheDocument();
+      expect(screen.getByText("Acceso")).toBeInTheDocument();
+    });
+
+    expect(screen.queryByText(/Privado/i)).not.toBeInTheDocument();
+    expect(screen.queryByText("desconectar")).not.toBeInTheDocument();
+  });
+
   it("debe ejecutar logout y navegar a / al clicar desconectar", async () => {
     const api = (await import("../../utils/api")).default as any;
     api.get.mockResolvedValue({ data: { _embedded: { categorias: [] } } });

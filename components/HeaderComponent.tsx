@@ -67,7 +67,7 @@ export default function HeaderComponent() {
         };
     }, [])
 
-    const isLogin = getToken() !== null;
+    const isLogin = !!getToken();
 
     function logout() {
         removeToken()
