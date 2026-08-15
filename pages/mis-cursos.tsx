@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { NextPage } from 'next'
 import { getToken, getUser } from '../services';
-import { Usuario, Curso, ApiError, NextRequestResponse } from '../types';
+import { Usuario, Curso, ApiError, CursoEmbedded, NextRequestResponse } from '../types';
 import api from '../utils/api';
 import { logger } from '../utils/logger';
 
@@ -14,7 +14,7 @@ const MisCursos: NextPage = () => {
             return;
         }
 
-        api.get(`/usuarios/${usuario.id}/cursos`, {
+        api.get<CursoEmbedded>(`/usuarios/${usuario.id}/cursos`, {
             headers: {
                 'Accept': 'application/json, application/hal+json',
                 'Content-Type': 'application/json'
@@ -28,7 +28,7 @@ const MisCursos: NextPage = () => {
             } else {
                 setCursos([]);
             }
-        }).catch((error) => {
+        }).catch((error: unknown) => {
             const apiError = error as ApiError;
             logger.error('Error al cargar los cursos matriculados:', {
                 message: apiError.message,

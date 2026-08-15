@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import MisCursos, { getServerSideProps } from '../../pages/mis-cursos';
+import api from '../../utils/api';
 import { getToken, getUser } from '../../services';
 import '@testing-library/jest-dom';
 
@@ -34,6 +35,8 @@ const mockUser = {
     email: 'test@example.com'
 };
 
+const mockApiGet = api.get as jest.Mock;
+
 describe('MisCursos Page', () => {
     describe('Component', () => {
         beforeEach(() => {
@@ -42,8 +45,7 @@ describe('MisCursos Page', () => {
 
         it('renders correctly', () => {
             (getUser as jest.Mock).mockReturnValue(mockUser);
-            const api = (jest.requireMock('../../utils/api') as any).default;
-            api.get.mockResolvedValue({ data: { _embedded: { cursos: [] } } });
+            mockApiGet.mockResolvedValue({ data: { _embedded: { cursos: [] } } });
 
             render(<MisCursos />);
 
@@ -52,8 +54,7 @@ describe('MisCursos Page', () => {
 
         it('muestra el mensaje cuando no hay cursos matriculados', async () => {
             (getUser as jest.Mock).mockReturnValue(mockUser);
-            const api = (jest.requireMock('../../utils/api') as any).default;
-            api.get.mockResolvedValue({ data: { _embedded: { cursos: [] } } });
+            mockApiGet.mockResolvedValue({ data: { _embedded: { cursos: [] } } });
 
             render(<MisCursos />);
 
@@ -65,8 +66,7 @@ describe('MisCursos Page', () => {
 
         it('muestra los cursos cuando el usuario tiene cursos matriculados', async () => {
             (getUser as jest.Mock).mockReturnValue(mockUser);
-            const api = (jest.requireMock('../../utils/api') as any).default;
-            api.get.mockResolvedValue({
+            mockApiGet.mockResolvedValue({
                 data: {
                     _embedded: {
                         cursos: [
@@ -89,8 +89,7 @@ describe('MisCursos Page', () => {
 
         it('muestra el mensaje si la petición falla', async () => {
             (getUser as jest.Mock).mockReturnValue(mockUser);
-            const api = (jest.requireMock('../../utils/api') as any).default;
-            api.get.mockRejectedValue({ message: 'error', response: { status: 404, data: {} } });
+            mockApiGet.mockRejectedValue({ message: 'error', response: { status: 404, data: {} } });
 
             render(<MisCursos />);
 
@@ -101,11 +100,10 @@ describe('MisCursos Page', () => {
 
         it('no pide cursos si no hay usuario', () => {
             (getUser as jest.Mock).mockReturnValue(null);
-            const api = (jest.requireMock('../../utils/api') as any).default;
 
             render(<MisCursos />);
 
-            expect(api.get).not.toHaveBeenCalled();
+            expect(mockApiGet).not.toHaveBeenCalled();
         });
     });
 

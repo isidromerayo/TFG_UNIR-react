@@ -1,6 +1,7 @@
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import HeaderComponent from "../../components/HeaderComponent";
+import { getToken } from "../../services";
 
 const mockPush = jest.fn();
 
@@ -123,8 +124,7 @@ describe("HeaderComponent", () => {
     const api = (await import("../../utils/api")).default as any;
     api.get.mockResolvedValue({ data: { _embedded: { categorias: [] } } });
 
-    const services = (await import("../../services")) as any;
-    services.getToken.mockReturnValue("");
+    (getToken as jest.Mock).mockReturnValue("");
 
     render(<HeaderComponent />);
 
