@@ -79,7 +79,6 @@ export default function HeaderComponent() {
     return loading ? (
         <div>...Data Loading.....</div>
     ) : (
-        <>
             <header id="header" className="header d-flex align-items-center fixed-top color-react-azulclaro">
                 <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
 
@@ -128,6 +127,5 @@ export default function HeaderComponent() {
                     </nav>
                 </div>
             </header>
-        </>
     )
 }

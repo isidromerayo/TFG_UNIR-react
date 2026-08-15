@@ -45,27 +45,25 @@ const Acceso: NextPage = () => {
   }
 
   return (
-    <>
-      <div className="pagina-datos container">
-        <h1>Acceso a tu cuenta en el portal TFG</h1>
-        <div className="col-lg-8">
-          <form className="form-signin" onSubmit={submitForm}>
+    <div className="pagina-datos container">
+      <h1>Acceso a tu cuenta en el portal TFG</h1>
+      <div className="col-lg-8">
+        <form className="form-signin" onSubmit={submitForm}>
+        <div>
+              <label htmlFor="inputEmail" className="sr-only">Email address</label>
+              <input type="email" id="inputEmail" name="email" onChange={handleInput} value={formData.email} className="form-control" placeholder="Email address" required autoFocus/>
+          </div>
           <div>
-                <label htmlFor="inputEmail" className="sr-only">Email address</label>
-                <input type="email" id="inputEmail" name="email" onChange={handleInput} value={formData.email} className="form-control" placeholder="Email address" required autoFocus/>
-            </div>
-            <div>
-                <label htmlFor="inputPassword" className="sr-only">Password</label>
-                <input type="password" id="inputPassword" name="password" onChange={handleInput} value={formData.password} className="form-control" placeholder="Password" required/>
-            </div>
-            <div>
-                <button className="btn btn-primary btn-login" type="submit">Acceso</button>
-            </div>
-          </form>
-        </div>
-
+              <label htmlFor="inputPassword" className="sr-only">Password</label>
+              <input type="password" id="inputPassword" name="password" onChange={handleInput} value={formData.password} className="form-control" placeholder="Password" required/>
+          </div>
+          <div>
+              <button className="btn btn-primary btn-login" type="submit">Acceso</button>
+          </div>
+        </form>
       </div>
-    </>
+
+    </div>
   )
 }
 export default Acceso
