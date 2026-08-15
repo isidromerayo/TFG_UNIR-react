@@ -2,33 +2,37 @@ import { TOKEN, USER } from '../utils/constants'
 import { logger } from '../utils/logger'
 import type { Usuario } from '../types'
 
+function isBrowser(): boolean {
+    return (globalThis as { window?: Window }).window !== undefined;
+}
+
 export function setToken(token: string): void {
-    if (globalThis.window !== undefined) {
+    if (isBrowser()) {
         localStorage.setItem(TOKEN, token)
     }
 }
 
 export function getToken(): string {
-    if (globalThis.window !== undefined) {
+    if (isBrowser()) {
         return localStorage.getItem(TOKEN) || '';
     }
     return '';
 }
 
 export function removeToken(): void {
-    if (globalThis.window !== undefined) {
+    if (isBrowser()) {
         localStorage.removeItem(TOKEN);
     }
 }
 
 export function setUser(user: Usuario | string): void {
-    if (globalThis.window !== undefined) {
+    if (isBrowser()) {
         localStorage.setItem(USER, typeof user === 'string' ? user : JSON.stringify(user));
     }
 }
 
 export function getUser(): Usuario | null {
-    if (globalThis.window !== undefined) {
+    if (isBrowser()) {
         try {
             const user = localStorage.getItem(USER);
             return user ? (JSON.parse(user) as Usuario) : null;
@@ -41,7 +45,7 @@ export function getUser(): Usuario | null {
 }
 
 export function removeUser(): void {
-    if (globalThis.window !== undefined) {
+    if (isBrowser()) {
         localStorage.removeItem(USER);
     }
 }
