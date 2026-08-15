@@ -20,7 +20,7 @@ const MisCursos: NextPage = () => {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
-            const embedded = response.data?._embedded?.cursos;
+            const embedded = response.data._embedded?.cursos;
             if (Array.isArray(embedded)) {
                 setCursos(embedded);
             } else if (Array.isArray(response.data)) {

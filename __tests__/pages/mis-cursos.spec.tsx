@@ -35,7 +35,7 @@ const mockUser = {
     email: 'test@example.com'
 };
 
-const mockApiGet = api.get as jest.Mock;
+const mockApiGet = jest.spyOn(api, 'get');
 
 describe('MisCursos Page', () => {
     describe('Component', () => {
