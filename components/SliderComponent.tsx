@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import { FormEvent } from "react"
+import { SubmitEvent } from "react"
 import Image from 'next/image';
 
 export default function SliderComponent() {
@@ -7,7 +7,7 @@ export default function SliderComponent() {
   const router = useRouter();
   const { push } = router;
 
-  async function buscarCursos(event: FormEvent<HTMLFormElement>) {
+  async function buscarCursos(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
     const query = formData.get('query');
