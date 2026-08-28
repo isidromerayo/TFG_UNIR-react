@@ -144,7 +144,7 @@ jobs:
       # 7. Crear issue si hay vulnerabilidades críticas
       - name: Create issue for critical vulnerabilities
         if: steps.pnpm-audit.outputs.vulnerabilities != '0' || failure()
-        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3
         with:
           script: |
             const title = '🔒 Security Alert: Vulnerabilities Detected';
@@ -202,7 +202,7 @@ jobs:
       # 8. Comentar en PR si hay vulnerabilidades
       - name: Comment on PR
         if: github.event_name == 'pull_request' && steps.pnpm-audit.outputs.vulnerabilities != '0'
-        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3
         with:
           script: |
             const comment = `
