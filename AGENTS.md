@@ -98,6 +98,7 @@ GitHub Actions in `.github/workflows/node.js.yml`:
 - Keep `main` in sync with `origin/main` (`git pull --rebase origin main`) before branching.
 - Open a PR with `gh pr create` and merge it via the GitHub UI / `gh pr merge` — never by direct push.
 - Only merge `main` (e.g. dependabot security fixes or release chores) through reviewed, green PRs.
+- **Commits MUST follow Conventional Commits** (`type: summary`, e.g. `fix(security): ...`). Use the `codely-git-conventional_commit` skill FIRST for any commit: it derives type/summary from the diff, uses present tense and lowercase, and adds the `Co-Authored-By:` AI trailer.
 
 ## Dependencies (versions as of last update)
 
