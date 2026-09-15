@@ -378,6 +378,6 @@ Este proyecto es parte del TFG de UNIR - Frameworks frontend JavaScript: Anális
 
 ---
 
-**Versión**: 0.2.0  
+**Versión**: 0.2.2  
 **Node.js**: 22.x  
-**Package Manager**: pnpm 10.x
+**Package Manager**: pnpm 10.17.1
