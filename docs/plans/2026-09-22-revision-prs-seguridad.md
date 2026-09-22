@@ -2,7 +2,7 @@
 
 - **Fecha**: 2026-09-22
 - **Herramienta/modelo**: opencode (deepseek-v4.1-flash)
-- **Estado**: in progress
+- **Estado**: done
 
 ## Objetivos
 
@@ -55,4 +55,9 @@ Causa del fallo de #223/#225: CodeQL exige que **todos** los pasos `github/codeq
 
 ## Resultado
 
-_(pendiente)_
+- Merge squash vía PR: #221, #222, #224, #223 y #225. Ramas borradas.
+- #223 y #225 resueltas en secuencia (Opción B): #225 rebasada con `@dependabot rebase`, CI en verde (`Analyze` pass) y merge final.
+- `main` (commit `3c371e9`): `init` y `analyze` en `1c5b6756` (v4.38.1); workflow `codeql.yml` en `main` success.
+- Seguridad: 0 alerts Dependabot y 0 alerts CodeQL abiertas al cierre.
+- Nota: el commit intermedio de `main` (`5ac1716`, solo `init`) tuvo el workflow CodeQL en rojo, esperado en la Opción B; el commit final queda verde.
+- Doc registrado en el PR #226.
