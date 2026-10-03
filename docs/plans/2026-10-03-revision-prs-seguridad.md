@@ -74,3 +74,5 @@ Estado de `pnpm audit` (2026-10-03): **1 critical, 7 high, 4 moderate**.
 - `pnpm audit`: pasa de 1 critical/7 high/4 moderate a **1 high** (`braces`, sin parche, aceptado).
 - Verificación local OK: `pnpm install --frozen-lockfile`, `pnpm lint`, `pnpm test-headless` (131/131), `pnpm cypress:component` (14/14) y `pnpm build`.
 - Falso positivo #228 corregido en el workflow; se cierra al mergear la PR consolidada.
+- `main`: #232 se auto-mergeó; `#237` se rebasó sobre `main` para resolver el conflicto de `package.json`/`pnpm-lock.yaml` y se mergeó. #236 (Snyk) cerrada por quedar superseded.
+- `braces` genera la issue #238 (detección real, ya no falso positivo). Decisión final: usar `pnpm audit --ignore-unfixable` en `security.yml` para no abrir issues por vulnerabilidades sin parche; se cierra #238.

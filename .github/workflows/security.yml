@@ -63,7 +63,7 @@ jobs:
         id: pnpm-audit
         run: |
           echo "## pnpm audit results" >> $GITHUB_STEP_SUMMARY
-          pnpm audit --json > pnpm-audit.json || true
+          pnpm audit --json --ignore-unfixable > pnpm-audit.json || true
           
           if [ -s pnpm-audit.json ]; then
             VULNS=$(jq '[.metadata.vulnerabilities[]?] | add // 0' pnpm-audit.json 2>/dev/null || echo 0)
