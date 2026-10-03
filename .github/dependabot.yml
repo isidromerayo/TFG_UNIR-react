@@ -94,6 +94,20 @@ updates:
       time: "09:00"
       timezone: "Europe/Madrid"
     
+    open-pull-requests-limit: 5
+    groups:
+      actions-minors:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+      actions-majors:
+        patterns:
+          - "*"
+        update-types:
+          - "major"
+
     labels:
       - "github-actions"
       - "automated"
