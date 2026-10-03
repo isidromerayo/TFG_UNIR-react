@@ -66,12 +66,18 @@ jobs:
           pnpm audit --json > pnpm-audit.json || true
           
           if [ -s pnpm-audit.json ]; then
-            VULNS=$(jq '.metadata.vulnerabilities | add // 0' pnpm-audit.json)
+            VULNS=$(jq '[.metadata.vulnerabilities[]?] | add // 0' pnpm-audit.json 2>/dev/null || echo 0)
             echo "Vulnerabilities found: $VULNS" >> $GITHUB_STEP_SUMMARY
             echo "vulnerabilities=$VULNS" >> $GITHUB_OUTPUT
+            if [ "$VULNS" -gt 0 ]; then
+              echo "has_vulnerabilities=true" >> $GITHUB_OUTPUT
+            else
+              echo "has_vulnerabilities=false" >> $GITHUB_OUTPUT
+            fi
           else
             echo "No vulnerabilities found" >> $GITHUB_STEP_SUMMARY
             echo "vulnerabilities=0" >> $GITHUB_OUTPUT
+            echo "has_vulnerabilities=false" >> $GITHUB_OUTPUT
           fi
         continue-on-error: true
       
@@ -98,7 +104,8 @@ jobs:
           pnpm outdated --format json > outdated.json || true
           
           if [ -s outdated.json ]; then
-            COUNT=$(jq 'length' outdated.json 2>/dev/null || echo "0")
+            COUNT=$(jq 'length' outdated.json 2>/dev/null || echo 0)
+            [ -z "$COUNT" ] && COUNT=0
             echo "Found $COUNT outdated packages" >> $GITHUB_STEP_SUMMARY
             echo "count=$COUNT" >> $GITHUB_OUTPUT
           else
@@ -143,7 +150,7 @@ jobs:
       
       # 7. Crear issue si hay vulnerabilidades críticas
       - name: Create issue for critical vulnerabilities
-        if: steps.pnpm-audit.outputs.vulnerabilities != '0' || failure()
+        if: steps.pnpm-audit.outputs.has_vulnerabilities == 'true'
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3
         with:
           script: |
@@ -201,7 +208,7 @@ jobs:
       
       # 8. Comentar en PR si hay vulnerabilidades
       - name: Comment on PR
-        if: github.event_name == 'pull_request' && steps.pnpm-audit.outputs.vulnerabilities != '0'
+        if: github.event_name == 'pull_request' && steps.pnpm-audit.outputs.has_vulnerabilities == 'true'
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3
         with:
           script: |
@@ -229,6 +236,6 @@ jobs:
       
       # 9. Warn if vulnerabilities are found (do not fail the workflow)
       - name: Warn on vulnerabilities
-        if: steps.pnpm-audit.outputs.vulnerabilities != '0'
+        if: steps.pnpm-audit.outputs.has_vulnerabilities == 'true'
         run: |
           echo "::warning::Vulnerabilities found (${{ steps.pnpm-audit.outputs.vulnerabilities }}). Please fix before merging."
