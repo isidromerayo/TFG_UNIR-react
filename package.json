@@ -38,7 +38,7 @@
     "axios": "^1.20.0",
     "eslint": "^9.39.3",
     "eslint-config-next": "16.3.5",
-    "next": "16.3.5",
+    "next": "16.3.6",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "react-hook-form": "^7.87.0",
