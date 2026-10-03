@@ -7,7 +7,7 @@ export default function SliderComponent() {
   const router = useRouter();
   const { push } = router;
 
-  async function buscarCursos(event: SubmitEvent<HTMLFormElement>) {
+  function buscarCursos(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
     const query = formData.get('query');

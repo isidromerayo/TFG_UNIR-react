@@ -30,7 +30,7 @@ export default function CursoPage() {
           setLoading(false);
         }
       };
-      fetchData();
+      void fetchData();
     } else {
       setLoading(false);
     }

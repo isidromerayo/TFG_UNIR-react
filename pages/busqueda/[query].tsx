@@ -49,7 +49,7 @@ function Busqueda({ query_string }: { query_string: string; }) {
     );
 }
 
-export async function getServerSideProps({ query }: NextPageContext) {
+export function getServerSideProps({ query }: NextPageContext) {
     const query_string = query.query;
     if (!query_string || typeof query_string !== 'string') {
         return { notFound: true };
