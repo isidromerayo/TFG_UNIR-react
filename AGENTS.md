@@ -73,6 +73,7 @@ GitHub Actions: `node.js.yml` (lint→build), `tests.yml` (Jest + Cypress compon
 - **TypeScript**: `moduleResolution: "bundler"` (auto-set by Next.js 16.x)
 - **Babel**: External `.babelrc` used — SWC disabled for Cypress tests
 - **pnpm overrides**: `package.json` pins patched versions of vulnerable transitive deps (sharp, js-yaml, ajv, minimatch, brace-expansion, etc.)
+- **`pnpm audit --ignore-unfixable` rewrites `package.json`**: it automatically appends the ignored unfixable CVEs to `pnpm.auditConfig.ignoreCves`, so `git diff package.json` shows changes after auditing. See `docs/security/pnpm-audit-unfixable-cves.md`
 - **Dependabot lockfiles break CI**: Dependabot-regenerated `pnpm-lock.yaml` drops the overrides section → `pnpm install --frozen-lockfile` fails with `ERR_PNPM_LOCKFILE_CONFIG_MISMATCH` in every job. Apply dep bumps manually on a branch: update overrides if needed, `pnpm up <pkg>@<ver>` (or `pnpm install --no-frozen-lockfile`), verify `pnpm install --frozen-lockfile` passes, then close the Dependabot PR (see PRs #207/#209/#210)
 - **Deprecated subdependencies**: glob@7.2.3, inflight@1.0.6, rimraf@3.0.2 (ignore in audits)
 
@@ -102,4 +103,9 @@ GitHub Actions: `node.js.yml` (lint→build), `tests.yml` (Jest + Cypress compon
 - Open a PR with `gh pr create` and merge it via the GitHub UI / `gh pr merge` — never by direct push.
 - Only merge `main` (e.g. dependabot security fixes or release chores) through reviewed, green PRs.
 - **Commits MUST follow Conventional Commits** (`type: summary`, e.g. `fix(security): ...`). Use the `codely-git-conventional_commit` skill FIRST for any commit: it derives type/summary from the diff, uses present tense and lowercase, and adds the `Co-Authored-By:` AI trailer.
+
+## Docs
+
+- `docs/security/pnpm-audit-unfixable-cves.md` — when and how to pin an unfixable CVE in `pnpm.auditConfig.ignoreCves`.
+- `docs/plans/` — execution records for non-trivial changes (`YYYY-MM-DD-brief-description.md`).
 
