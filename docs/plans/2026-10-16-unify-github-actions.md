@@ -16,10 +16,11 @@ frameworks is not biased by workflow differences. The canonical baseline is **An
 - `.github/workflows/node.js.yml`: split the single `build` job into `lint` and `build` jobs and
   drop the duplicated test/Cypress/coverage/audit steps (they already run in `tests.yml` and
   `security.yml`).
-- `.github/workflows/security.yml`: adopt the Angular hard production gate. Because this repo's
-  `pnpm audit` endpoint is retired (HTTP 410), the gate runs the repo script `pnpm security`
-  instead of `pnpm audit --prod`; the rest of the flow (dev warning, outdated, Snyk, OSV,
-  artifacts, issue/PR comment) mirrors Angular.
+- `.github/workflows/security.yml`: adopt the Angular hard production gate, byte-for-byte
+  identical across the three frontends. The gate uses the `pnpm audit --prod` **exit code** so it
+  respects `pnpm.auditConfig.ignoreCves` (this repo has two ignored CVEs; the JSON metadata still
+  reports them as `high`). Contrary to the AGENTS note, `pnpm audit` works in CI (HTTP 410 no
+  longer observed), so the `pnpm security` script is no longer used as the gate.
 - `.github/workflows/tests.yml`: action SHA bumps only (the guarded SonarQube job already exists).
 - `.github/workflows/codeql.yml`: align the schedule cron and bump `github/codeql-action`.
 - Actions pinned to current versions (SHA + `# vX.Y.Z`): setup-node v7.1.0, upload-artifact
@@ -29,8 +30,8 @@ frameworks is not biased by workflow differences. The canonical baseline is **An
 ## Design decisions
 
 - Angular is the baseline (hard security gate, SonarQube in `tests.yml`).
-- React keeps a hard gate but implemented with `pnpm security` because of the retired audit
-  endpoint; this is a documented, unavoidable per-repo exception.
+- The production gate relies on the `pnpm audit --prod` exit code rather than parsing the JSON
+  metadata, because ignored CVEs (`pnpm.auditConfig.ignoreCves`) still appear in the metadata.
 - `.github/dependabot.yml` already matched the unified schema (weekly, labels, commit-message),
   so it is left unchanged.
 

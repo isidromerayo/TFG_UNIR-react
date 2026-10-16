@@ -58,23 +58,28 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       
-      # 1. Auditoría de seguridad vía el script del repo — GATE DURO
-      #    (pnpm audit --prod está retirado en este repo: HTTP 410, ver AGENTS.md)
-      - name: pnpm security (production gate)
+      # 1. Auditoría de producción con pnpm (npm Advisory Database) — GATE DURO
+      #    Se usa el exit code de pnpm para respetar `pnpm.auditConfig.ignoreCves`
+      #    (pnpm devuelve 0 cuando solo quedan avisos ignorados); el JSON se usa
+      #    únicamente para reportar el conteo.
+      - name: pnpm audit (production gate)
         id: pnpm-audit-prod
         run: |
-          echo "## pnpm security results" >> $GITHUB_STEP_SUMMARY
-          if pnpm security; then
-            echo "No vulnerabilities found" >> $GITHUB_STEP_SUMMARY
-            echo "vulnerabilities=0" >> $GITHUB_OUTPUT
-          else
-            VULNS=$(jq '[.metadata.vulnerabilities[]?] | add // 0' pnpm-audit.json 2>/dev/null || echo 0)
-            case "$VULNS" in (*[!0-9]*|'') VULNS=1;; esac
-            echo "Vulnerabilities found: $VULNS" >> $GITHUB_STEP_SUMMARY
-            echo "vulnerabilities=$VULNS" >> $GITHUB_OUTPUT
-            echo "::error::Found $VULNS vulnerabilities. Fix them before merging."
+          echo "## pnpm audit --prod results" >> $GITHUB_STEP_SUMMARY
+          AUDIT_EXIT=0
+          pnpm audit --prod --json > pnpm-audit-prod.json 2>/dev/null || AUDIT_EXIT=$?
+
+          if [ "$AUDIT_EXIT" -ne 0 ]; then
+            PROD_VULNS=$(jq -r '[.metadata.vulnerabilities | values] | add // 0' pnpm-audit-prod.json 2>/dev/null || echo 0)
+            case "$PROD_VULNS" in (*[!0-9]*|'') PROD_VULNS=1;; esac
+            echo "Production vulnerabilities found: $PROD_VULNS" >> $GITHUB_STEP_SUMMARY
+            echo "vulnerabilities=$PROD_VULNS" >> $GITHUB_OUTPUT
+            echo "::error::Found $PROD_VULNS production vulnerabilities. Fix them before merging."
             exit 1
           fi
+
+          echo "No production vulnerabilities found" >> $GITHUB_STEP_SUMMARY
+          echo "vulnerabilities=0" >> $GITHUB_OUTPUT
 
       # 2. Auditoría completa (dev + prod) — WARNING (riesgos dev-only aceptados)
       - name: pnpm audit (dev warning)
@@ -148,7 +153,7 @@ jobs:
           name: security-reports
           path: |
             pnpm-audit.json
-            npm-audit.json
+            pnpm-audit-prod.json
             outdated.json
             snyk-report.json
             osv-report.json
@@ -175,13 +180,13 @@ jobs:
             **Run**: ${context.runNumber}
 
             ### Summary
-            - pnpm security (production): ${prodVulns} vulnerabilities
+            - pnpm audit (production): ${prodVulns} vulnerabilities
             - Outdated packages: ${outdatedCount}
 
             ### Actions Required
             1. Review the security reports in the workflow artifacts
             2. Update vulnerable production dependencies
-            3. Run \`pnpm security\` locally for details
+            3. Run \`pnpm audit --prod\` locally for details
             4. Check Snyk dashboard if configured
 
             ### Quick Fix
@@ -190,7 +195,7 @@ jobs:
             pnpm update
 
             # Verify
-            pnpm security
+            pnpm audit --prod
             pnpm test-headless
             pnpm build
             \`\`\`
@@ -236,7 +241,7 @@ jobs:
 
             ### Quick commands
             \`\`\`bash
-            pnpm security
+            pnpm audit --prod
             pnpm outdated
             pnpm update
             \`\`\`
