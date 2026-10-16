@@ -76,6 +76,12 @@ GitHub Actions: `node.js.yml` (lint→build), `tests.yml` (Jest + Cypress compon
 - **`pnpm audit --ignore-unfixable` rewrites `package.json`**: it automatically appends the ignored unfixable CVEs to `pnpm.auditConfig.ignoreCves`, so `git diff package.json` shows changes after auditing. See `docs/security/pnpm-audit-unfixable-cves.md`
 - **Dependabot lockfiles break CI**: Dependabot-regenerated `pnpm-lock.yaml` drops the overrides section → `pnpm install --frozen-lockfile` fails with `ERR_PNPM_LOCKFILE_CONFIG_MISMATCH` in every job. Apply dep bumps manually on a branch: update overrides if needed, `pnpm up <pkg>@<ver>` (or `pnpm install --no-frozen-lockfile`), verify `pnpm install --frozen-lockfile` passes, then close the Dependabot PR (see PRs #207/#209/#210)
 - **Deprecated subdependencies**: glob@7.2.3, inflight@1.0.6, rimraf@3.0.2 (ignore in audits)
+- **Accepted advisories (no upstream patch)**: an advisory is only ever "accepted" when no patched
+  version is published. It must be registered in `docs/security/accepted-advisories.md` and
+  rechecked every iteration: `pnpm security:accepted` (step *Accepted advisories recheck* in
+  `security.yml`) fails as soon as OSV publishes a fix — then bump the dependency and remove the
+  silencing (`pnpm.auditConfig.ignoreCves`, the `ACCEPTED` list, the Dependabot dismissal) in the
+  same PR.
 
 ## Branch Policy (MUST)
 
@@ -107,5 +113,6 @@ GitHub Actions: `node.js.yml` (lint→build), `tests.yml` (Jest + Cypress compon
 ## Docs
 
 - `docs/security/pnpm-audit-unfixable-cves.md` — when and how to pin an unfixable CVE in `pnpm.auditConfig.ignoreCves`.
+- `docs/security/accepted-advisories.md` — registry of accepted advisories (no upstream patch) + the rule to recheck them every iteration.
 - `docs/plans/` — execution records for non-trivial changes (`YYYY-MM-DD-brief-description.md`).
 

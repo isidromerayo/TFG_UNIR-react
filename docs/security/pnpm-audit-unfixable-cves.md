@@ -73,6 +73,7 @@ gh api -X PATCH repos/<owner>/<repo>/dependabot/alerts/151 \
 
 ## 🔗 Related agreements
 
+- `docs/security/accepted-advisories.md` — registro de los advisories ya aceptados y revisión automática (`pnpm security:accepted`) para retirarlos en cuanto aparezca un parche; esa es la fuente de verdad de *qué* está aceptado hoy.
 - `AGENTS.md` → *Quirks* → **pnpm overrides** y *CI/CD* → `security.yml`.
 - `AGENTS.md` → *Plan Mode & Execution Records* y `docs/plans/` (toda decisión no trivial se registra y se actualiza su estado).
 

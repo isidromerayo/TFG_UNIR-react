@@ -27,6 +27,7 @@
     "test:all:ci": "pnpm test:coverage:ci && pnpm cypress:component",
     "coverage:report": "echo 'Coverage report generated at coverage/lcov-report/index.html'",
     "security": "./scripts/security-check.sh",
+    "security:accepted": "./scripts/check-accepted-advisories.sh",
     "security:audit": "pnpm audit",
     "security:outdated": "pnpm outdated"
   },
