@@ -19,10 +19,9 @@ frameworks is not biased by workflow differences. The canonical baseline is **An
 - `.github/workflows/security.yml`: adopt the Angular hard production gate, byte-for-byte
   identical across the three frontends. The gate uses the `pnpm audit --prod` **exit code** so it
   respects `pnpm.auditConfig.ignoreCves`, and an `ACCEPTED` list tolerates the agreed
-  no-upstream-patch package `braces` (reached here through the production dependency
-  `eslint-config-next`); any other production advisory fails the build. Contrary to the AGENTS
-  note, `pnpm audit` works in CI (HTTP 410 no longer observed), so the `pnpm security` script is
-  no longer used as the gate.
+  no-upstream-patch package `braces`; any other production advisory fails the build. Contrary
+  to the AGENTS note, `pnpm audit` works in CI (HTTP 410 no longer observed), so the
+  `pnpm security` script is no longer used as the gate.
 - `.github/workflows/tests.yml`: action SHA bumps only (the guarded SonarQube job already exists).
 - `.github/workflows/codeql.yml`: align the schedule cron and bump `github/codeql-action`.
 - Actions pinned to current versions (SHA + `# vX.Y.Z`): setup-node v7.1.0, upload-artifact

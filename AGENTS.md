@@ -73,6 +73,7 @@ GitHub Actions: `node.js.yml` (lint→build), `tests.yml` (Jest + Cypress compon
 - **TypeScript**: `moduleResolution: "bundler"` (auto-set by Next.js 16.x)
 - **Babel**: External `.babelrc` used — SWC disabled for Cypress tests
 - **pnpm overrides**: `package.json` pins patched versions of vulnerable transitive deps (sharp, js-yaml, ajv, minimatch, brace-expansion, etc.)
+- **Lint tooling is dev-only**: `eslint` and `eslint-config-next` belong in `devDependencies`. Keeping them out of `dependencies` is what keeps the production gate (`pnpm audit --prod`) clean: `eslint-config-next` → `@next/eslint-plugin-next` → `fast-glob` → `micromatch` → `braces` (`GHSA-vfj7-8cjw-p6xm`, no upstream patch) stays a dev-only advisory.
 - **`pnpm audit --ignore-unfixable` rewrites `package.json`**: it automatically appends the ignored unfixable CVEs to `pnpm.auditConfig.ignoreCves`, so `git diff package.json` shows changes after auditing. See `docs/security/pnpm-audit-unfixable-cves.md`
 - **Dependabot lockfiles break CI**: Dependabot-regenerated `pnpm-lock.yaml` drops the overrides section → `pnpm install --frozen-lockfile` fails with `ERR_PNPM_LOCKFILE_CONFIG_MISMATCH` in every job. Apply dep bumps manually on a branch: update overrides if needed, `pnpm up <pkg>@<ver>` (or `pnpm install --no-frozen-lockfile`), verify `pnpm install --frozen-lockfile` passes, then close the Dependabot PR (see PRs #207/#209/#210)
 - **Deprecated subdependencies**: glob@7.2.3, inflight@1.0.6, rimraf@3.0.2 (ignore in audits)

@@ -54,12 +54,6 @@ importers:
       axios:
         specifier: ^1.20.0
         version: 1.20.0
-      eslint:
-        specifier: ^9.39.3
-        version: 9.39.5
-      eslint-config-next:
-        specifier: 16.3.8
-        version: 16.3.8(@typescript-eslint/parser@8.70.1(eslint@9.39.5)(typescript@5.9.3))(eslint@9.39.5)(typescript@5.9.3)
       next:
         specifier: 16.3.8
         version: 16.3.8(@babel/core@7.29.7)(@types/node@26.6.3)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -127,6 +121,12 @@ importers:
       cypress:
         specifier: ^15.21.1
         version: 15.21.1
+      eslint:
+        specifier: ^9.39.3
+        version: 9.39.5
+      eslint-config-next:
+        specifier: 16.3.8
+        version: 16.3.8(@typescript-eslint/parser@8.70.1(eslint@9.39.5)(typescript@5.9.3))(eslint@9.39.5)(typescript@5.9.3)
       file-loader:
         specifier: ^6.2.0
         version: 6.2.0(webpack@5.104.1(postcss@8.5.23))
