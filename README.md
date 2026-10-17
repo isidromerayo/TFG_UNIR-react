@@ -200,6 +200,7 @@ TFG_UNIR-react/
 | `pnpm cypress:open` | Abrir Cypress interactivo (E2E) |
 | `pnpm cypress:run` | Ejecutar Cypress headless (E2E) |
 | `pnpm cypress:component` | Ejecutar tests de componentes (Cypress) |
+| `pnpm a11y` | Auditoría de accesibilidad pa11y (htmlcs+axe, WCAG2AA) — requiere dev server en :3000 |
 
 ## 📚 Documentación
 

@@ -44,3 +44,6 @@ package-lock.json.backup
 next-env.d.ts
 # Jest test reports for SonarQube
 test-report.xml
+
+# Accessibility reports
+/reports

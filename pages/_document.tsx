@@ -6,6 +6,7 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          <title>Frontend - React</title>
           <meta charSet="utf-8" />
           {/* eslint-disable-next-line @next/next/no-css-tags */}
           <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css" />

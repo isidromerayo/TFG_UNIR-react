@@ -90,27 +90,27 @@ const Registro: NextPage = () => {
             <div className="col-md-6 form-group">
               <label htmlFor="nombre" className="label">Nombre (*)</label>
               <input type="text" id="nombre" className="form-control" {...register("nombre")}
-                placeholder="indique su nombre" aria-label="indique su nombre" />
+                placeholder="indique su nombre" />
               <span className="error-form">{errors.nombre?.message}</span>
             </div>
             <div className="col-md-8 form-group">
               <label htmlFor="apellidos" className="label">Apellidos (*)</label>
               <input type="text" id="apellidos" className="form-control"  {...register("apellidos")}
-                placeholder="indique sus apellidos" aria-label="indique sus apellidos" />
+                placeholder="indique sus apellidos" />
               <span className="error-form">{errors.apellidos?.message}</span>
 
             </div>
             <div className="col-md-8 form-group">
               <label htmlFor="email" className="label">Correo electrónico (*)</label>
               <input type="email" id="email" className="form-control"  {...register("email")}
-                placeholder="indique su correo electrónico" aria-label="indique su correo electrónico" />
+                placeholder="indique su correo electrónico" />
               <span className="error-form">{errors.email?.message}</span>
 
             </div>
             <div className="col-md-6 form-group">
               <label htmlFor="pass" className="label">Contraseña (*)</label>
               <input type="password" id="pass" className="form-control"  {...register("password")}
-                placeholder="indique su contraseña" aria-label="indique su contraseña" />
+                placeholder="indique su contraseña" />
               <span className="error-form">{errors.password?.message}</span>
 
 
@@ -119,9 +119,9 @@ const Registro: NextPage = () => {
               (*) campos obligatorios
             </div>
             <div className="text-center signup-form-button">
-              <button type="submit" className="btn btn-primary" aria-label="registrarse en el portal">Registrar</button>
+              <button type="submit" className="btn btn-primary">Registrar</button>
               <button type="button" className="btn btn-warning borrar-form"
-                aria-label="limpiar formulario de registro" onClick={() => reset()}>Borrar</button>
+               onClick={() => reset()}>Borrar</button>
             </div>
 
           </div>

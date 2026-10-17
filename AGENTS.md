@@ -16,6 +16,7 @@ pnpm build                  # Next.js production build
 pnpm test-headless          # Jest (no watch; coverage always collected, see Testing)
 pnpm cypress:component      # Cypress component tests
 pnpm cypress:e2e            # Cypress e2e tests
+pnpm a11y                   # pa11y-ci audit (htmlcs+axe, WCAG2AA) — requires dev server on :3000
 pnpm security               # scripts/security-check.sh (replaces retired pnpm audit)
 ```
 
@@ -82,6 +83,7 @@ GitHub Actions: `node.js.yml` (lint→build), `tests.yml` (Jest + Cypress compon
   `security.yml`) fails as soon as OSV publishes a fix — then bump the dependency and remove the
   silencing (`pnpm.auditConfig.ignoreCves`, the `ACCEPTED` list, the Dependabot dismissal) in the
   same PR.
+- **pa11y uses system Chrome**: `.pa11yci` points `chromeLaunchConfig.executablePath` at `/usr/bin/google-chrome-stable`. Reports land in `reports/a11y/` (gitignored). Requires dev server on :3000 and backend on :8080 for `/categorias`, `/categoria/:id`, `/curso/:id`.
 
 ## Branch Policy (MUST)
 
@@ -116,3 +118,12 @@ GitHub Actions: `node.js.yml` (lint→build), `tests.yml` (Jest + Cypress compon
 - `docs/security/accepted-advisories.md` — registry of accepted advisories (no upstream patch) + the rule to recheck them every iteration.
 - `docs/plans/` — execution records for non-trivial changes (`YYYY-MM-DD-brief-description.md`).
 
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
