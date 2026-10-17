@@ -35,13 +35,13 @@ describe('Registro Page', () => {
         expect(screen.getByLabelText(/apellidos \(\*\)/i)).toBeInTheDocument();
         expect(screen.getByLabelText(/correo electrónico \(\*\)/i)).toBeInTheDocument();
         expect(screen.getByLabelText(/contraseña \(\*\)/i)).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: /registrarse en el portal/i })).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: /limpiar formulario de registro/i })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: /registrar/i })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: /borrar/i })).toBeInTheDocument();
     });
 
     it('shows validation errors when submitting empty form', async () => {
         render(<Registro />);
-        const submitButton = screen.getByRole('button', { name: /registrarse en el portal/i });
+        const submitButton = screen.getByRole("button", { name: /registrar/i });
 
         fireEvent.click(submitButton);
 
@@ -64,7 +64,7 @@ describe('Registro Page', () => {
         fireEvent.change(screen.getByLabelText(/correo electrónico \(\*\)/i), { target: { value: 'juan@example.com' } });
         fireEvent.change(screen.getByLabelText(/contraseña \(\*\)/i), { target: { value: 'password123' } });
 
-        fireEvent.click(screen.getByRole('button', { name: /registrarse en el portal/i }));
+        fireEvent.click(screen.getByRole("button", { name: /registrar/i }));
 
         await waitFor(() => {
             expect(mockedAxios.post).toHaveBeenCalledWith(
@@ -101,7 +101,7 @@ describe('Registro Page', () => {
         fireEvent.change(screen.getByLabelText(/correo electrónico \(\*\)/i), { target: { value: 'juan@example.com' } });
         fireEvent.change(screen.getByLabelText(/contraseña \(\*\)/i), { target: { value: 'password123' } });
 
-        fireEvent.click(screen.getByRole('button', { name: /registrarse en el portal/i }));
+        fireEvent.click(screen.getByRole("button", { name: /registrar/i }));
 
         await waitFor(() => {
             expect(Swal.fire).toHaveBeenCalledWith(expect.objectContaining({
@@ -127,7 +127,7 @@ describe('Registro Page', () => {
         fireEvent.change(screen.getByLabelText(/correo electrónico \(\*\)/i), { target: { value: 'juan@example.com' } });
         fireEvent.change(screen.getByLabelText(/contraseña \(\*\)/i), { target: { value: 'password123' } });
 
-        fireEvent.click(screen.getByRole('button', { name: /registrarse en el portal/i }));
+        fireEvent.click(screen.getByRole("button", { name: /registrar/i }));
 
         await waitFor(() => {
             expect(Swal.fire).toHaveBeenCalledWith(expect.objectContaining({
@@ -148,7 +148,7 @@ describe('Registro Page', () => {
         fireEvent.change(screen.getByLabelText(/correo electrónico \(\*\)/i), { target: { value: 'juan@example.com' } });
         fireEvent.change(screen.getByLabelText(/contraseña \(\*\)/i), { target: { value: 'password123' } });
 
-        fireEvent.click(screen.getByRole('button', { name: /registrarse en el portal/i }));
+        fireEvent.click(screen.getByRole("button", { name: /registrar/i }));
 
         await waitFor(() => {
             expect(Swal.fire).toHaveBeenCalledWith(expect.objectContaining({
@@ -169,7 +169,7 @@ describe('Registro Page', () => {
         fireEvent.change(screen.getByLabelText(/correo electrónico \(\*\)/i), { target: { value: 'juan@example.com' } });
         fireEvent.change(screen.getByLabelText(/contraseña \(\*\)/i), { target: { value: 'password123' } });
 
-        fireEvent.click(screen.getByRole('button', { name: /registrarse en el portal/i }));
+        fireEvent.click(screen.getByRole("button", { name: /registrar/i }));
 
         await waitFor(() => {
             expect(Swal.fire).toHaveBeenCalledWith(expect.objectContaining({
@@ -190,7 +190,7 @@ describe('Registro Page', () => {
         fireEvent.change(screen.getByLabelText(/correo electrónico \(\*\)/i), { target: { value: 'juan@example.com' } });
         fireEvent.change(screen.getByLabelText(/contraseña \(\*\)/i), { target: { value: 'password123' } });
 
-        fireEvent.click(screen.getByRole('button', { name: /registrarse en el portal/i }));
+        fireEvent.click(screen.getByRole("button", { name: /registrar/i }));
 
         await waitFor(() => {
             expect(Swal.fire).toHaveBeenCalledWith(expect.objectContaining({
@@ -211,7 +211,7 @@ describe('Registro Page', () => {
         fireEvent.change(screen.getByLabelText(/correo electrónico \(\*\)/i), { target: { value: 'juan@example.com' } });
         fireEvent.change(screen.getByLabelText(/contraseña \(\*\)/i), { target: { value: 'password123' } });
 
-        fireEvent.click(screen.getByRole('button', { name: /registrarse en el portal/i }));
+        fireEvent.click(screen.getByRole("button", { name: /registrar/i }));
 
         await waitFor(() => {
             expect(Swal.fire).toHaveBeenCalledWith(expect.objectContaining({
@@ -232,7 +232,7 @@ describe('Registro Page', () => {
         fireEvent.change(screen.getByLabelText(/correo electrónico \(\*\)/i), { target: { value: 'juan@example.com' } });
         fireEvent.change(screen.getByLabelText(/contraseña \(\*\)/i), { target: { value: 'password123' } });
 
-        fireEvent.click(screen.getByRole('button', { name: /registrarse en el portal/i }));
+        fireEvent.click(screen.getByRole("button", { name: /registrar/i }));
 
         await waitFor(() => {
             expect(Swal.fire).toHaveBeenCalledWith(expect.objectContaining({
@@ -248,7 +248,7 @@ describe('Registro Page', () => {
         const emailInput = screen.getByLabelText(/correo electrónico \(\*\)/i) as HTMLInputElement;
         fireEvent.change(emailInput, { target: { value: 'something' } });
 
-        const resetButton = screen.getByRole('button', { name: /limpiar formulario de registro/i });
+        const resetButton = screen.getByRole("button", { name: /borrar/i });
         fireEvent.click(resetButton);
 
         await waitFor(() => {
