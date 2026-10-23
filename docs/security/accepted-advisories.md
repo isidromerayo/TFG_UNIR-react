@@ -47,17 +47,6 @@ pnpm security:accepted          # o: ./scripts/check-accepted-advisories.sh
       "acceptedOn": "2026-10-15",
       "mutedBy": "ACCEPTED=\"braces\" in .github/workflows/security.yml + pnpm.auditConfig.ignoreCves",
       "reason": "Todas las versiones publicadas (<= 3.0.3) están afectadas y no hay parche upstream. Tooling de lint, sin entrada controlada por atacante."
-    },
-    {
-      "id": "GHSA-hp3w-g68c-fv3c",
-      "aliases": ["CVE-2026-97058"],
-      "package": "sprintf-js",
-      "version": "1.0.3",
-      "scope": "dev",
-      "route": "js-yaml@3.15.2 > argparse@1.0.10 > sprintf-js",
-      "acceptedOn": "2026-10-15",
-      "mutedBy": "pnpm.auditConfig.ignoreCves (CVE-2026-97058) + Dependabot dismissal",
-      "reason": "1.1.3 es la última versión publicada y está afectada; el fix upstream existe sólo como commit, sin release en npm. Dev-only (formateo de errores de argparse)."
     }
   ]
 }
