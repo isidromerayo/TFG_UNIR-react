@@ -28,7 +28,6 @@ Los advisories **con** parche nunca se silencian: se corrigen con un `pnpm.overr
 ```json
 "auditConfig": {
   "ignoreCves": [
-    "CVE-2026-93687",
     "CVE-2026-97058"
   ]
 }
@@ -67,7 +66,7 @@ gh api -X PATCH repos/<owner>/<repo>/dependabot/alerts/151 \
 
 ## 🧐 Real world examples
 
-- `package.json` → `pnpm.auditConfig.ignoreCves` (`CVE-2026-93687` de `braces`, #241; `CVE-2026-97058` de `sprintf-js`, #251).
+- `package.json` → `pnpm.auditConfig.ignoreCves` (`CVE-2026-97058` de `sprintf-js`, #251).
 - `.github/workflows/security.yml:66` → `pnpm audit --json --ignore-unfixable` (cubre CI, pero no el audit local sin flags).
 - `docs/plans/2026-10-15-dependabot-alerts-octubre.md` y `docs/plans/2026-10-03-revision-prs-seguridad.md` → decisiones registradas.
 
