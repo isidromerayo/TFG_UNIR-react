@@ -3,7 +3,8 @@ import Link from 'next/link'
 import { API_URL } from '../utils'
 import { useState, useEffect } from 'react';
 import api from '../utils/api';
-import { Categoria } from '../types';
+import { Categoria, ApiError } from '../types';
+import { logger } from '../utils/logger';
 
 const Categorias: NextPage = () => {
 
@@ -13,11 +14,22 @@ const Categorias: NextPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result_cursos = await (await api(`${API_URL}/categorias?sort=nombre`)).data._embedded.categorias;
-      setCategorias(result_cursos)
-      setLoading(false);
+      try {
+        const response = await api(`${API_URL}/categorias?sort=nombre`);
+        const categoriasEncontradas = response.data?._embedded?.categorias;
+        setCategorias(Array.isArray(categoriasEncontradas) ? categoriasEncontradas : []);
+      } catch (error) {
+        const apiError = error as ApiError;
+        logger.error('Error al cargar las categorías:', {
+          message: apiError.message,
+          status: apiError.response?.status
+        });
+        setCategorias([]);
+      } finally {
+        setLoading(false);
+      }
     }
-    fetchData()
+    void fetchData()
   }, [])
 
   return loading ? (

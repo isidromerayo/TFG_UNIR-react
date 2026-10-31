@@ -58,7 +58,7 @@ export default function HeaderComponent() {
             }
         };
 
-        fetchData();
+        void fetchData();
 
         // Cleanup function
         return () => {

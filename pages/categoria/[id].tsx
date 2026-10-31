@@ -3,7 +3,8 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { API_URL } from '../../utils'
 import api from '../../utils/api'
-import { Categoria as CategoriaType, Curso, NextPageContext } from '../../types'
+import { Categoria as CategoriaType, Curso, NextPageContext, ApiError } from '../../types'
+import { logger } from '../../utils/logger'
 
 function Categoria({ data }: { data: CategoriaType }) {
 
@@ -13,11 +14,22 @@ function Categoria({ data }: { data: CategoriaType }) {
 
   useEffect(() => {
     const fetchData = async (categoria_id: number) => {
-      const result_cursos = await api(`${API_URL}/categorias/${categoria_id}/cursos`)
-      setCursos(result_cursos.data._embedded.cursos)
-      setLoading(false)
+      try {
+        const result_cursos = await api(`${API_URL}/categorias/${categoria_id}/cursos`)
+        const cursosDeCategoria = result_cursos.data?._embedded?.cursos
+        setCursos(Array.isArray(cursosDeCategoria) ? cursosDeCategoria : [])
+      } catch (error) {
+        const apiError = error as ApiError
+        logger.error('Error al cargar los cursos de la categoría:', {
+          message: apiError.message,
+          status: apiError.response?.status
+        })
+        setCursos([])
+      } finally {
+        setLoading(false)
+      }
     }
-    fetchData(data.id)
+    void fetchData(data.id)
   }, [data.id, router.isReady])
   return loading ? (
     <div>...Data Loading.....</div>

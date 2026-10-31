@@ -51,7 +51,7 @@ const Acceso: NextPage = () => {
         <form className="form-signin" onSubmit={submitForm}>
         <div>
               <label htmlFor="inputEmail" className="sr-only">Email address</label>
-              <input type="email" id="inputEmail" name="email" onChange={handleInput} value={formData.email} className="form-control" placeholder="Email address" required autoFocus/>
+              <input type="email" id="inputEmail" name="email" onChange={handleInput} value={formData.email} className="form-control" placeholder="Email address" required />
           </div>
           <div>
               <label htmlFor="inputPassword" className="sr-only">Password</label>

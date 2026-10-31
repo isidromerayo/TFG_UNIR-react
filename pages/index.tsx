@@ -43,7 +43,7 @@ const Home: NextPage = () => {
       }
     };
     
-    fetchData();
+    void fetchData();
   }, [])
   
     const data: HomePageData = {

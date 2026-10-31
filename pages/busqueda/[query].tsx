@@ -2,7 +2,8 @@ import { API_URL } from "../../utils";
 import { useEffect, useState } from "react";
 import api from "../../utils/api";
 import Link from "next/link";
-import { Curso, NextPageContext } from '../../types';
+import { Curso, NextPageContext, ApiError } from '../../types';
+import { logger } from '../../utils/logger';
 
 function Busqueda({ query_string }: { query_string: string; }) {
 
@@ -11,12 +12,23 @@ function Busqueda({ query_string }: { query_string: string; }) {
 
     useEffect(() => {
         const fetchData = async (query: string) => {
-            const encodedQuery = encodeURIComponent(query);
-            const result_cursos = await api(`${API_URL}/cursos/search/findByTituloContaining?titulo=${encodedQuery}`);
-            setCursos(result_cursos.data._embedded.cursos);
+            try {
+                const encodedQuery = encodeURIComponent(query);
+                const result_cursos = await api(`${API_URL}/cursos/search/findByTituloContaining?titulo=${encodedQuery}`);
+                const cursosEncontrados = result_cursos.data?._embedded?.cursos;
+                setCursos(Array.isArray(cursosEncontrados) ? cursosEncontrados : []);
+            } catch (error) {
+                const apiError = error as ApiError;
+                logger.error('Error al buscar cursos:', {
+                    message: apiError.message,
+                    status: apiError.response?.status
+                });
+                setCursos([]);
+            } finally {
+                setLoading(false);
+            }
         };
-        setLoading(false);
-        fetchData(query_string);
+        void fetchData(query_string);
     }, [query_string]);
 
     return loading ? (
