@@ -2,7 +2,7 @@
 
 - **Fecha**: 2026-10-31
 - **Herramienta/modelo**: OpenCode · Qwen3.8 Flash
-- **Estado**: in progress
+- **Estado**: done (2026-10-31)
 
 ## Contexto
 
@@ -61,6 +61,6 @@ informativo en la misma PR.
 
 ## Pendiente al cerrar
 
-- [ ] Primera corrida `workflow_dispatch` de `a11y.yml` tras el merge.
-- [ ] Cerrar PRs #260 y #267 con referencia a esta PR.
-- [ ] Actualizar submodule `react/` del monorepo.
+- [x] Primera corrida workflow_dispatch (31-oct 14:08 UTC): 8/8 URLs, 0 errores — run 41208725621, artifact a11y-reports. Nota PoC: BD del job sin datos (opción B).
+- [x] PRs Dependabot #260 y #267 cerradas con referencia a esta PR (#272).
+- [x] Monorepo: PR #27 mergeada (de3b19f), react/ apuntando a main con este cambio.
