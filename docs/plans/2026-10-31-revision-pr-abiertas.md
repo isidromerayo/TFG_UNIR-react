@@ -25,10 +25,15 @@ en `AGENTS.md`: **los bumps se aplican a mano sobre `main`** y después se cierr
 ## Cambios (rama `chore/deps-refresh-resolvers-cypress-react`)
 
 - `pnpm remove @cypress/react` → desaparece de `devDependencies` y del lockfile.
-- `pnpm up @hookform/resolvers@6.0.0` → sube a la major estable (6.0.0, del 19/10) en lugar de la
-  7.0.0 publicada el mismo día. Peers de v6 (`yup ^1.0.0`, `react-hook-form ^7.55.0`) satisfied;
-  el `yupResolver` está ejercitado por los 11 tests de `__tests__/pages/registro.spec.tsx`, que
-  renderizan el componente real sin mockear `react-hook-form`.
+- `pnpm up @hookform/resolvers@6.0.2` → sube a la major estable (6.0.0, del 19/10) en lugar de la
+  7.0.0 publicada el mismo día, y se queda en **6.0.2**, el último parche de la línea 6.x (6.0.1 y
+  6.0.2 son correcciones de bug del 27 y 28/10). Los breaking changes de la v6 están **limitados al
+  resolver `effect-ts`** (exige `effect@^4`), así que el `yupResolver` no se ve afectado. Peers de v6
+  (`yup ^1.0.0`, `react-hook-form ^7.55.0`) satisfied; el `yupResolver` está ejercitado por los 11
+  tests de `__tests__/pages/registro.spec.tsx`, que renderizan el componente real sin mockear
+  `react-hook-form` y comprueban los mensajes de validación (`'nombre is a required field'`).
+- `cypress/component/README.md`: se corrige la referencia obsoleta a `@cypress/react` (los tests
+  montan con el subpath `cypress/react` que ya trae el propio paquete `cypress`).
 - Diff resultante: **48 líneas de lockfile** (frente a las ~630 que traían las PR del bot).
 
 ## Verificación

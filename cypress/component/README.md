@@ -1,6 +1,6 @@
 # Cypress Component Testing
 
-Este directorio contiene tests de componentes React usando `@cypress/react`.
+Este directorio contiene tests de componentes React usando el subpath `cypress/react` que incluye el propio paquete `cypress` (no hace falta instalar `@cypress/react` aparte).
 
 ## ¿Qué es Component Testing?
 
@@ -177,5 +177,5 @@ Para expandir los tests de componentes:
 ## Recursos
 
 - [Cypress Component Testing Docs](https://docs.cypress.io/guides/component-testing/overview)
-- [@cypress/react Documentation](https://github.com/cypress-io/cypress/tree/develop/npm/react)
+- [Cypress React (subpath `cypress/react`)](https://github.com/cypress-io/cypress/tree/develop/npm/react)
 - [Next.js + Cypress Guide](https://nextjs.org/docs/testing#cypress)
