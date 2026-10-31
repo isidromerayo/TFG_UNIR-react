@@ -86,11 +86,12 @@ api.interceptors.response.use(
         return response;
     },
     (error: AxiosError) => {
-        let errorMessage;
+        let errorMessage: string;
 
         if (error.response) {
             // Server responded with error status
-            errorMessage = error.response.data?.message ?? 'Server Error';
+            const data = error.response.data as { message?: string } | undefined;
+            errorMessage = data?.message ?? 'Server Error';
             logger.error('Error Response:', {
                 url: error.config?.url,
                 status: error.response.status,
