@@ -181,10 +181,10 @@ d) **Fecha de actualización**:
 ## 🔗 Enlaces Útiles
 
 ### Documentación Interna
-- [README.md](./README.md) - Documentación principal
-- [NEXTJS_16_UPGRADE.md](./NEXTJS_16_UPGRADE.md) - Guía de actualización
-- [DOCS_INDEX.md](./DOCS_INDEX.md) - Índice de documentación
-- [DEPENDENCY_UPDATE_GUIDE.md](./DEPENDENCY_UPDATE_GUIDE.md) - Guía de dependencias
+- [README.md](../../README.md) - Documentación principal
+- [NEXTJS_16_UPGRADE.md](../guides/nextjs-16-upgrade.md) - Guía de actualización
+- [DOCS_INDEX.md](../README.md) - Índice de documentación
+- [DEPENDENCY_UPDATE_GUIDE.md](../guides/dependency-update-guide.md) - Guía de dependencias
 
 ### Documentación Externa
 - [Next.js 16 Release Notes](https://nextjs.org/blog/next-16)

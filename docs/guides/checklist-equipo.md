@@ -194,9 +194,9 @@ rm package-lock.json
 
 ## 📚 Recursos
 
-- **Guía rápida**: [QUICKSTART_PNPM.md](./QUICKSTART_PNPM.md)
-- **Guía completa**: [MIGRATION_TO_PNPM.md](./MIGRATION_TO_PNPM.md)
-- **Seguridad**: [SECURITY_SETUP.md](./SECURITY_SETUP.md)
+- **Guía rápida**: [QUICKSTART_PNPM.md](./quickstart-pnpm.md)
+- **Guía completa**: [MIGRATION_TO_PNPM.md](../archive/MIGRATION_TO_PNPM.md)
+- **Seguridad**: [SECURITY_SETUP.md](./security-setup.md)
 - **Documentación pnpm**: https://pnpm.io/
 
 ---
@@ -224,7 +224,7 @@ Una vez completados todos los pasos:
 Si tienes problemas:
 
 1. Revisa la sección "Problemas Comunes" arriba
-2. Consulta [MIGRATION_TO_PNPM.md](./MIGRATION_TO_PNPM.md) - Sección Troubleshooting
+2. Consulta [MIGRATION_TO_PNPM.md](../archive/MIGRATION_TO_PNPM.md) - Sección Troubleshooting
 3. Pregunta en el canal del equipo
 4. Revisa los logs de error y compártelos
 
