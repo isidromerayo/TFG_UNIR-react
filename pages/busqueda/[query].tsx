@@ -1,6 +1,6 @@
 import { API_URL } from "../../utils";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../utils/api";
 import Link from "next/link";
 import { Curso, NextPageContext } from '../../types';
 
@@ -12,7 +12,7 @@ function Busqueda({ query_string }: { query_string: string; }) {
     useEffect(() => {
         const fetchData = async (query: string) => {
             const encodedQuery = encodeURIComponent(query);
-            const result_cursos = await axios(`${API_URL}/cursos/search/findByTituloContaining?titulo=${encodedQuery}`);
+            const result_cursos = await api(`${API_URL}/cursos/search/findByTituloContaining?titulo=${encodedQuery}`);
             setCursos(result_cursos.data._embedded.cursos);
         };
         setLoading(false);

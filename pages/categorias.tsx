@@ -2,7 +2,7 @@ import { NextPage } from 'next'
 import Link from 'next/link'
 import { API_URL } from '../utils'
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { Categoria } from '../types';
 
 const Categorias: NextPage = () => {
@@ -13,7 +13,7 @@ const Categorias: NextPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result_cursos = await (await axios(`${API_URL}/categorias?sort=nombre`)).data._embedded.categorias;
+      const result_cursos = await (await api(`${API_URL}/categorias?sort=nombre`)).data._embedded.categorias;
       setCategorias(result_cursos)
       setLoading(false);
     }

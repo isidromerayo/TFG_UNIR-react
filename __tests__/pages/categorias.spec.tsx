@@ -1,17 +1,17 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import Categorias from '../../pages/categorias';
-import axios from 'axios';
+import api from '../../utils/api';
 import '@testing-library/jest-dom';
 
-// Mock axios as a function for this test file
-jest.mock('axios', () => {
+// Mock api instance for this test file
+jest.mock('../../utils/api', () => {
     return {
         __esModule: true,
         default: jest.fn()
     };
 });
 
-const mockedAxios = axios as unknown as jest.Mock;
+const mockedApi = api as unknown as jest.Mock;
 
 describe('Categorias Page', () => {
     beforeEach(() => {
@@ -19,7 +19,7 @@ describe('Categorias Page', () => {
     });
 
     it('renders loading state initially', () => {
-        mockedAxios.mockReturnValue(new Promise(() => { }));
+        mockedApi.mockReturnValue(new Promise(() => { }));
         render(<Categorias />);
         expect(screen.getByText('...Data Loading.....')).toBeInTheDocument();
     });
@@ -35,7 +35,7 @@ describe('Categorias Page', () => {
                 }
             }
         };
-        mockedAxios.mockResolvedValue(mockData);
+        mockedApi.mockResolvedValue(mockData);
 
         render(<Categorias />);
 

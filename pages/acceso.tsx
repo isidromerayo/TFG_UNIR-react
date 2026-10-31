@@ -3,7 +3,7 @@ import { NextPage } from 'next'
 import { useRouter } from 'next/router';
 import { setUser , setToken } from '../services/'
 import { API_URL } from '../utils/'
-import axios from 'axios';
+import api from '../utils/api'
 import Swal from 'sweetalert2';
 import { FormInputEvent, FormSubmitEvent } from '../types';
 
@@ -32,7 +32,7 @@ const Acceso: NextPage = () => {
   const submitForm = (e: FormSubmitEvent) => {
     e.preventDefault();
 
-    axios.post(`${API_URL}/auth`, formData).then(response => {
+    api.post(`${API_URL}/auth`, formData).then(response => {
       setToken(response.data.token);
       setUser(JSON.stringify(response.data));
       Swal.fire('Acceso', 'Logeado correctamente');

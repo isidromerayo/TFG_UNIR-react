@@ -2,7 +2,7 @@ import { NextPage } from 'next'
 import SliderComponent from '../components/SliderComponent'
 import HomeComponent from '../components/HomeComponent'
 import { API_URL } from '../utils'
-import axios from 'axios'
+import api from '../utils/api'
 import { useEffect, useState } from 'react'
 import { Curso, Valoracion, HomePageData } from '../types'
 import { logger } from '../utils/logger'
@@ -24,9 +24,9 @@ const Home: NextPage = () => {
     const fetchData = async () => {
       try {
         const [result_cursos, result_valoraciones, result_actualizaciones] = await Promise.all([
-          axios.get(url_cursos),
-          axios.get(url_valoraciones),
-          axios.get(url_actualizaciones)
+          api.get(url_cursos),
+          api.get(url_valoraciones),
+          api.get(url_actualizaciones)
         ]);
 
         setValorados(result_cursos.data._embedded?.cursos || []);

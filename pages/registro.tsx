@@ -1,6 +1,6 @@
-import axios from 'axios'
 import { NextPage } from 'next'
 import { API_URL } from '../utils/constants'
+import api from '../utils/api'
 import Swal from 'sweetalert2'
 
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -41,12 +41,7 @@ const Registro: NextPage = () => {
         estado: 'P' // P for Pending
       };
 
-      await axios.post(`${API_URL}/usuarios`, userData, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        }
-      });
+      await api.post(`${API_URL}/usuarios`, userData);
 
       Swal.fire({
         title: 'Alta',

@@ -2,6 +2,8 @@ import { defineConfig } from "cypress";
 
 export default defineConfig({
   e2e: {
+    // Errors fallback after retry backoff (~1.5s) when the backend is absent
+    defaultCommandTimeout: 8000,
     setupNodeEvents(on, config) {
       // Always setup code coverage task
       require('@cypress/code-coverage/task')(on, config)

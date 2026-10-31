@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import Home from '../../pages/index';
-import axios from 'axios';
+import api from '../../utils/api';
 import { logger } from '../../utils/logger';
 
 // Mock child components
@@ -28,15 +28,15 @@ jest.mock('../../utils/logger', () => ({
     }
 }));
 
-// Mock axios explicitly
-jest.mock('axios', () => ({
+// Mock api instance explicitly
+jest.mock('../../utils/api', () => ({
     __esModule: true,
     default: {
         get: jest.fn()
     }
 }));
 
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+const mockedApi = api as jest.Mocked<typeof api>;
 
 describe('Home Page', () => {
     beforeEach(() => {
@@ -44,7 +44,7 @@ describe('Home Page', () => {
     });
 
     it('renders loading state initially', () => {
-        (mockedAxios.get as jest.Mock).mockReturnValue(new Promise(() => { }));
+        (mockedApi.get as jest.Mock).mockReturnValue(new Promise(() => { }));
 
         render(<Home />);
         expect(screen.getByText('...Data Loading.....')).toBeInTheDocument();
@@ -54,7 +54,7 @@ describe('Home Page', () => {
         const mockCursos = { data: { _embedded: { cursos: [{ id: 1 }] } } };
         const mockVal = { data: { _embedded: { valoraciones: [{ id: 1 }] } } };
 
-        (mockedAxios.get as jest.Mock)
+        (mockedApi.get as jest.Mock)
             .mockResolvedValueOnce(mockCursos)
             .mockResolvedValueOnce(mockVal)
             .mockResolvedValueOnce(mockCursos);
@@ -74,7 +74,7 @@ describe('Home Page', () => {
     });
 
     it('handles fetch error and logs it', async () => {
-        (mockedAxios.get as jest.Mock).mockRejectedValue(new Error('Network Error'));
+        (mockedApi.get as jest.Mock).mockRejectedValue(new Error('Network Error'));
 
         render(<Home />);
 
