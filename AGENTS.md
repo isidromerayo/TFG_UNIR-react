@@ -2,126 +2,183 @@
 
 ## Project
 
-- **Next.js 16.x** (Pages Router, not App Router)
-- **React 19.x**, TypeScript 5.9.3
-- **pnpm** (not npm) — `.npmrc` has `shamefully-hoist=true`
-- Frontend for online course management system
+- **Next.js 16.4.2** (Pages Router — *not* App Router), **React 19.3.0**, **TypeScript 5.9.3**
+- **pnpm 10.17.1** (`packageManager`) — never npm; `.npmrc` sets `shamefully-hoist=true`
+- Toolchain: Jest 30.5.2 + Testing Library, Cypress 15.21.1 (component + e2e), ESLint 9 flat config,
+  pa11y-ci 5 stack, Zustand 5, Axios, SweetAlert2, react-hook-form + yup
+- Frontend of the TFG UNIR system. Backend is Spring Boot on `:8080` (`NEXT_PUBLIC_API_URL`, default
+  `http://localhost:8080/api`). Sibling repos: angular, vue3, backend — each has its own `AGENTS.md`.
 
 ## Essential Commands
 
 ```bash
-pnpm dev                    # localhost:3000
-pnpm lint                   # ESLint
-pnpm build                  # Next.js production build
-pnpm test-headless          # Jest (no watch; coverage always collected, see Testing)
-pnpm cypress:component      # Cypress component tests
-pnpm cypress:e2e            # Cypress e2e tests
-pnpm a11y                   # pa11y-ci audit (htmlcs+axe, WCAG2AA) — requires dev server on :3000
-pnpm security               # scripts/security-check.sh (pnpm audit + OSV + accepted advisories)
+pnpm dev                        # localhost:3000
+pnpm lint                       # eslint . (does NOT run during next build in Next 16)
+pnpm build                      # production build (Babel via .babelrc, not SWC)
+pnpm test-headless              # Jest — coverage + thresholds always enforced (see Testing)
+pnpm cypress:component          # 14 component tests
+pnpm cypress:e2e                # needs `pnpm build && pnpm start` (visits :3000, no backend)
+pnpm a11y                       # pa11y-ci — needs dev server + backend :8080 with data + system Chrome
+pnpm security                   # scripts/security-check.sh (audit + OSV + accepted advisories)
+pnpm security:accepted          # fails as soon as OSV publishes a fix for an accepted advisory
 ```
 
-Single Jest test file: `pnpm test-headless __tests__/path/to/file.test.tsx`
+Focused local runs (both are the non-obvious forms):
+
+```bash
+pnpm test-headless __tests__/pages/categorias.spec.tsx --coverageThreshold='{}'
+pnpm cypress:component --spec cypress/component/HeaderComponent.cy.tsx
+```
+
+The `--coverageThreshold='{}'` escape hatch is required for single-file Jest runs: coverage is always
+collected and the *global* thresholds fail when only one suite runs.
 
 ## Pre-Commit Flow (MANDATORY)
 
-Run in order. **Do not commit if any step fails.**
+In order; do not commit if any step fails.
 
 ```bash
 pnpm lint && pnpm test-headless && pnpm cypress:component && pnpm build
 ```
 
-Or individually:
-1. `pnpm lint` — fix code if fails
-2. `pnpm test-headless` — 130+ tests must pass
-3. `pnpm cypress:component` — 14+ tests must pass
-4. `pnpm build` — must compile successfully
-
-**Note:** `pnpm audit` es el gate de producción del repo (`pnpm audit --prod`, paso *pnpm audit
-(production gate)* de `security.yml`); el endpoint vuelve a responder. Un advisory **con** parche se
-corrige con `pnpm.overrides`, nunca con `auditConfig.ignoreCves`. El audit completo (dev + prod) se
-reporta como warning, no bloquea.
+Then expect the **external gates on the PR** to be stricter than local CI — see Quality Gates below.
 
 ## Architecture
 
 ```
-pages/          # Next.js Pages Router (file-based routing)
-components/     # Reusable React components (6 main)
-services/       # API client (Axios) + session management
-store/          # Zustand state management
-utils/          # Helpers (logger, API, constants)
-__tests__/      # Jest unit tests (mirrors pages/components structure)
-cypress/        # Cypress component tests
+pages/          # routes; dynamic segments are [id] / [query] (busqueda, categoria, curso, valoracion)
+components/     # 6 components; LayoutComponent wraps everything via pages/_app.tsx
+services/       # session.ts (localStorage token/user) re-exported by index.ts
+store/          # useCartStore.ts (Zustand, in-memory — cart is not persisted)
+types/          # index.ts: ALL API DTOs + ApiError (no `any` in page code)
+utils/          # api.ts (shared axios instance), constants.ts (API_URL), logger.ts
+styles/         # vendored Bootstrap/icon CSS + globals.css (no Tailwind)
+__tests__/pages/        # mirrors pages/   (PLURAL)
+__tests__/component/    # mirrors components/  (SINGULAR — easy to get wrong)
+cypress/component, cypress/e2e
+docs/plans/     # execution records: YYYY-MM-DD-brief-description.md
 ```
 
-Key files:
-- `pages/_app.tsx` — App wrapper
-- `store/useCartStore.ts` — Cart state (Zustand)
-- `services/session.ts` — Auth/session management (localStorage)
-- `utils/api.ts` — Axios instance with retry/interceptors
-- `utils/constants.ts` — `API_URL` from `NEXT_PUBLIC_API_URL` (defaults to `http://localhost:8080/api`)
+## API & data-loading conventions (match these)
+
+- Use the shared instance `utils/api.ts`. Never call raw `axios` — that bypasses the 30 s timeout,
+  the retry policy (GET/HEAD/OPTIONS only, 3 tries, backoff 500/1000/1500 ms on network/429/5xx) and
+  the error interceptors that preserve `response`, `status` and `code`.
+- `baseURL` is already `API_URL`; pages pass absolute URLs (`${API_URL}/...`) — both work, keep the
+  page style consistent.
+- HAL payloads: type the call as `api.get<Partial<CursoEmbedded>>(…)`,
+  `<Partial<CategoriaEmbedded>>`, `<Partial<ValoracionEmbedded>>`, then guard with
+  `Array.isArray(response.data._embedded?.cursos)`. Untyped `api(url)` returns `any` and trips Codacy.
+- `useEffect` data loading: inner `async fetchData()` with `try/catch/finally`, `logger.error(…,
+  { message, status })` in the catch, empty-array fallback, `setLoading(false)` **only in `finally`**
+  (otherwise a failed request leaves an infinite spinner), and invoke it as `void fetchData()`.
+- `router.push(...)` is typed `Promise<boolean>` — it is also a floating promise; use `void push(...)`
+  if an analyzer flags it. `.then()` chains must end in `.catch()` (see `pages/mis-cursos.tsx`).
+- User-facing errors go through SweetAlert2 in every frontend (team convention).
+- `services/session.ts` guards `localStorage` with `isBrowser()`; never touch `localStorage` directly
+  from components (breaks SSR/jsdom).
+- `pages/registro.tsx` uses react-hook-form + yup; the other forms are controlled `useState`. Do not
+  "unify" them as a side effect of a task.
+
+## Quality Gates (what actually breaks a PR)
+
+- **Codacy PR check allows 0 new issues** (conclusion `action_required` = fail, even though Jest,
+  Cypress, lint and build are green). Rules that fire on this codebase:
+  `no-unsafe-assignment`/`no-unsafe-member-access` (untyped `_embedded` reads),
+  `unbound-method` (referencing `logger.error` off the real `Logger` instance in specs),
+  `no-empty-function` (`new Promise(() => {})`).
+  Verify locally before pushing: run ESLint 9 with type-aware parsing and those rule families
+  (`npx eslint --no-config-lookup -c <type-aware config> <files>`), because `pnpm lint` cannot see them.
+- **SonarCloud** (`sonar-project.properties`, key `isidromerayo_TFG_UNIR-react`): gate is on *new
+  code*, `new_coverage ≥ 80%` — new lines need tests. Recurring rules: `typescript:S9383`
+  (floating promise), `typescript:S9379` (`autoFocus` — remove it, don't replace it with a `ref`
+  focus, that is the same defect).
+- Local `eslint.config.mjs` is **not** type-aware (3 rules + `next/core-web-vitals`), so `pnpm lint`
+  will not catch any of the above. Don't enable type-aware linting casually: it unblocks a large
+  backlog of pre-existing findings.
+- `pnpm audit --prod` is the blocking security step in `security.yml`; the full audit (dev + prod) is
+  warning-only. `ACCEPTED` lists are currently empty — a *silenced* advisory is allowed only while
+  upstream has no patch (registry + checklist: `docs/security/accepted-advisories.md`).
 
 ## Testing
 
-- **Jest**: `__tests__/` directory, jsdom environment, ~92% line coverage
-- Coverage is ALWAYS collected (`collectCoverage: true` in `jest.config.js`) and thresholds are enforced even by `pnpm test-headless` — low coverage fails the run. `store/` requires 100% functions/lines/statements.
-- **Cypress**: `cypress/` directory (`component/` and `e2e/`), component testing with `@cypress/react` + webpack/Next dev server
-- Coverage merges: `pnpm cypress:component:coverage` generates combined reports
+- Coverage is always collected. Thresholds (`jest.config.js`): global branches 45 / functions 59 /
+  lines+statements 63; `components/**` 85 functions/lines/statements, branches 50; `services/**` 85;
+  `store/**` 100 functions/lines/statements, branches 80. **Never lower a threshold or add a
+  `collectCoverageFrom` exclusion** — cover the new branch instead.
+- Current baseline: 25 suites / 143 tests, statements 95.2%, branches 75.6%, lines 95.5%.
+- Mock `utils/api`, never axios: `jest.mock('../../utils/api', () => ({ __esModule: true, default: { get: jest.fn() } }))`.
+- Do **not** `import { jest } from '@jest/globals'` in a file that declares hoisted `jest.mock`
+  factories — the factory registers against a different instance and `mockResolvedValue` blows up at
+  runtime. Use the global `jest` like the other specs do.
+- Take typed mock handles to avoid Codacy `unbound-method`:
+  `const mockedApiGet = jest.requireMock<{ default: { get: jest.Mock } }>('../../utils/api').default.get;`
+- `getServerSideProps` is unit-tested directly (mock `global.fetch`); component tests need
+  `jest.mock('next/router')` returning `{ isReady: true, push: jest.fn() }` when the page calls `useRouter`.
+- Cypress component tests run through Babel + `babel-plugin-istanbul`; coverage needs
+  `pnpm cypress:component:coverage`, and Jest+Cypress lcov get merged (`coverage:merge`, and in CI by
+  `tests.yml`) before Sonar reads `coverage/merged/lcov.info`.
+- E2E has a single spec (`cypress/e2e/app.cy.js`) with **no backend**: `defaultCommandTimeout` is
+  8000 ms so the API retry backoff (~3 s) plus the error fallback lands inside the window. Keep that
+  timeout if you touch `utils/api.ts` retry timing.
 
 ## CI/CD
 
-GitHub Actions: `node.js.yml` (lint→build), `tests.yml` (Jest + Cypress component/e2e + coverage + Sonar), `security.yml` (scheduled audit/Snyk), `codeql.yml`, `a11y.yml` (pa11y semanal/dispatch, informativo — sin gate de merge). Node 22.x, pnpm 10, `pnpm install --frozen-lockfile`.
+`.github/workflows/`: `node.js.yml` (lint → build), `tests.yml` (Jest + Cypress component + e2e,
+coverage comment, SonarCloud), `security.yml` (scheduled/PR audit, Snyk, OSV, accepted-advisory
+recheck), `codeql.yml`, `a11y.yml` (pa11y weekly/dispatch, `continue-on-error` — informative).
+All jobs: Node 22.x, `pnpm 10.17.1`, `pnpm install --frozen-lockfile`, every third-party action
+pinned to a 40-char SHA, secrets never used in `if:` (guard with `if: env.X != ''`).
 
 ## Quirks
 
-- **Cypress binary**: Run `pnpm cypress install` after version changes
-- **TypeScript**: `moduleResolution: "bundler"` (auto-set by Next.js 16.x)
-- **Babel**: External `.babelrc` used — SWC disabled for Cypress tests
-- **pnpm overrides**: `package.json` pins patched versions of vulnerable transitive deps (sharp, js-yaml, ajv, minimatch, brace-expansion, etc.)
-- **`pnpm audit --ignore-unfixable` rewrites `package.json`**: it automatically appends the ignored unfixable CVEs to `pnpm.auditConfig.ignoreCves`, so `git diff package.json` shows changes after auditing. See `docs/security/pnpm-audit-unfixable-cves.md`
-- **Dependabot lockfiles break CI**: Dependabot-regenerated `pnpm-lock.yaml` drops the overrides section → `pnpm install --frozen-lockfile` fails with `ERR_PNPM_LOCKFILE_CONFIG_MISMATCH` in every job. Apply dep bumps manually on a branch: update overrides if needed, `pnpm up <pkg>@<ver>` (or `pnpm install --no-frozen-lockfile`), verify `pnpm install --frozen-lockfile` passes, then close the Dependabot PR (see PRs #207/#209/#210)
-- **Deprecated subdependencies**: glob@7.2.3, inflight@1.0.6, rimraf@3.0.2 (ignore in audits)
-- **Accepted advisories (no upstream patch)**: an advisory is only ever "accepted" when no patched
-  version is published. It must be registered in `docs/security/accepted-advisories.md` and
-  rechecked every iteration: `pnpm security:accepted` (step *Accepted advisories recheck* in
-  `security.yml`) fails as soon as OSV publishes a fix — then bump the dependency and remove the
-  silencing (`pnpm.auditConfig.ignoreCves`, the `ACCEPTED` list, the Dependabot dismissal) in the
-  same PR.
-- **pa11y uses system Chrome**: `.pa11yci` points `chromeLaunchConfig.executablePath` at `/usr/bin/google-chrome-stable`. Reports land in `reports/a11y/` (gitignored). Requires dev server on :3000 and backend on :8080 for `/categorias`, `/categoria/:id`, `/curso/:id`.
-- **pa11y stack (unificado 2026-10-31 con angular y vue3)**: `pa11y@10` + `pa11y-ci@5` + `pa11y-ci-reporter-html@9`; engines exigen Node ≥ 22.13. `pa11y-ci@5` arrastra puppeteer 25 (ya no existe `extract-zip` en el árbol). El reporter 9 requiere pa11y-ci 5 vía su propiedad `supports`, pero **pa11y-ci no la valida**: la única prueba de compatibilidad es ejecutar `pnpm a11y`. Ningún check de PR corre pa11y (`a11y.yml` es semanal/dispatch) — verde de CI ≠ a11y funcionando.
-- **pa11y upgrade policy**: bump `pa11y-ci` and `pa11y-ci-reporter-html` in the same branch (never reporter-only past a pa11y-ci major), re-lock with `pnpm install` locally, verify the `pnpm.overrides` survive the lock diff, and run `pnpm a11y` (dev server + backend) before merging. Close any Dependabot PRs for this tree and apply the bump manually (lockfile gotcha above). Full guide: `docs/accessibility.md`.
+- **Dependabot lockfiles break CI**: a regenerated `pnpm-lock.yaml` drops `pnpm.overrides` →
+  `ERR_PNPM_LOCKFILE_CONFIG_MISMATCH` in every job. Apply bumps manually on a branch (`pnpm up <pkg>`,
+  verify `pnpm install --frozen-lockfile`) and close the Dependabot PR.
+- **`pnpm.overrides` in `package.json` pin patched versions of transitive deps** (sharp, js-yaml, ajv,
+  minimatch, brace-expansion, follow-redirects, form-data, …). Never strip them when "cleaning".
+- **`pnpm audit --ignore-unfixable` rewrites `package.json`**, appending CVEs to
+  `pnpm.auditConfig.ignoreCves`. Use `pnpm.overrides` for anything with a patch; guide in
+  `docs/security/pnpm-audit-unfixable-cves.md`.
+- **Babel**: external `.babelrc` (`next/babel` + istanbul) is used by Jest, Cypress *and* `next build`
+  — SWC is not in play.
+- **Cypress binary**: re-run `pnpm cypress install` after a version bump.
+- **pa11y**: uses `/usr/bin/google-chrome-stable` (`.pa11yci`); reports go to `reports/a11y/`
+  (gitignored). Stack is unified across the three frontends (`pa11y` 10 / `pa11y-ci` 5 / reporter 9,
+  Node ≥ 22.13) and `pa11y-ci` does not validate the reporter's `supports` field — the only real
+  compatibility test is running `pnpm a11y`. Bump ci + reporter in the same branch; full guide
+  `docs/accessibility.md`.
+- **TypeScript**: `moduleResolution: "bundler"`, `strict`, and `__tests__`/`cypress` are *excluded*
+  from `tsconfig.json` — a type-aware ESLint run over specs needs its own tsconfig.
+- Deprecated subdependencies still in the tree: glob@7, inflight@1, rimraf@3 (ignore in audits).
 
 ## Branch Policy (MUST)
 
-- **NEVER commit or push directly to `main` or `master`.**
-- All changes (code, docs, CI, dependency updates, security fixes and hotfixes) MUST go through a branch and a Pull Request.
-- Use descriptive branch prefixes: `feature/`, `fix/`, `docs/`, `ci/`, `chore/`, `security/`, `release/`.
-- Prefer **squash merge** for a clean linear history.
-- **NEVER force-push to `main` or `master`.**
-- Releases MUST use a `release/X.Y.Z` branch, merge it via PR, then create the Git tag from the updated `main` branch.
-- This policy applies to both human contributors and AI agents.
+- **NEVER commit or push directly to `main`/`master`.** No force-push either.
+- All changes go through a branch + PR: prefixes `feature/`, `fix/`, `docs/`, `ci/`, `chore/`,
+  `security/`, `release/`.
+- Commits MUST follow Conventional Commits — use the `codely-git-conventional_commit` skill FIRST for
+  any commit (it derives type/summary from the diff and adds the AI `Co-Authored-By:` trailer).
+- Open with `gh pr create`, merge with `gh pr merge --squash --delete-branch` **only after every check
+  is green** (a green Jest/lint/build set is not enough — Codacy and SonarCloud gate the PR).
+- Releases: `release/X.Y.Z` branch → PR → tag from the updated `main`.
 
 ## Plan Mode & Execution Records (MUST)
 
-- When in **plan mode**, state it explicitly in every response and do NOT execute changes until the user approves with `adelante` and the system switches to build mode.
-- All non-trivial plans MUST be saved to `docs/plans/` with the format `YYYY-MM-DD-brief-description.md`.
-- Plan files MUST include: date, tool/model used, objectives, file changes, verification steps, design decisions, and current status (planned/in progress/done).
-- Before executing a plan, confirm explicit user approval.
-- After execution, record the outcome and update the plan status.
-- When the user corrects an undocumented convention, use the `codely-doc-create` skill to document it under `docs/` (categories from `ls docs/`, Good/Bad examples).
-
-## Git Workflow (MANDATORY)
-
-- **NEVER commit or push directly to `main`.** All work goes through a feature branch and a pull request.
-- Keep `main` in sync with `origin/main` (`git pull --rebase origin main`) before branching.
-- Open a PR with `gh pr create` and merge it via the GitHub UI / `gh pr merge` — never by direct push.
-- Only merge `main` (e.g. dependabot security fixes or release chores) through reviewed, green PRs.
-- **Commits MUST follow Conventional Commits** (`type: summary`, e.g. `fix(security): ...`). Use the `codely-git-conventional_commit` skill FIRST for any commit: it derives type/summary from the diff, uses present tense and lowercase, and adds the `Co-Authored-By:` AI trailer.
+- In plan mode, state it in every response and change nothing until the user approves with `adelante`.
+- Non-trivial plans go to `docs/plans/YYYY-MM-DD-brief-description.md` with date, tool/model used,
+  objectives, file changes, verification steps, design decisions and status (planned/in progress/done).
+- Confirm explicit user approval before executing; record the outcome afterwards in the same file.
+- When the user corrects an undocumented convention, document it with the `codely-doc-create` skill.
 
 ## Docs
 
-- `docs/security/pnpm-audit-unfixable-cves.md` — when and how to pin an unfixable CVE in `pnpm.auditConfig.ignoreCves`.
-- `docs/security/accepted-advisories.md` — registry of accepted advisories (no upstream patch) + the rule to recheck them every iteration.
-- `docs/plans/` — execution records for non-trivial changes (`YYYY-MM-DD-brief-description.md`).
+- `docs/security/accepted-advisories.md` — accepted (unpatched) advisories + the recheck rule.
+- `docs/security/pnpm-audit-unfixable-cves.md` — when/how to silence an unfixable CVE.
+- `docs/accessibility.md` — pa11y stack, upgrade policy, how to run the audit.
+- `docs/plans/` — execution records; the newest files describe the current conventions.
+- Root `AGENTS.md` (`TFG_UNIR-multi/`) — monorepo layout and cross-project conventions. The root
+  directory is not a git repo; commit inside this one.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
