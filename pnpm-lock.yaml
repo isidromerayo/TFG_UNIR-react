@@ -41,8 +41,8 @@ importers:
   .:
     dependencies:
       '@hookform/resolvers':
-        specifier: ^5.9.1
-        version: 5.9.1(@sinclair/typebox@0.34.52)(ajv-formats@2.1.1(ajv@6.15.0))(ajv@6.15.0)(react-hook-form@7.90.0(@types/react@19.3.0)(react@19.3.0))(yup@1.7.1)(zod@4.6.7)
+        specifier: ^6.0.2
+        version: 6.0.2(@sinclair/typebox@0.34.52)(ajv-formats@2.1.1(ajv@6.15.0))(ajv@6.15.0)(react-hook-form@7.90.0(@types/react@19.3.0)(react@19.3.0))(yup@1.7.1)(zod@4.6.7)
       '@types/node':
         specifier: 26.6.3
         version: 26.6.3
@@ -92,9 +92,6 @@ importers:
       '@cypress/code-coverage':
         specifier: ^4.0.3
         version: 4.0.3(@babel/core@7.29.7)(@babel/preset-env@7.29.7(@babel/core@7.29.7))(babel-loader@10.0.0(@babel/core@7.29.7)(webpack@5.104.1(postcss@8.5.23)))(cypress@15.21.1)(webpack@5.104.1(postcss@8.5.23))
-      '@cypress/react':
-        specifier: ^9.0.2
-        version: 9.0.2(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(cypress@15.21.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@cypress/webpack-preprocessor':
         specifier: ^7.1.2
         version: 7.1.2(@babel/core@7.29.7)(@babel/preset-env@7.29.7(@babel/core@7.29.7))(babel-loader@10.0.0(@babel/core@7.29.7)(webpack@5.104.1(postcss@8.5.23)))(webpack@5.104.1(postcss@8.5.23))
@@ -856,18 +853,6 @@ packages:
       cypress: '>=15.10.0'
       webpack: ^4 || ^5
 
-  '@cypress/react@9.0.2':
-    resolution: {integrity: sha512-b20a0g6Ot3u92wdmDD+4/r5NkAKPJz+yN2miuydDwy63Hzpk9fLQ0tee5xzx/0VPxYrh3dzedoO8dwUR3qpBlg==}
-    peerDependencies:
-      '@types/react': ^18 || ^19
-      '@types/react-dom': ^18 || ^19
-      cypress: '*'
-      react: ^18 || ^19
-      react-dom: ^18 || ^19
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-
   '@cypress/request@4.0.1':
     resolution: {integrity: sha512-y20e+e6dFYkOUUJLVUZTsJRuTiXZaUQ32WD+R/ux/HBybbTx4ge7cNINcua0pU8+SNkKuRbOF12mBmzuzM8n5w==}
     engines: {node: '>= 14.17.0'}
@@ -947,22 +932,21 @@ packages:
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@hookform/resolvers@5.9.1':
-    resolution: {integrity: sha512-7b7vsbraJxKgjVSA1Nur9tLwj539WGJUBLA7QNvXnFoT2pM5Z7G+6rlukk4B2/QrTZy6huRtH6wKeESPKuIr6w==}
+  '@hookform/resolvers@6.0.2':
+    resolution: {integrity: sha512-e2dqUOlaGuirKVOd/iZWk/Yg5zeaGw7t0hSc3LzxL3o7eZGwZkTyEbBL8H52m0wRKEsNLWoMGOiXGHbPHTXlEQ==}
     peerDependencies:
       '@sinclair/typebox': '>=0.25.24'
       '@standard-schema/spec': ^1.0.0
-      '@typeschema/main': '>=0.13.7'
       '@vinejs/vine': ^2.0.0 || ^3.0.0 || ^4.0.0
       ajv: ^8.18.0
       ajv-errors: ^3.0.0
       ajv-formats: ^2.1.1
       arktype: ^2.0.0
-      ata-validator: ^1.2.0
+      ata-validator: ^1.23.0
       class-transformer: '>=0.4.0'
       class-validator: '>=0.12.0'
       computed-types: ^1.0.0
-      effect: ^3.10.3
+      effect: ^4.0.0
       fluentvalidation-ts: ^3.0.0
       fp-ts: ^2.7.0
       io-ts: ^2.0.0
@@ -979,8 +963,6 @@ packages:
       '@sinclair/typebox':
         optional: true
       '@standard-schema/spec':
-        optional: true
-      '@typeschema/main':
         optional: true
       '@vinejs/vine':
         optional: true
@@ -4328,8 +4310,8 @@ packages:
     resolution: {integrity: sha512-pN/yOAvcC+5rQ5nERGuwrjLlYvLTbCibnZ1I7B1LaiAz9BRBlE9GMgE/eqV30P7aJQUf7Ddimy/RsbYO/GrVGg==}
     engines: {node: '>= 10.13.0'}
 
-  schema-utils@4.8.1:
-    resolution: {integrity: sha512-x39pYlJPyH7Uge5QO64B9XGP9zLDc9WNmiQZc+CE3IzZPvMu3lHOuAMGpYNoPixEL7MSWlGhYTg5UlLSL8G6iw==}
+  schema-utils@4.8.2:
+    resolution: {integrity: sha512-iKlak3OFHF0dgD1nZRvgWQzG+P1TiEcMnLSBtIVBg937z5Jd6WE1c3SyZkXIyCfPHowL35yMsVvIjotm1c1qiw==}
     engines: {node: '>= 10.13.0'}
     hasBin: true
     peerDependencies:
@@ -5952,15 +5934,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@cypress/react@9.0.2(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(cypress@15.21.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
-    dependencies:
-      '@types/react-dom': 19.3.0(@types/react@19.3.0)
-      cypress: 15.21.1
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
-    optionalDependencies:
-      '@types/react': 19.3.0
-
   '@cypress/request@4.0.1':
     dependencies:
       aws-sign2: 0.7.0
@@ -6086,7 +6059,7 @@ snapshots:
       '@eslint/core': 0.17.0
       levn: 0.4.1
 
-  '@hookform/resolvers@5.9.1(@sinclair/typebox@0.34.52)(ajv-formats@2.1.1(ajv@6.15.0))(ajv@6.15.0)(react-hook-form@7.90.0(@types/react@19.3.0)(react@19.3.0))(yup@1.7.1)(zod@4.6.7)':
+  '@hookform/resolvers@6.0.2(@sinclair/typebox@0.34.52)(ajv-formats@2.1.1(ajv@6.15.0))(ajv@6.15.0)(react-hook-form@7.90.0(@types/react@19.3.0)(react@19.3.0))(yup@1.7.1)(zod@4.6.7)':
     dependencies:
       '@standard-schema/utils': 0.3.0
       react-hook-form: 7.90.0(@types/react@19.3.0)(react@19.3.0)
@@ -9945,7 +9918,7 @@ snapshots:
       ajv: 6.15.0
       ajv-keywords: 3.5.2(ajv@6.15.0)
 
-  schema-utils@4.8.1(webpack@5.104.1(postcss@8.5.23)):
+  schema-utils@4.8.2(webpack@5.104.1(postcss@8.5.23)):
     dependencies:
       '@types/json-schema': 7.0.15
       ajv: 8.20.0
@@ -10253,7 +10226,7 @@ snapshots:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       jest-worker: 27.5.1
-      schema-utils: 4.8.1(webpack@5.104.1(postcss@8.5.23))
+      schema-utils: 4.8.2(webpack@5.104.1(postcss@8.5.23))
       terser: 5.51.2
       webpack: 5.104.1(postcss@8.5.23)
     optionalDependencies:
@@ -10542,7 +10515,7 @@ snapshots:
       loader-runner: 4.3.2
       mime-types: 2.1.35
       neo-async: 2.6.2
-      schema-utils: 4.8.1(webpack@5.104.1(postcss@8.5.23))
+      schema-utils: 4.8.2(webpack@5.104.1(postcss@8.5.23))
       tapable: 2.3.3
       terser-webpack-plugin: 5.6.1(postcss@8.5.23)(webpack@5.104.1(postcss@8.5.23))
       watchpack: 2.6.3
