@@ -36,6 +36,16 @@ pnpm security:accepted          # o: ./scripts/check-accepted-advisories.sh
 ```json accepted-advisories
 {
   "ecosystem": "npm",
-  "advisories": []
+  "advisories": [
+    {
+      "id": "CVE-2026-93753",
+      "package": "deepmerge",
+      "version": "4.3.1",
+      "route": ".>jest>@jest/core>jest-config>deepmerge",
+      "severity": "low",
+      "scope": "dev",
+      "reason": "Sin parche upstream: la ultima version publicada (4.3.1, de 2023) sigue siendo vulnerable (patched <0.0.0). Dev-only via jest/jest-config. mergeObject() solo se usa con la configuracion local del runner de tests, sin entrada controlada por atacante. Silenciado via pnpm.auditConfig.ignoreCves."
+    }
+  ]
 }
 ```
