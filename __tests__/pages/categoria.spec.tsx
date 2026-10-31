@@ -10,13 +10,12 @@ jest.mock('next/router', () => ({
   useRouter: jest.fn()
 }));
 
-// Mock de la instancia de api (el componente la usa como funcion: api(url))
+// Mock de la instancia de api y del logger
 jest.mock('../../utils/api', () => ({
   __esModule: true,
-  default: jest.fn()
+  default: { get: jest.fn() }
 }));
 
-// Mock del logger para afirmar sobre el camino de error
 jest.mock('../../utils/logger', () => ({
   __esModule: true,
   logger: {
@@ -25,13 +24,11 @@ jest.mock('../../utils/logger', () => ({
   }
 }));
 
-import CategoriaPage from '../../pages/categoria/[id]';
-import { getServerSideProps } from '../../pages/categoria/[id]';
-import api from '../../utils/api';
-import { logger } from '../../utils/logger';
+import CategoriaPage, { getServerSideProps } from '../../pages/categoria/[id]';
 
-const mockedApi = api as unknown as jest.Mock;
-const mockedLoggerError = logger.error as jest.Mock;
+// Handles tipados de los mocks para no referenciar metodos sin bindear
+const mockedApiGet = jest.requireMock<{ default: { get: jest.Mock } }>('../../utils/api').default.get;
+const mockedLoggerError = jest.requireMock<{ logger: { error: jest.Mock } }>('../../utils/logger').logger.error;
 
 const categoria: Categoria = { id: 7, nombre: 'Backend', descripcion: 'APIs' };
 
@@ -81,7 +78,7 @@ describe('Categoria Page (componente)', () => {
   });
 
   it('muestra el estado de carga mientras la petición está pendiente', () => {
-    mockedApi.mockReturnValue(new Promise(() => { }));
+    mockedApiGet.mockReturnValue(new Promise<never>(() => undefined));
 
     render(<CategoriaPage data={categoria} />);
 
@@ -89,7 +86,7 @@ describe('Categoria Page (componente)', () => {
   });
 
   it('renderiza los cursos de la categoría', async () => {
-    mockedApi.mockResolvedValue({
+    mockedApiGet.mockResolvedValue({
       data: { _embedded: { cursos: [curso(1, 'Spring Boot'), curso(2, 'Quarkus')] } }
     });
 
@@ -99,21 +96,22 @@ describe('Categoria Page (componente)', () => {
       expect(screen.getByText('Spring Boot')).toBeInTheDocument();
     });
     expect(screen.getByText('Quarkus')).toBeInTheDocument();
-    expect(logger.error).not.toHaveBeenCalled();
+    expect(mockedLoggerError).not.toHaveBeenCalled();
   });
 
   it('muestra el aviso vacío cuando la respuesta no trae _embedded', async () => {
-    mockedApi.mockResolvedValue({ data: {} });
+    mockedApiGet.mockResolvedValue({ data: {} });
 
     render(<CategoriaPage data={categoria} />);
 
     await waitFor(() => {
       expect(screen.getByText('Sin cursos en esta categoría')).toBeInTheDocument();
     });
+    expect(mockedLoggerError).not.toHaveBeenCalled();
   });
 
   it('muestra el aviso vacío y registra el error si la petición rechaza', async () => {
-    mockedApi.mockRejectedValue({ message: 'boom', response: { status: 503 } });
+    mockedApiGet.mockRejectedValue({ message: 'boom', response: { status: 503 } });
 
     render(<CategoriaPage data={categoria} />);
 

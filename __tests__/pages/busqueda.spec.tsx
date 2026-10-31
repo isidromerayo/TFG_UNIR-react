@@ -2,15 +2,12 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, beforeEach } from '@jest/globals';
 import type { Curso } from '../../types';
 
-// Mock de la instancia de api (el componente la usa como funcion: api(url))
-jest.mock('../../utils/api', () => {
-    return {
-        __esModule: true,
-        default: jest.fn()
-    };
-});
+// Mock de la instancia de api y del logger del utils/api compartido
+jest.mock('../../utils/api', () => ({
+    __esModule: true,
+    default: { get: jest.fn() }
+}));
 
-// Mock del logger para poder afirmar sobre el camino de error
 jest.mock('../../utils/logger', () => ({
     __esModule: true,
     logger: {
@@ -20,11 +17,11 @@ jest.mock('../../utils/logger', () => ({
 }));
 
 import Busqueda, { getServerSideProps } from '../../pages/busqueda/[query]';
-import api from '../../utils/api';
-import { logger } from '../../utils/logger';
 
-const mockedApi = api as unknown as jest.Mock;
-const mockedLoggerError = logger.error as jest.Mock;
+// Handles tipados de los mocks: leer los metodos desde la importacion real
+// (instancia de la clase Logger) dispararia el aviso `unbound-method`
+const mockedApiGet = jest.requireMock<{ default: { get: jest.Mock } }>('../../utils/api').default.get;
+const mockedLoggerError = jest.requireMock<{ logger: { error: jest.Mock } }>('../../utils/logger').logger.error;
 
 const curso = (id: number, titulo: string): Curso => ({
     id,
@@ -66,7 +63,7 @@ describe('Busqueda Page (componente)', () => {
   });
 
   it('muestra el estado de carga mientras la petición pendiente', () => {
-    mockedApi.mockReturnValue(new Promise(() => { }));
+    mockedApiGet.mockReturnValue(new Promise<never>(() => undefined));
 
     render(<Busqueda query_string="react" />);
 
@@ -74,7 +71,7 @@ describe('Busqueda Page (componente)', () => {
   });
 
   it('renderiza los cursos cuando la búsqueda tiene resultados', async () => {
-    mockedApi.mockResolvedValue({
+    mockedApiGet.mockResolvedValue({
         data: { _embedded: { cursos: [curso(1, 'React moderno')] } }
     });
 
@@ -84,21 +81,22 @@ describe('Busqueda Page (componente)', () => {
         expect(screen.getByText('React moderno')).toBeInTheDocument();
     });
     expect(screen.getByText('detalle del curso')).toBeInTheDocument();
-    expect(logger.error).not.toHaveBeenCalled();
+    expect(mockedLoggerError).not.toHaveBeenCalled();
   });
 
   it('muestra sin resultados cuando la respuesta no trae _embedded', async () => {
-    mockedApi.mockResolvedValue({ data: {} });
+    mockedApiGet.mockResolvedValue({ data: {} });
 
     render(<Busqueda query_string="nada" />);
 
     await waitFor(() => {
         expect(screen.getByText(/No hay resultados para el texto indicado/)).toBeInTheDocument();
     });
+    expect(mockedLoggerError).not.toHaveBeenCalled();
   });
 
   it('muestra sin resultados y registra el error si la petición rechaza', async () => {
-    mockedApi.mockRejectedValue({ message: 'boom', response: { status: 500 } });
+    mockedApiGet.mockRejectedValue({ message: 'boom', response: { status: 500 } });
 
     render(<Busqueda query_string="react" />);
 

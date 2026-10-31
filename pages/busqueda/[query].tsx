@@ -2,7 +2,7 @@ import { API_URL } from "../../utils";
 import { useEffect, useState } from "react";
 import api from "../../utils/api";
 import Link from "next/link";
-import { Curso, NextPageContext, ApiError } from '../../types';
+import { Curso, NextPageContext, ApiError, CursoEmbedded } from '../../types';
 import { logger } from '../../utils/logger';
 
 function Busqueda({ query_string }: { query_string: string; }) {
@@ -14,8 +14,8 @@ function Busqueda({ query_string }: { query_string: string; }) {
         const fetchData = async (query: string) => {
             try {
                 const encodedQuery = encodeURIComponent(query);
-                const result_cursos = await api(`${API_URL}/cursos/search/findByTituloContaining?titulo=${encodedQuery}`);
-                const cursosEncontrados = result_cursos.data?._embedded?.cursos;
+                const response = await api.get<Partial<CursoEmbedded>>(`${API_URL}/cursos/search/findByTituloContaining?titulo=${encodedQuery}`);
+                const cursosEncontrados = response.data._embedded?.cursos;
                 setCursos(Array.isArray(cursosEncontrados) ? cursosEncontrados : []);
             } catch (error) {
                 const apiError = error as ApiError;
@@ -36,7 +36,7 @@ function Busqueda({ query_string }: { query_string: string; }) {
     ) : (
         <div className="container pagina-datos">
             <h1>Búsqueda de nuestros cursos: <span className="destacar-palabra">{query_string}</span></h1>
-            {cursos === null || cursos === undefined || cursos.length === 0 ? (<div className="sin-resultados">
+            {!cursos || cursos.length === 0 ? (<div className="sin-resultados">
                 No hay resultados para el texto indicado, revise o refine la palabra de búsqueda...
                 <p>
                     <Link href="/">volver al inicio</Link>

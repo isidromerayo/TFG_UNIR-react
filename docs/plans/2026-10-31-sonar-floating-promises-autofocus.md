@@ -83,6 +83,41 @@ como «candidato a incidencia futura». La incidencia ya está abierta, así que
   type-aware linting y activarlo obligaría a reconfigurar el parser y destapar incidencias fuera de
   alcance. La detención la sigue haciendo SonarQube.
 
+## Segunda pasada: gate de Codacy (0 incidencias nuevas)
+
+El check `Codacy Static Code Analysis` de la PR se puso en `action_required` con
+**14 incidencias nuevas (máx. 0)**. Se corrigieron todas en la misma rama:
+
+- **6 de tipo `unsafe-any`** (`no-unsafe-assignment` / `no-unsafe-member-access`) en
+  `pages/busqueda/[query].tsx`, `pages/categoria/[id].tsx` y `pages/categorias.tsx`: la llamada
+  genérica `api(url)` devuelve `AxiosResponse<any>`. Se cambió a la forma tipada que ya usaba
+  `pages/mis-cursos.tsx`, `api.get<Partial<CursoEmbedded>>(…)` y
+  `api.get<Partial<CategoriaEmbedded>>(…)`, de modo que el guard `Array.isArray` se evalúa sobre
+  `Curso[] | undefined` en lugar de sobre `any`.
+- **2 `Unexpected empty arrow function`** en los specs de carga pendiente:
+  `new Promise(() => { })` → `new Promise<never>(() => undefined)`.
+- **6 `unbound-method`** al referenciar `logger.error` importado (instancia de la clase `Logger`).
+  Los specs toman ahora handles tipados del mock con `jest.requireMock<{ … }>('../../utils/logger')`,
+  igual que hacía ya `__tests__/pages/acceso.spec.tsx`.
+- Como consecuencia del tipado, `no-unnecessary-condition` marcaba el `response.data?.` (axios
+  tipa `data` como no nulo): se dejó `response.data._embedded?.cursos`, que es la cadena realmente
+  opcional. En `busqueda/[query].tsx` se simplificó además la condición de render
+  `cursos === null || cursos === undefined || …` por `!cursos || cursos.length === 0`, que es la
+  única rama alcanzable con `useState<Curso[] | undefined>`.
+
+Comprobación local antes de subir: ESLint con análisis tipado (`no-unsafe-*`, `unbound-method`,
+`no-empty-function`, `no-unnecessary-condition`) sobre los 6 ficheros → **0 incidencias** en las
+líneas tocadas.
+
+### Verificación tras la segunda pasada
+
+| Paso | Resultado |
+|---|---|
+| `pnpm lint` | ✅ 0 errores (warning preexistente en `_document.tsx`) |
+| `pnpm test-headless` | ✅ 25 suites / 143 tests · branches 75,59% (168 ramas) · lines 95,53% |
+| `pnpm cypress:component` | ✅ 14/14 |
+| `pnpm build` | ✅ |
+
 ## Trabajo futuro detectado
 
 - `next/router` tipa `push(...)` como `Promise<boolean>`, así que Sonar puede reportar en próximos
@@ -92,7 +127,10 @@ como «candidato a incidencia futura». La incidencia ya está abierta, así que
 - `pages/categoria/[id].tsx:21` mantiene `router.isReady` en las dependencias del efecto con
   `getServerSideProps`: provoca una segunda petición al pasar de `false` a `true`. Candidato a
   limpieza aparte.
-- `pages/categoria/[id].tsx:59` (`getServerSideProps`) no comprueba `res.ok` antes de `res.json()`.
+- `pages/categoria/[id].tsx:71-72` (`getServerSideProps`) no comprueba `res.ok` antes de `res.json()`
+  y su `const data = await res.json()` sigue siendo `any` (`no-unsafe-assignment`, preexistente:
+  Codacy no lo cuenta como nuevo). Mismo caso en `components/HeaderComponent.tsx:36` y en las tres
+  lecturas de `_embedded` de `pages/index.tsx:32-34`, que usarían `api.get<T>` sin tipar todavía.
 
 ## Ramificación
 

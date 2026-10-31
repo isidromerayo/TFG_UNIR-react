@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { API_URL } from '../utils'
 import { useState, useEffect } from 'react';
 import api from '../utils/api';
-import { Categoria, ApiError } from '../types';
+import { Categoria, ApiError, CategoriaEmbedded } from '../types';
 import { logger } from '../utils/logger';
 
 const Categorias: NextPage = () => {
@@ -15,8 +15,8 @@ const Categorias: NextPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api(`${API_URL}/categorias?sort=nombre`);
-        const categoriasEncontradas = response.data?._embedded?.categorias;
+        const response = await api.get<Partial<CategoriaEmbedded>>(`${API_URL}/categorias?sort=nombre`);
+        const categoriasEncontradas = response.data._embedded?.categorias;
         setCategorias(Array.isArray(categoriasEncontradas) ? categoriasEncontradas : []);
       } catch (error) {
         const apiError = error as ApiError;

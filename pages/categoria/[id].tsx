@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { API_URL } from '../../utils'
 import api from '../../utils/api'
-import { Categoria as CategoriaType, Curso, NextPageContext, ApiError } from '../../types'
+import { Categoria as CategoriaType, Curso, NextPageContext, ApiError, CursoEmbedded } from '../../types'
 import { logger } from '../../utils/logger'
 
 function Categoria({ data }: { data: CategoriaType }) {
@@ -15,8 +15,8 @@ function Categoria({ data }: { data: CategoriaType }) {
   useEffect(() => {
     const fetchData = async (categoria_id: number) => {
       try {
-        const result_cursos = await api(`${API_URL}/categorias/${categoria_id}/cursos`)
-        const cursosDeCategoria = result_cursos.data?._embedded?.cursos
+        const response = await api.get<Partial<CursoEmbedded>>(`${API_URL}/categorias/${categoria_id}/cursos`)
+        const cursosDeCategoria = response.data._embedded?.cursos
         setCursos(Array.isArray(cursosDeCategoria) ? cursosDeCategoria : [])
       } catch (error) {
         const apiError = error as ApiError
