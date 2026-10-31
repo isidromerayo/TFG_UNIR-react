@@ -85,12 +85,12 @@ api.interceptors.response.use(
     (response) => {
         return response;
     },
-    (error) => {
+    (error: AxiosError) => {
         let errorMessage;
 
         if (error.response) {
             // Server responded with error status
-            errorMessage = error.response.data?.message || 'Server Error';
+            errorMessage = error.response.data?.message ?? 'Server Error';
             logger.error('Error Response:', {
                 url: error.config?.url,
                 status: error.response.status,
@@ -105,7 +105,7 @@ api.interceptors.response.use(
             });
         } else {
             // Request setup error
-            errorMessage = error.message || 'Request setup error';
+            errorMessage = error.message ?? 'Request setup error';
             logger.error('Request Error:', {
                 url: error.config?.url,
                 message: errorMessage
