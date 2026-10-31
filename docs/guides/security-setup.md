@@ -320,11 +320,11 @@ Reportes guardados por 30 días:
 
 ## 📚 Documentación Relacionada
 
-- [AUDIT_REPORT.md](./AUDIT_REPORT.md) - Reporte de auditoría actual
-- [SECURITY_AUDIT_ANALYSIS.md](./SECURITY_AUDIT_ANALYSIS.md) - Análisis de herramientas
-- [DEPENDENCY_UPDATE_GUIDE.md](./DEPENDENCY_UPDATE_GUIDE.md) - Guía de actualización
-- [PENDING_PRS_REPORT.md](./PENDING_PRS_REPORT.md) - PRs pendientes
-- [scripts/README.md](./scripts/README.md) - Documentación de scripts
+- [AUDIT_REPORT.md](../archive/AUDIT_REPORT.md) - Reporte de auditoría actual
+- [SECURITY_AUDIT_ANALYSIS.md](../security/security-audit-analysis.md) - Análisis de herramientas
+- [DEPENDENCY_UPDATE_GUIDE.md](./dependency-update-guide.md) - Guía de actualización
+- [PENDING_PRS_REPORT.md](../archive/PENDING_PRS_REPORT.md) - PRs pendientes
+- [scripts/README.md](../../scripts/README.md) - Documentación de scripts
 
 ## 🔗 Enlaces Útiles
 
@@ -367,7 +367,7 @@ chmod +x scripts/security-check.sh
 
 ### pnpm audit no detecta vulnerabilidades conocidas
 
-**Solución**: Ver [SECURITY_AUDIT_ANALYSIS.md](./SECURITY_AUDIT_ANALYSIS.md)
+**Solución**: Ver [SECURITY_AUDIT_ANALYSIS.md](../security/security-audit-analysis.md)
 
 pnpm audit solo consulta npm Advisory Database. Usar múltiples herramientas.
 

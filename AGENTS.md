@@ -173,6 +173,8 @@ pinned to a 40-char SHA, secrets never used in `if:` (guard with `if: env.X != '
 
 ## Docs
 
+- `docs/README.md` — índice de toda la documentación; `docs/guides/` tiene las guías activas y
+  `docs/archive/` la documentación histórica que se conserva por trazabilidad
 - `docs/security/accepted-advisories.md` — accepted (unpatched) advisories + the recheck rule.
 - `docs/security/pnpm-audit-unfixable-cves.md` — when/how to silence an unfixable CVE.
 - `docs/accessibility.md` — pa11y stack, upgrade policy, how to run the audit.

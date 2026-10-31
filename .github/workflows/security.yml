@@ -60,7 +60,7 @@ jobs:
       
       # 1. Auditoría de producción con pnpm (npm Advisory Database) — GATE DURO
       #    `ACCEPTED` lista paquetes sin parche upstream cuyo riesgo se documenta
-      #    en SECURITY_AUDIT_ANALYSIS.md; cualquier otra vulnerabilidad de
+      #    en docs/security/security-audit-analysis.md; cualquier otra vulnerabilidad de
       #    producción hace fallar el job. Se usa el exit code de pnpm para
       #    respetar `pnpm.auditConfig.ignoreCves`.
       - name: pnpm audit (production gate)
@@ -80,7 +80,7 @@ jobs:
               echo "::error::Found $PROD_VULNS production vulnerabilities. Fix them before merging."
               exit 1
             fi
-            echo "::warning::Only accepted production advisories found ($ACCEPTED). See SECURITY_AUDIT_ANALYSIS.md."
+            echo "::warning::Only accepted production advisories found ($ACCEPTED). See docs/security/security-audit-analysis.md."
           else
             echo "No production vulnerabilities found" >> $GITHUB_STEP_SUMMARY
             echo "vulnerabilities=0" >> $GITHUB_OUTPUT
@@ -94,7 +94,7 @@ jobs:
           pnpm audit --json > pnpm-audit.json || true
 
           if [ -s pnpm-audit.json ]; then
-            # Accepted dev-only packages without upstream patch (see SECURITY_AUDIT_ANALYSIS.md)
+            # Accepted dev-only packages without upstream patch (see docs/security/security-audit-analysis.md)
             ACCEPTED=""
             TOTAL=$(jq -r '.metadata.vulnerabilities | add // 0' pnpm-audit.json 2>/dev/null || echo 0)
             ACCEPTED_COUNT=$(jq '[.advisories[] | select(.module_name as $m | ("'$ACCEPTED'" | split(" ") | index($m)))] | length' pnpm-audit.json 2>/dev/null || echo 0)
@@ -104,7 +104,7 @@ jobs:
             echo "Total vulnerabilities found: $TOTAL (accepted: $ACCEPTED_COUNT)" >> $GITHUB_STEP_SUMMARY
             echo "vulnerabilities=$DEV_VULNS" >> $GITHUB_OUTPUT
             if [ "$DEV_VULNS" -gt 0 ]; then
-              echo "::warning::Vulnerabilities found ($DEV_VULNS non-accepted, $TOTAL total, $ACCEPTED_COUNT accepted dev-only: $ACCEPTED). Production gate passed. See SECURITY_AUDIT_ANALYSIS.md for accepted risks."
+              echo "::warning::Vulnerabilities found ($DEV_VULNS non-accepted, $TOTAL total, $ACCEPTED_COUNT accepted dev-only: $ACCEPTED). Production gate passed. See docs/security/security-audit-analysis.md for accepted risks."
             fi
           else
             echo "No vulnerabilities found" >> $GITHUB_STEP_SUMMARY
@@ -263,7 +263,7 @@ jobs:
       - name: Warn on dev vulnerabilities
         if: steps.pnpm-audit-dev.outputs.vulnerabilities != '' && steps.pnpm-audit-dev.outputs.vulnerabilities != '0'
         run: |
-          echo "::warning::Dev/toolchain vulnerabilities found (${{ steps.pnpm-audit-dev.outputs.vulnerabilities }}). Production gate passed; review accepted risks in SECURITY_AUDIT_ANALYSIS.md."
+          echo "::warning::Dev/toolchain vulnerabilities found (${{ steps.pnpm-audit-dev.outputs.vulnerabilities }}). Production gate passed; review accepted risks in docs/security/security-audit-analysis.md."
 
       # 10. Advisories aceptados (sin parche upstream): falla si ya hay fix publicado
       #     Regla y registro: docs/security/accepted-advisories.md

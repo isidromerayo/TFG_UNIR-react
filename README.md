@@ -223,17 +223,17 @@ TFG_UNIR-react/
 ## 📚 Documentación
 
 - **[AGENTS.md](./AGENTS.md)** - Contexto completo del proyecto para agentes IA
+- **[docs/README.md](./docs/README.md)** - Índice general de la documentación
 - **[docs/accessibility.md](./docs/accessibility.md)** - Guía de uso de pa11y (auditoría de accesibilidad, política de upgrade, job CI)
-- **[NEXTJS_16_UPGRADE.md](./NEXTJS_16_UPGRADE.md)** - Documentación de actualización a Next.js 16
-- **[SONARQUBE_SETUP.md](./SONARQUBE_SETUP.md)** - Configuración de SonarQube y métricas
-- **[MIGRATION_TO_PNPM.md](./MIGRATION_TO_PNPM.md)** - Guía de migración a pnpm
-- **[CHANGELOG_PNPM.md](./CHANGELOG_PNPM.md)** - Changelog de la migración
-- **[AUDIT_REPORT.md](./AUDIT_REPORT.md)** - Reporte de auditoría de seguridad
-- **[SECURITY_AUDIT_ANALYSIS.md](./SECURITY_AUDIT_ANALYSIS.md)** - Análisis de herramientas de auditoría
-- **[DEPENDENCY_UPDATE_GUIDE.md](./DEPENDENCY_UPDATE_GUIDE.md)** - Guía de actualización de dependencias
-- **[PENDING_PRS_REPORT.md](./PENDING_PRS_REPORT.md)** - Análisis de PRs pendientes
-- **[PULL_REQUEST.md](./PULL_REQUEST.md)** - Guía para la creación de Pull Requests
-- **[DOCS_INDEX.md](./DOCS_INDEX.md)** - Índice general de la documentación
+- **[docs/security/](./docs/security/)** - Registro de advisories aceptados y guía de `pnpm audit`
+- **[docs/guides/nextjs-16-upgrade.md](./docs/guides/nextjs-16-upgrade.md)** - Documentación de la actualización a Next.js 16
+- **[docs/guides/sonarqube-setup.md](./docs/guides/sonarqube-setup.md)** - Configuración de SonarQube y métricas
+- **[docs/guides/dependency-update-guide.md](./docs/guides/dependency-update-guide.md)** - Guía de actualización de dependencias
+- **[docs/guides/versioning-guide.md](./docs/guides/versioning-guide.md)** - Guía de versionado y releases
+- **[docs/guides/security-setup.md](./docs/guides/security-setup.md)** - Configuración del flujo de seguridad
+- **[docs/guides/quickstart-pnpm.md](./docs/guides/quickstart-pnpm.md)** - Puesta en marcha con pnpm
+- **[docs/guides/checklist-equipo.md](./docs/guides/checklist-equipo.md)** - Checklist de trabajo del equipo
+- **[docs/archive/](./docs/archive/)** - Documentación histórica: migración a pnpm, reportes de auditoría y PRs anteriores
 
 ## Seguridad y Mantenimiento
 
@@ -254,8 +254,8 @@ pnpm outdated
 - GitHub Dependabot para alertas de seguridad
 - Herramientas externas como Snyk o OSV Scanner
 
-Ver [AUDIT_REPORT.md](./AUDIT_REPORT.md) para el reporte completo.  
-Ver [SECURITY_AUDIT_ANALYSIS.md](./SECURITY_AUDIT_ANALYSIS.md) para entender las limitaciones de `pnpm audit`.
+Ver [docs/archive/AUDIT_REPORT.md](./docs/archive/AUDIT_REPORT.md) para el reporte completo.  
+Ver [docs/security/security-audit-analysis.md](./docs/security/security-audit-analysis.md) para entender las limitaciones de `pnpm audit`.
 
 ### Verificar Dependencias Desactualizadas
 
@@ -357,7 +357,7 @@ Auditoría de seguridad multi-herramienta (diaria 2 AM UTC, push y PRs a `main`)
 
 ## 🔄 Migración a pnpm
 
-Este proyecto ha sido migrado de npm a pnpm. Para más información, consulta [MIGRATION_TO_PNPM.md](./MIGRATION_TO_PNPM.md).
+Este proyecto ha sido migrado de npm a pnpm. Para más información, consulta [docs/archive/MIGRATION_TO_PNPM.md](./docs/archive/MIGRATION_TO_PNPM.md).
 
 ### Ejecutar Migración
 
