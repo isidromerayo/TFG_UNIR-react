@@ -47,9 +47,9 @@ api.interceptors.response.use(undefined, async (err: AxiosError) => {
         throw new Error(err.message);
     }
 
-    const retryCount = (config as ApiRetryConfig)._retryCount || 0;
+    const retryCount = (config as ApiRetryConfig)._retryCount ?? 0;
     const canRetry = retryCount < RETRY_CONFIG.maxRetries
-        && RETRYABLE_METHODS.has((config.method || '').toLowerCase())
+        && RETRYABLE_METHODS.has((config.method ?? '').toLowerCase())
         && isTransientError(err);
 
     if (!canRetry) {

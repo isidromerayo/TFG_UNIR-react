@@ -19,8 +19,8 @@ jest.mock('sweetalert2', () => ({
 }));
 
 // Handles de los mocks (tipados para evitar accesos inseguros)
-const mockPost = (jest.requireMock('../../utils/api') as { default: { post: jest.Mock } }).default.post;
-const mockFire = (jest.requireMock('sweetalert2') as { default: { fire: jest.Mock } }).default.fire;
+const mockPost = jest.requireMock<{ default: { post: jest.Mock } }>('../../utils/api').default.post;
+const mockFire = jest.requireMock<{ default: { fire: jest.Mock } }>('sweetalert2').default.fire;
 const mockPush = jest.fn();
 
 describe('Acceso Page', () => {
