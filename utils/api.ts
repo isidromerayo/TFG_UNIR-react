@@ -1,11 +1,30 @@
-import axios from 'axios';
+import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { API_URL } from './constants';
 import { logger } from './logger';
+
+interface ApiRetryConfig extends InternalAxiosRequestConfig {
+    _retryCount?: number;
+}
 
 // Custom retry configuration
 const RETRY_CONFIG = {
     maxRetries: 3,
     retryDelay: 1000
+};
+
+// Only idempotent methods are retried (never POST/PUT/PATCH/DELETE)
+const RETRYABLE_METHODS = new Set<string>(['get', 'head', 'options']);
+
+// A failure is transient when no response was received (network level),
+// when the server answers 429 (throttling) or with a 5xx status
+const isTransientError = (error: AxiosError): boolean => {
+    if (error.code === 'ERR_CANCELED') {
+        return false;
+    }
+    if (!error.response) {
+        return true;
+    }
+    return error.response.status === 429 || error.response.status >= 500;
 };
 
 const api = axios.create({
@@ -21,21 +40,25 @@ const api = axios.create({
     }
 });
 
-// Add retry functionality to axios
-api.interceptors.response.use(undefined, async (err) => {
+// Retry transient failures of idempotent requests with incremental backoff
+api.interceptors.response.use(undefined, async (err: AxiosError) => {
     const { config } = err;
-    if (!config) throw new Error(err.message);
-
-    // Use a symbol to store retry count to avoid type conflicts
-    const retryCount = config._retryCount || 0;
-    
-    if (retryCount >= RETRY_CONFIG.maxRetries) {
+    if (!config) {
         throw new Error(err.message);
     }
 
-    config._retryCount = retryCount + 1;
+    const retryCount = (config as ApiRetryConfig)._retryCount || 0;
+    const canRetry = retryCount < RETRY_CONFIG.maxRetries
+        && RETRYABLE_METHODS.has((config.method || '').toLowerCase())
+        && isTransientError(err);
+
+    if (!canRetry) {
+        throw err;
+    }
+
+    (config as ApiRetryConfig)._retryCount = retryCount + 1;
     const delayMs = RETRY_CONFIG.retryDelay * (retryCount + 1);
-    
+
     await new Promise(resolve => setTimeout(resolve, delayMs));
     return api(config);
 });
@@ -55,14 +78,16 @@ api.interceptors.request.use(
     }
 );
 
-// Add response interceptor for better error handling
+// Add response interceptor for better error handling:
+// enriches the error message but preserves the original error
+// (response, status, code) so pages can discriminate error kinds
 api.interceptors.response.use(
     (response) => {
         return response;
     },
     (error) => {
         let errorMessage;
-        
+
         if (error.response) {
             // Server responded with error status
             errorMessage = error.response.data?.message || 'Server Error';
@@ -86,10 +111,10 @@ api.interceptors.response.use(
                 message: errorMessage
             });
         }
-        
-        // Asignar el mensaje al error antes de lanzarlo
+
+        // Keep message readable while preserving response/status/code
         error.message = errorMessage;
-        throw new Error(errorMessage);
+        return Promise.reject(error);
     }
 );
 

@@ -2,7 +2,7 @@
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import { useRouter } from 'next/router';
 import Swal from 'sweetalert2';
-import axios from 'axios';
+import api from '../../utils/api';
 import Registro from '../../pages/registro';
 
 // Mock de useRouter
@@ -15,9 +15,9 @@ jest.mock('sweetalert2', () => ({
     fire: jest.fn()
 }));
 
-// Mock de axios
-jest.mock('axios');
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+// Mock de la instancia de api
+jest.mock('../../utils/api');
+const mockedApi = api as jest.Mocked<typeof api>;
 
 describe('Registro Page', () => {
     const mockPush = jest.fn();
@@ -56,7 +56,7 @@ describe('Registro Page', () => {
 
 
     it('successfully registers a user', async () => {
-        mockedAxios.post.mockResolvedValue({ data: {} });
+        mockedApi.post.mockResolvedValue({ data: {} });
         render(<Registro />);
 
         fireEvent.change(screen.getByLabelText(/nombre \(\*\)/i), { target: { value: 'Juan' } });
@@ -67,7 +67,7 @@ describe('Registro Page', () => {
         fireEvent.click(screen.getByRole("button", { name: /registrar/i }));
 
         await waitFor(() => {
-            expect(mockedAxios.post).toHaveBeenCalledWith(
+            expect(mockedApi.post).toHaveBeenCalledWith(
                 expect.stringContaining('/usuarios'),
                 expect.objectContaining({
                     nombre: 'Juan',
@@ -75,8 +75,7 @@ describe('Registro Page', () => {
                     email: 'juan@example.com',
                     password: 'password123',
                     estado: 'P'
-                }),
-                expect.any(Object)
+                })
             );
             expect(Swal.fire).toHaveBeenCalledWith(expect.objectContaining({
                 title: 'Alta',
@@ -88,7 +87,7 @@ describe('Registro Page', () => {
 
     it('handles registration error with message', async () => {
         const errorMessage = 'User already exists';
-        mockedAxios.post.mockRejectedValue({
+        mockedApi.post.mockRejectedValue({
             response: {
                 data: { message: errorMessage }
             }
@@ -114,7 +113,7 @@ describe('Registro Page', () => {
 
     it('handles registration error with errors array', async () => {
         const errorMessage = 'Invalid data';
-        mockedAxios.post.mockRejectedValue({
+        mockedApi.post.mockRejectedValue({
             response: {
                 data: { errors: [{ message: errorMessage }] }
             }
@@ -137,7 +136,7 @@ describe('Registro Page', () => {
     });
 
     it('handles 400 error', async () => {
-        mockedAxios.post.mockRejectedValue({
+        mockedApi.post.mockRejectedValue({
             response: { status: 400 }
         });
 
@@ -158,7 +157,7 @@ describe('Registro Page', () => {
     });
 
     it('handles 409 error', async () => {
-        mockedAxios.post.mockRejectedValue({
+        mockedApi.post.mockRejectedValue({
             response: { status: 409 }
         });
 
@@ -179,7 +178,7 @@ describe('Registro Page', () => {
     });
 
     it('handles timeout error', async () => {
-        mockedAxios.post.mockRejectedValue({
+        mockedApi.post.mockRejectedValue({
             code: 'ECONNABORTED'
         });
 
@@ -200,7 +199,7 @@ describe('Registro Page', () => {
     });
 
     it('handles generic connection error', async () => {
-        mockedAxios.post.mockRejectedValue({
+        mockedApi.post.mockRejectedValue({
             // No response structure
         });
 
@@ -221,7 +220,7 @@ describe('Registro Page', () => {
     });
 
     it('handles 500 error', async () => {
-        mockedAxios.post.mockRejectedValue({
+        mockedApi.post.mockRejectedValue({
             response: { status: 500 }
         });
 
