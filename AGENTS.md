@@ -69,7 +69,7 @@ Key files:
 
 ## CI/CD
 
-GitHub Actions: `node.js.yml` (lint→build), `tests.yml` (Jest + Cypress component/e2e + coverage + Sonar), `security.yml` (scheduled audit/Snyk), `codeql.yml`. Node 22.x, pnpm 10, `pnpm install --frozen-lockfile`.
+GitHub Actions: `node.js.yml` (lint→build), `tests.yml` (Jest + Cypress component/e2e + coverage + Sonar), `security.yml` (scheduled audit/Snyk), `codeql.yml`, `a11y.yml` (pa11y semanal/dispatch, informativo — sin gate de merge). Node 22.x, pnpm 10, `pnpm install --frozen-lockfile`.
 
 ## Quirks
 
@@ -87,6 +87,8 @@ GitHub Actions: `node.js.yml` (lint→build), `tests.yml` (Jest + Cypress compon
   silencing (`pnpm.auditConfig.ignoreCves`, the `ACCEPTED` list, the Dependabot dismissal) in the
   same PR.
 - **pa11y uses system Chrome**: `.pa11yci` points `chromeLaunchConfig.executablePath` at `/usr/bin/google-chrome-stable`. Reports land in `reports/a11y/` (gitignored). Requires dev server on :3000 and backend on :8080 for `/categorias`, `/categoria/:id`, `/curso/:id`.
+- **pa11y stack (unificado 2026-10-31 con angular y vue3)**: `pa11y@10` + `pa11y-ci@5` + `pa11y-ci-reporter-html@9`; engines exigen Node ≥ 22.13. `pa11y-ci@5` arrastra puppeteer 25 (ya no existe `extract-zip` en el árbol). El reporter 9 requiere pa11y-ci 5 vía su propiedad `supports`, pero **pa11y-ci no la valida**: la única prueba de compatibilidad es ejecutar `pnpm a11y`. Ningún check de PR corre pa11y (`a11y.yml` es semanal/dispatch) — verde de CI ≠ a11y funcionando.
+- **pa11y upgrade policy**: bump `pa11y-ci` and `pa11y-ci-reporter-html` in the same branch (never reporter-only past a pa11y-ci major), re-lock with `pnpm install` locally, verify the `pnpm.overrides` survive the lock diff, and run `pnpm a11y` (dev server + backend) before merging. Close any Dependabot PRs for this tree and apply the bump manually (lockfile gotcha above). Full guide: `docs/accessibility.md`.
 
 ## Branch Policy (MUST)
 
@@ -123,7 +125,7 @@ GitHub Actions: `node.js.yml` (lint→build), `tests.yml` (Jest + Cypress compon
 
 <!-- BEGIN:nextjs-agent-rules -->
 
-# This is NOT the Next.js you know
+## This is NOT the Next.js you know
 
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
 
