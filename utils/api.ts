@@ -106,7 +106,7 @@ api.interceptors.response.use(
             });
         } else {
             // Request setup error
-            errorMessage = error.message ?? 'Request setup error';
+            errorMessage = error.message;
             logger.error('Request Error:', {
                 url: error.config?.url,
                 message: errorMessage
