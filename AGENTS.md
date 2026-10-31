@@ -17,7 +17,7 @@ pnpm test-headless          # Jest (no watch; coverage always collected, see Tes
 pnpm cypress:component      # Cypress component tests
 pnpm cypress:e2e            # Cypress e2e tests
 pnpm a11y                   # pa11y-ci audit (htmlcs+axe, WCAG2AA) — requires dev server on :3000
-pnpm security               # scripts/security-check.sh (replaces retired pnpm audit)
+pnpm security               # scripts/security-check.sh (pnpm audit + OSV + accepted advisories)
 ```
 
 Single Jest test file: `pnpm test-headless __tests__/path/to/file.test.tsx`
@@ -36,7 +36,10 @@ Or individually:
 3. `pnpm cypress:component` — 14+ tests must pass
 4. `pnpm build` — must compile successfully
 
-**Note:** `pnpm audit` endpoint is retired (HTTP 410). Use `pnpm outdated` to check for updates instead.
+**Note:** `pnpm audit` es el gate de producción del repo (`pnpm audit --prod`, paso *pnpm audit
+(production gate)* de `security.yml`); el endpoint vuelve a responder. Un advisory **con** parche se
+corrige con `pnpm.overrides`, nunca con `auditConfig.ignoreCves`. El audit completo (dev + prod) se
+reporta como warning, no bloquea.
 
 ## Architecture
 

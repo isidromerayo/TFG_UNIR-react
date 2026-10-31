@@ -23,7 +23,7 @@ overrides:
   brace-expansion@>=4.0.0 <5.0.12: ^5.0.12
   lodash: ^4.18.1
   serialize-javascript: ^7.0.5
-  follow-redirects: '>=1.16.1'
+  follow-redirects: '>=1.16.2'
   basic-ftp: '>=6.2.1'
   fast-uri@<3.1.6: ^3.1.6
   '@humanfs/node@<0.16.8': ^0.16.8
@@ -55,12 +55,6 @@ importers:
       axios:
         specifier: ^1.20.0
         version: 1.20.0
-      eslint:
-        specifier: ^9.39.3
-        version: 9.39.5
-      eslint-config-next:
-        specifier: 16.4.2
-        version: 16.4.2(@typescript-eslint/parser@8.72.0(eslint@9.39.5)(typescript@5.9.3))(eslint@9.39.5)(typescript@5.9.3)
       next:
         specifier: 16.4.2
         version: 16.4.2(@babel/core@7.29.7)(@types/node@26.6.3)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -128,6 +122,12 @@ importers:
       cypress:
         specifier: ^15.21.1
         version: 15.21.1
+      eslint:
+        specifier: ^9.39.3
+        version: 9.39.5
+      eslint-config-next:
+        specifier: 16.4.2
+        version: 16.4.2(@typescript-eslint/parser@8.72.0(eslint@9.39.5)(typescript@5.9.3))(eslint@9.39.5)(typescript@5.9.3)
       file-loader:
         specifier: ^6.2.0
         version: 6.2.0(webpack@5.104.1(postcss@8.5.23))
@@ -3004,8 +3004,8 @@ packages:
   flatted@3.4.2:
     resolution: {integrity: sha512-PjDse7RzhcPkIJwy5t7KPWQSZ9cAbzQXcafsetQoD7sOJRQlGikNbx7yZp2OotDnJyrDcbyRq3Ttb18iYOqkxA==}
 
-  follow-redirects@1.16.1:
-    resolution: {integrity: sha512-FNvFGzoMLWmE6Yj9spb/zjd7yiNCHiAW9/Tg9CXrQ8wuu32HtlJOwWO11OJafl5FfY3DxTdQ0vj42zU1kvv5jg==}
+  follow-redirects@1.16.2:
+    resolution: {integrity: sha512-/kVP2U8z596Ia0gwFrwyIeo74ta5aVmSeU1FfAUMAmcEP5EP7zydmag3SLiN64NaRKef3lxsq7i/g7ltJQDGow==}
     engines: {node: '>=4.0'}
     peerDependencies:
       debug: '*'
@@ -7345,7 +7345,7 @@ snapshots:
 
   axios@1.20.0:
     dependencies:
-      follow-redirects: 1.16.1
+      follow-redirects: 1.16.2
       form-data: 4.0.6
       https-proxy-agent: 5.0.1
       proxy-from-env: 2.1.0
@@ -8477,7 +8477,7 @@ snapshots:
 
   flatted@3.4.2: {}
 
-  follow-redirects@1.16.1: {}
+  follow-redirects@1.16.2: {}
 
   for-each@0.3.5:
     dependencies:
