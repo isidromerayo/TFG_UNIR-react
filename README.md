@@ -30,7 +30,7 @@ Next.js publica **dos canales de release**: `stable` (producción) y `canary` (p
 
 | Versión | Estado | Fecha de Lanzamiento | Fin de Soporte | Última release |
 |---------|--------|----------------------|----------------|----------------|
-| **16.x** | **Active LTS** | 22 de Octubre 2025 | ~22 de Octubre 2027 | 16.3.8 (Octubre 2026) |
+| **16.x** | **Active LTS** | 22 de Octubre 2025 | ~22 de Octubre 2027 | 16.4.5 (Noviembre 2026) |
 | **15.x** | Maintenance LTS | 21 de Octubre 2024 | 21 de Octubre 2026 | 15.5.23 (Agosto 2026) |
 | **14.x** | End of Life (EOL) | 26 de Octubre 2023 | 26 de Octubre 2025 | 14.2.35 (Diciembre 2025) |
 
@@ -40,7 +40,7 @@ React publica **tres canales de release**: `Latest` (estable), `Canary` (pre-rel
 
 | Versión | Estado | Fecha de Lanzamiento | Última release |
 |---------|--------|----------------------|----------------|
-| **React 19** | **Estable / Actual** | 5 de Diciembre 2024 | 19.3.0 (Octubre 2026) |
+| **React 19** | **Estable / Actual** | 5 de Diciembre 2024 | 19.3.1 (Octubre 2026) |
 | **React 18** | Solo correcciones de seguridad | 29 de Marzo 2022 | 18.3.1 (Abril 2024) |
 
 ### Política de Lanzamientos (SemVer)
@@ -60,13 +60,14 @@ timeline
     2026-07 : React 19.2.8 (último parche)
     2026-08 : Next.js 16.3 (Instant Navigations)
     2026-10 : React 19.3.0 / Next.js 16.3.8 (parches de seguridad)
+    2026-11 : React 19.3.1 / Next.js 16.4.5 (parches)
 ```
 
 ### Implicaciones para este proyecto
 
-- **Next.js 16.3.8** (Active LTS) con **React 19.3.0** (Latest) en modo **Pages Router**.
-- Next.js 16.3.8 está en **Active LTS**: recibe nuevas funcionalidades, correcciones y parches de seguridad. La última minor, **16.3.8**, incluye el parche de la vulnerabilidad crítica `GHSA-vcvr-r3jv-pc5j` (RCE en `next/og` ImageResponse).
-- React 19.3.0 es la versión `Latest` estable: recibe nuevas funcionalidades y parches de seguridad.
+- **Next.js 16.4.5** (Active LTS) con **React 19.3.1** (Latest) en modo **Pages Router**.
+- Next.js 16.4.x está en **Active LTS**: recibe nuevas funcionalidades, correcciones y parches de seguridad. La línea 16.3.x sigue incluida en ella y ya incorporaba el parche de la vulnerabilidad crítica `GHSA-vcvr-r3jv-pc5j` (RCE en `next/og` ImageResponse); 16.4.x son parches posteriores sobre esa base.
+- React 19.3.1 es la versión `Latest` estable (parche del protocolo de transporte de React Server Components, no usado por este proyecto): recibe nuevas funcionalidades y parches de seguridad.
 - Node.js 22.x cumple el requisito mínimo de Next.js 16 (Node.js 20.9+).
 - **Fuentes oficiales**: [Next.js Support Policy](https://nextjs.org/support-policy) · [React versioning policy](https://react.dev/community/versioning-policy)
 
@@ -78,13 +79,13 @@ Aplicación web frontend desarrollada en React con Next.js para un sistema de ge
 
 ## 🚀 Tecnologías
 
-- **Framework**: Next.js 16.3.8
-- **Librería**: React 19.3.0
+- **Framework**: Next.js 16.4.5
+- **Librería**: React 19.3.1
 - **Lenguaje**: TypeScript 5.9.3
 - **Package Manager**: pnpm
-- **State Management**: Zustand 5.0.15
-- **Forms**: React Hook Form 7.88.0 + Yup 1.7.1
-- **HTTP Client**: Axios 1.20.0
+- **State Management**: Zustand 5.0.16
+- **Forms**: React Hook Form 7.91.0 + Yup 1.7.1
+- **HTTP Client**: Axios 1.21.0
 - **UI/Alerts**: SweetAlert2 11.26.25
 - **Testing**: Jest + Testing Library, Cypress
 
@@ -243,19 +244,22 @@ TFG_UNIR-react/
 # Verificar dependencias desactualizadas
 pnpm outdated
 
-# Verificar vulnerabilidades (endpoint retirado - usar herramientas externas)
-# pnpm audit  # HTTP 410 - endpoint retirado por npm
+# Verificar vulnerabilidades (gate de CI: solo producción)
+pnpm audit --prod
 ```
 
-**Estado actual**: Next.js actualizado a 16.3.8 (parche crítico `GHSA-vcvr-r3jv-pc5j` y overrides transitivos de `brace-expansion` y `js-yaml`)
+**Estado actual**: Next.js 16.4.5 / React 19.3.1. `pnpm audit --prod` no reporta vulnerabilidades conocidas (`pnpm.overrides` mantiene los parches de dependencias transitivas: `brace-expansion`, `js-yaml`, `sharp`, `form-data`, …).
 
-⚠️ **Importante**: `pnpm audit` endpoint está retirado (HTTP 410). Usar:
+⚠️ **Importante**: `pnpm audit` vuelve a responder (el HTTP 410 ya no aplica). El gate bloqueante de CI es `pnpm audit --prod`; el audit completo (dev + prod) reporta avisos solo de desarrollo y no bloquea la PR.
+
+Complementar con:
 - `pnpm outdated` para verificar actualizaciones disponibles
 - GitHub Dependabot para alertas de seguridad
 - Herramientas externas como Snyk o OSV Scanner
 
 Ver [docs/archive/AUDIT_REPORT.md](./docs/archive/AUDIT_REPORT.md) para el reporte completo.  
-Ver [docs/security/security-audit-analysis.md](./docs/security/security-audit-analysis.md) para entender las limitaciones de `pnpm audit`.
+Ver [docs/security/security-audit-analysis.md](./docs/security/security-audit-analysis.md) para entender los límites de `pnpm audit` (no cubre todo el ecosistema).  
+Ver [docs/security/accepted-advisories.md](./docs/security/accepted-advisories.md) para el registro de avisos aceptados (hoy no hay ninguno).
 
 ### Verificar Dependencias Desactualizadas
 
