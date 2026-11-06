@@ -2,7 +2,7 @@
 
 ## Project
 
-- **Next.js 16.4.2** (Pages Router — *not* App Router), **React 19.3.0**, **TypeScript 5.9.3**
+- **Next.js 16.4.5** (Pages Router — *not* App Router), **React 19.3.1**, **TypeScript 5.9.3**
 - **pnpm 10.17.1** (`packageManager`) — never npm; `.npmrc` sets `shamefully-hoist=true`
 - Toolchain: Jest 30.5.2 + Testing Library, Cypress 15.21.1 (component + e2e), ESLint 9 flat config,
   pa11y-ci 5 stack, Zustand 5, Axios, SweetAlert2, react-hook-form + yup
