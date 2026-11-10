@@ -4,7 +4,7 @@
 
 - **Next.js 16.4.5** (Pages Router — *not* App Router), **React 19.3.1**, **TypeScript 5.9.3**
 - **pnpm 10.17.1** (`packageManager`) — never npm; `.npmrc` sets `shamefully-hoist=true`
-- Toolchain: Jest 30.5.2 + Testing Library, Cypress 15.21.1 (component + e2e), ESLint 9 flat config,
+- Toolchain: Jest 30.5.2 + Testing Library, Cypress 16.2.1 (component + e2e), ESLint 9 flat config,
   pa11y-ci 5 stack, Zustand 5, Axios, SweetAlert2, react-hook-form + yup
 - Frontend of the TFG UNIR system. Backend is Spring Boot on `:8080` (`NEXT_PUBLIC_API_URL`, default
   `http://localhost:8080/api`). Sibling repos: angular, vue3, backend — each has its own `AGENTS.md`.
