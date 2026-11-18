@@ -30,22 +30,21 @@ pnpm security:accepted          # o: ./scripts/check-accepted-advisories.sh
 - ✅ Si sigue sin parche: nada que hacer.
 - ❌ Si ya hay parche, o si ya no aplica a la versión registrada: subir la dependencia, retirar el
   silencio (`ignoreCves` / `ACCEPTED` / dismissal) y **borrar la entrada de este registro**.
+- 🚫 Si OSV ha **retirado (withdrawn)** el advisory, o ya no lo devuelve para esa versión: no hace
+  falta subir nada (puede no existir parche); basta con retirar el silencio y borrar la entrada del
+  registro en la misma PR. El gate `check-accepted-advisories.sh` lo detecta y falla hasta limpiarlo.
 
 ## Registro
 
 ```json accepted-advisories
 {
   "ecosystem": "npm",
-  "advisories": [
-    {
-      "id": "CVE-2026-93753",
-      "package": "deepmerge",
-      "version": "4.3.1",
-      "route": ".>jest>@jest/core>jest-config>deepmerge",
-      "severity": "low",
-      "scope": "dev",
-      "reason": "Sin parche upstream: la ultima version publicada (4.3.1, de 2023) sigue siendo vulnerable (patched <0.0.0). Dev-only via jest/jest-config. mergeObject() solo se usa con la configuracion local del runner de tests, sin entrada controlada por atacante. Silenciado via pnpm.auditConfig.ignoreCves."
-    }
-  ]
+  "advisories": []
 }
 ```
+
+> 2026-11-18: se retiró la entrada `CVE-2026-93753` (`deepmerge@4.3.1`, dev-only vía
+> `jest/jest-config`) porque el CVE fue **withdrawn** por el CNA (VulnCheck) el 2026-11-17 y OSV ya
+> no lo asocia a la versión. No existe parche de `deepmerge` (4.3.1 sigue siendo la última
+> publicada), así que no se subió la dependencia; se retiró también el silencio en
+> `pnpm.auditConfig.ignoreCves`. Registro en `docs/plans/2026-11-18-withdrawn-deepmerge-advisory.md`.
