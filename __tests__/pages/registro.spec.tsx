@@ -18,6 +18,7 @@ jest.mock('sweetalert2', () => ({
 // Mock de la instancia de api
 jest.mock('../../utils/api');
 const mockedApi = api as jest.Mocked<typeof api>;
+const mockPost = jest.requireMock<{ default: { post: jest.Mock } }>('../../utils/api').default.post;
 
 describe('Registro Page', () => {
     const mockPush = jest.fn();
@@ -35,8 +36,41 @@ describe('Registro Page', () => {
         expect(screen.getByLabelText(/apellidos \(\*\)/i)).toBeInTheDocument();
         expect(screen.getByLabelText(/correo electrónico \(\*\)/i)).toBeInTheDocument();
         expect(screen.getByLabelText(/contraseña \(\*\)/i)).toBeInTheDocument();
+        expect(screen.getByText(/entre 8 y 72 caracteres/i)).toBeInTheDocument();
         expect(screen.getByRole("button", { name: /registrar/i })).toBeInTheDocument();
         expect(screen.getByRole("button", { name: /borrar/i })).toBeInTheDocument();
+    });
+
+    it('rejects a password shorter than 8 characters without calling the API', async () => {
+        render(<Registro />);
+
+        fireEvent.change(screen.getByLabelText(/nombre \(\*\)/i), { target: { value: 'Juan' } });
+        fireEvent.change(screen.getByLabelText(/apellidos \(\*\)/i), { target: { value: 'Perez' } });
+        fireEvent.change(screen.getByLabelText(/correo electrónico \(\*\)/i), { target: { value: 'juan@example.com' } });
+        fireEvent.change(screen.getByLabelText(/contraseña \(\*\)/i), { target: { value: '1234567' } });
+
+        fireEvent.click(screen.getByRole("button", { name: /registrar/i }));
+
+        await waitFor(() => {
+            expect(screen.getByText('La contraseña debe tener al menos 8 caracteres')).toBeInTheDocument();
+        });
+        expect(mockPost).not.toHaveBeenCalled();
+    });
+
+    it('rejects a password longer than 72 characters without calling the API', async () => {
+        render(<Registro />);
+
+        fireEvent.change(screen.getByLabelText(/nombre \(\*\)/i), { target: { value: 'Juan' } });
+        fireEvent.change(screen.getByLabelText(/apellidos \(\*\)/i), { target: { value: 'Perez' } });
+        fireEvent.change(screen.getByLabelText(/correo electrónico \(\*\)/i), { target: { value: 'juan@example.com' } });
+        fireEvent.change(screen.getByLabelText(/contraseña \(\*\)/i), { target: { value: 'a'.repeat(73) } });
+
+        fireEvent.click(screen.getByRole("button", { name: /registrar/i }));
+
+        await waitFor(() => {
+            expect(screen.getByText('La contraseña no puede superar los 72 caracteres')).toBeInTheDocument();
+        });
+        expect(mockPost).not.toHaveBeenCalled();
     });
 
     it('shows validation errors when submitting empty form', async () => {

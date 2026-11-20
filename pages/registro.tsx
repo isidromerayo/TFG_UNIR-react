@@ -9,6 +9,10 @@ import * as Yup from "yup";
 import { useRouter } from 'next/router';
 import { logger } from '../utils/logger';
 import { ApiError } from '../types';
+import {
+  PASSWORD_LENGTH_HINT,
+  passwordSchema,
+} from '../utils/passwordPolicy';
 
 interface Inputs {
   nombre: string,
@@ -25,7 +29,7 @@ const Registro: NextPage = () => {
     nombre: Yup.string().required(),
     apellidos: Yup.string().required(),
     email: Yup.string().email().required(),
-    password: Yup.string().required().min(4),
+    password: passwordSchema,
 
   })
 
@@ -105,7 +109,8 @@ const Registro: NextPage = () => {
             <div className="col-md-6 form-group">
               <label htmlFor="pass" className="label">Contraseña (*)</label>
               <input type="password" id="pass" className="form-control"  {...register("password")}
-                placeholder="indique su contraseña" />
+                placeholder="indique su contraseña" autoComplete="new-password" aria-describedby="pass-hint" />
+              <small id="pass-hint" className="form-text text-muted">{PASSWORD_LENGTH_HINT}</small>
               <span className="error-form">{errors.password?.message}</span>
 
 
