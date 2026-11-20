@@ -18,6 +18,7 @@ jest.mock('sweetalert2', () => ({
 // Mock de la instancia de api
 jest.mock('../../utils/api');
 const mockedApi = api as jest.Mocked<typeof api>;
+const mockPost = jest.requireMock<{ default: { post: jest.Mock } }>('../../utils/api').default.post;
 
 describe('Registro Page', () => {
     const mockPush = jest.fn();
@@ -53,7 +54,7 @@ describe('Registro Page', () => {
         await waitFor(() => {
             expect(screen.getByText('La contraseña debe tener al menos 8 caracteres')).toBeInTheDocument();
         });
-        expect(mockedApi.post).not.toHaveBeenCalled();
+        expect(mockPost).not.toHaveBeenCalled();
     });
 
     it('rejects a password longer than 72 characters without calling the API', async () => {
@@ -69,7 +70,7 @@ describe('Registro Page', () => {
         await waitFor(() => {
             expect(screen.getByText('La contraseña no puede superar los 72 caracteres')).toBeInTheDocument();
         });
-        expect(mockedApi.post).not.toHaveBeenCalled();
+        expect(mockPost).not.toHaveBeenCalled();
     });
 
     it('shows validation errors when submitting empty form', async () => {
