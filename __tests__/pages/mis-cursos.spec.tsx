@@ -85,6 +85,8 @@ describe('MisCursos Page', () => {
             });
             expect(screen.getByText('Curso Angular')).toBeInTheDocument();
             expect(screen.queryByText('No tienes cursos matriculados.')).not.toBeInTheDocument();
+            // La petición se lanza sin cabeceras manuales: Authorization la añade el interceptor de utils/api.ts
+            expect(mockApiGet).toHaveBeenCalledWith('/usuarios/1/cursos');
         });
 
         it('muestra el mensaje si la petición falla', async () => {

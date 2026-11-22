@@ -14,12 +14,9 @@ const MisCursos: NextPage = () => {
             return;
         }
 
-        api.get<CursoEmbedded>(`/usuarios/${usuario.id}/cursos`, {
-            headers: {
-                'Accept': 'application/json, application/hal+json',
-                'Content-Type': 'application/json'
-            }
-        }).then((response) => {
+        // La cabecera Authorization la añade el interceptor de utils/api.ts;
+        // el 401 (sesión ausente o caducada) lo trata el interceptor de sesión
+        api.get<CursoEmbedded>(`/usuarios/${usuario.id}/cursos`).then((response) => {
             const embedded = response.data._embedded.cursos;
             if (Array.isArray(embedded)) {
                 setCursos(embedded);
