@@ -297,10 +297,10 @@ describe('API Utils', () => {
 });
 
 describe('Auth request interceptor', () => {
-    const authorizationFor = async (url: string, method: string): Promise<unknown> => {
+    const authorizationFor = (url: string, method: string): unknown => {
         const config = { url, method, headers: new AxiosHeaders() };
-        const fulfilled = api.interceptors.request.handlers[1].fulfilled as (c: typeof config) => typeof config;
-        const result = await fulfilled(config);
+        const fulfilled = api.interceptors.request.handlers[1].fulfilled as (_config: typeof config) => typeof config;
+        const result = fulfilled(config);
         return result.headers.get('Authorization');
     };
 
@@ -310,30 +310,30 @@ describe('Auth request interceptor', () => {
 
     it('añade Authorization: Bearer <token> en rutas protegidas (URL relativa y absoluta)', async () => {
         setToken('jwt-123');
-        expect(await authorizationFor('/usuarios/1/cursos', 'get')).toBe('Bearer jwt-123');
-        expect(await authorizationFor(`${API_URL}/usuarios/1/cursos`, 'get')).toBe('Bearer jwt-123');
-        expect(await authorizationFor(`${API_URL}/usuarios/1/misCursosComprados`, 'post')).toBe('Bearer jwt-123');
+        expect(authorizationFor('/usuarios/1/cursos', 'get')).toBe('Bearer jwt-123');
+        expect(authorizationFor(`${API_URL}/usuarios/1/cursos`, 'get')).toBe('Bearer jwt-123');
+        expect(authorizationFor(`${API_URL}/usuarios/1/misCursosComprados`, 'post')).toBe('Bearer jwt-123');
     });
 
     it('omite la cabecera en POST /auth y POST /usuarios (login y alta públicos)', async () => {
         setToken('jwt-123');
-        expect(await authorizationFor(`${API_URL}/auth`, 'post')).toBeUndefined();
-        expect(await authorizationFor(`${API_URL}/usuarios`, 'post')).toBeUndefined();
-        expect(await authorizationFor('/auth', 'post')).toBeUndefined();
+        expect(authorizationFor(`${API_URL}/auth`, 'post')).toBeUndefined();
+        expect(authorizationFor(`${API_URL}/usuarios`, 'post')).toBeUndefined();
+        expect(authorizationFor('/auth', 'post')).toBeUndefined();
     });
 
     it('omite la cabecera en los GET públicos de catálogo', async () => {
         setToken('jwt-123');
-        expect(await authorizationFor(`${API_URL}/categorias?sort=nombre`, 'get')).toBeUndefined();
-        expect(await authorizationFor('categorias', 'get')).toBeUndefined();
-        expect(await authorizationFor(`${API_URL}/cursos/search/selectMorePoints`, 'get')).toBeUndefined();
-        expect(await authorizationFor(`${API_URL}/valoraciones/5`, 'get')).toBeUndefined();
+        expect(authorizationFor(`${API_URL}/categorias?sort=nombre`, 'get')).toBeUndefined();
+        expect(authorizationFor('categorias', 'get')).toBeUndefined();
+        expect(authorizationFor(`${API_URL}/cursos/search/selectMorePoints`, 'get')).toBeUndefined();
+        expect(authorizationFor(`${API_URL}/valoraciones/5`, 'get')).toBeUndefined();
     });
 
     it('omite la cabecera cuando no hay token o vale literalmente undefined', async () => {
-        expect(await authorizationFor('/usuarios/1/cursos', 'get')).toBeUndefined();
+        expect(authorizationFor('/usuarios/1/cursos', 'get')).toBeUndefined();
         setToken('undefined');
-        expect(await authorizationFor('/usuarios/1/cursos', 'get')).toBeUndefined();
+        expect(authorizationFor('/usuarios/1/cursos', 'get')).toBeUndefined();
     });
 });
 

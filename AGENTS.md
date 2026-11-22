@@ -182,6 +182,20 @@ pinned to a 40-char SHA, secrets never used in `if:` (guard with `if: env.X != '
 - Root `AGENTS.md` (`TFG_UNIR-multi/`) — monorepo layout and cross-project conventions. The root
   directory is not a git repo; commit inside this one.
 
+## Branch policy (MUST)
+
+- **NEVER commit or push directly to `main`.** Everything goes through a branch + PR (squash
+  merge) with Conventional Commits.
+- **NEVER approve or merge a PR if ANY check is failing or pending — including checks GitHub
+  marks as non-required** ("Some non-required checks are failing" is a NO-GO). Wait until every
+  check is green (lint, tests, Cypress, build, Codacy, CodeQL, Sonar, security scans). The
+  responsibility is on the person or agent merging.
+- **Codacy PR gate:** the org's "Default coding standard" forces the legacy ESLint8 tool, which
+  does not honour this repo's flat `eslint.config.mjs`. Resolved per-repo by enabling **ESLint9
+  with "use configuration file"** and disabling the legacy tool (P2 decision 2026-11-22, plan
+  `docs/plans/2026-11-22-jwt-auth-interceptor.md`). If a PR shows a new wave of `ESLint8_*`
+  annotations, re-apply and reanalyze the PR.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 ## This is NOT the Next.js you know
