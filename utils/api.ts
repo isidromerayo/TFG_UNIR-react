@@ -1,9 +1,16 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
+import Swal from 'sweetalert2';
+import { getToken, removeToken, removeUser } from '../services/session';
 import { API_URL } from './constants';
 import { logger } from './logger';
 
 interface ApiRetryConfig extends InternalAxiosRequestConfig {
     _retryCount?: number;
+}
+
+interface UrlConfig {
+    url?: string;
+    method?: string;
 }
 
 // Custom retry configuration
@@ -14,6 +21,53 @@ const RETRY_CONFIG = {
 
 // Only idempotent methods are retried (never POST/PUT/PATCH/DELETE)
 const RETRYABLE_METHODS = new Set<string>(['get', 'head', 'options']);
+
+// Rutas de catálogo (solo lectura) que el backend sirve sin token
+const CATALOGO_PUBLICO = /^\/(categorias|cursos|valoraciones)([/?]|$)/;
+
+/**
+ * Path relativo a API_URL: las páginas pasan unas veces URLs absolutas
+ * (`${API_URL}/...`) y otras relativas (`/usuarios/...`).
+ */
+const urlPath = (url?: string): string => {
+    if (!url) {
+        return '';
+    }
+    const sinBase = url.startsWith(API_URL) ? url.slice(API_URL.length) : url;
+    return sinBase.startsWith('/') ? sinBase : `/${sinBase}`;
+};
+
+/**
+ * Rutas a las que NO se añade la cabecera Authorization: login y alta de usuario
+ * (POST públicos) y el catálogo de solo lectura. Enviar el token ahí es inocuo
+ * pero provoca preflights CORS innecesarios.
+ */
+export function esRutaPublica(config: UrlConfig): boolean {
+    const path = urlPath(config.url);
+    const method = (config.method ?? '').toLowerCase();
+    if (method === 'post' && (path === '/auth' || path === '/usuarios')) {
+        return true;
+    }
+    return method === 'get' && CATALOGO_PUBLICO.test(path);
+}
+
+/** El 401/403 del login (POST /auth) lo muestra la página de acceso con su propio mensaje. */
+const esLogin = (config?: UrlConfig): boolean =>
+    !!config && (config.method ?? '').toLowerCase() === 'post' && urlPath(config.url) === '/auth';
+
+/**
+ * Redirige al login cuando la sesión caduca. Se expone como propiedad de un
+ * objeto porque jsdom define `window.location` no configurable: así los tests
+ * pueden sustituirla sin navegar de verdad. El guard de `window` mantiene el
+ * módulo seguro para el código que corre en el servidor.
+ */
+export const sesionFallback = {
+    redirigirAAcceso(): void {
+        if (typeof window !== 'undefined') {
+            window.location.assign('/acceso');
+        }
+    }
+};
 
 // A failure is transient when no response was received (network level),
 // when the server answers 429 (throttling) or with a 5xx status
@@ -78,6 +132,18 @@ api.interceptors.request.use(
     }
 );
 
+// Adjunta el JWT a las rutas protegidas. El token viaja en el body de
+// AuthResponse (el backend nunca lo devuelve en cabecera), por lo que se
+// descarta también el valor literal 'undefined' que guardó durante un
+// tiempo el antiguo lector de cabeceras.
+api.interceptors.request.use((config) => {
+    const token = getToken();
+    if (token && token !== 'undefined' && !esRutaPublica(config)) {
+        config.headers.set('Authorization', `Bearer ${token}`);
+    }
+    return config;
+});
+
 // Add response interceptor for better error handling:
 // enriches the error message but preserves the original error
 // (response, status, code) so pages can discriminate error kinds
@@ -115,6 +181,30 @@ api.interceptors.response.use(
 
         // Keep message readable while preserving response/status/code
         error.message = errorMessage;
+        return Promise.reject(error);
+    }
+);
+
+// Trata de forma centralizada los fallos de autorización en rutas protegidas:
+//  - 401: cierra la sesión, avisa y redirige a /acceso (sesión caducada).
+//  - 403: informa de falta de permisos sin cerrar la sesión (el `id` pedido no
+//    casa con el del token).
+// El 401/403 del login (POST /auth) NO se trata aquí: lo muestra la página de
+// acceso con su propio mensaje de credenciales (se evita así el doble aviso).
+api.interceptors.response.use(
+    (response) => response,
+    (error: AxiosError) => {
+        if (!esLogin(error.config)) {
+            const status = error.response?.status;
+            if (status === 401) {
+                removeToken();
+                removeUser();
+                Swal.fire('Sesión caducada', 'Su sesión ha expirado, vuelva a acceder', 'warning');
+                sesionFallback.redirigirAAcceso();
+            } else if (status === 403) {
+                Swal.fire('Sin permisos', 'No tiene permiso para ver estos datos', 'error');
+            }
+        }
         return Promise.reject(error);
     }
 );

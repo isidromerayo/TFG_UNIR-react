@@ -72,4 +72,56 @@ describe('Acceso Page', () => {
       expect(mockPush).not.toHaveBeenCalled();
     });
   });
+
+  it('debería mantener el aviso de credenciales con 401', async () => {
+    mockPost.mockRejectedValue({ response: { status: 401, data: { message: 'Bad credentials' } } });
+    render(<Acceso />);
+
+    fireEvent.change(screen.getByPlaceholderText(/email address/i), { target: { value: 'test@example.com' } });
+    fireEvent.change(screen.getByPlaceholderText(/password/i), { target: { value: 'password123' } });
+    fireEvent.click(screen.getByRole('button', { name: /acceso/i }));
+
+    await waitFor(() => {
+      expect(mockFire).toHaveBeenCalledWith('Problemas acceso', 'No se ha podido logear, revise usuario/contraseña', 'error');
+    });
+  });
+
+  it('debería mostrar los segundos de Retry-After cuando el login responde 429', async () => {
+    mockPost.mockRejectedValue({ response: { status: 429, headers: { 'retry-after': '45' } } });
+    render(<Acceso />);
+
+    fireEvent.change(screen.getByPlaceholderText(/email address/i), { target: { value: 'test@example.com' } });
+    fireEvent.change(screen.getByPlaceholderText(/password/i), { target: { value: 'password123' } });
+    fireEvent.click(screen.getByRole('button', { name: /acceso/i }));
+
+    await waitFor(() => {
+      expect(mockFire).toHaveBeenCalledWith('Problemas acceso', 'Demasiados intentos seguidos, vuelva a intentarlo en 45 segundos', 'error');
+    });
+  });
+
+  it('debería usar el mensaje de bloqueo genérico si el 429 no trae Retry-After', async () => {
+    mockPost.mockRejectedValue({ response: { status: 429 } });
+    render(<Acceso />);
+
+    fireEvent.change(screen.getByPlaceholderText(/email address/i), { target: { value: 'test@example.com' } });
+    fireEvent.change(screen.getByPlaceholderText(/password/i), { target: { value: 'password123' } });
+    fireEvent.click(screen.getByRole('button', { name: /acceso/i }));
+
+    await waitFor(() => {
+      expect(mockFire).toHaveBeenCalledWith('Problemas acceso', 'Demasiados intentos seguidos, espere unos minutos y vuelva a intentarlo', 'error');
+    });
+  });
+
+  it('debería avisar de falta de permisos si el login responde 403', async () => {
+    mockPost.mockRejectedValue({ response: { status: 403 } });
+    render(<Acceso />);
+
+    fireEvent.change(screen.getByPlaceholderText(/email address/i), { target: { value: 'test@example.com' } });
+    fireEvent.change(screen.getByPlaceholderText(/password/i), { target: { value: 'password123' } });
+    fireEvent.click(screen.getByRole('button', { name: /acceso/i }));
+
+    await waitFor(() => {
+      expect(mockFire).toHaveBeenCalledWith('Problemas acceso', 'No tiene permiso para realizar esta operación', 'error');
+    });
+  });
 }); 

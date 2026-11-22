@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { setUser , setToken } from '../services/'
 import { API_URL } from '../utils/'
 import api from '../utils/api'
+import { authErrorMessage } from '../utils/api-error'
 import Swal from 'sweetalert2';
 import { FormInputEvent, FormSubmitEvent } from '../types';
 
@@ -37,8 +38,11 @@ const Acceso: NextPage = () => {
       setUser(JSON.stringify(response.data));
       Swal.fire('Acceso', 'Logeado correctamente');
       push('/mis-cursos')
-  }).catch(() => {
-      Swal.fire('Problemas acceso', 'No se ha podido logear, revise usuario/contraseña', 'error');
+  }).catch((error: unknown) => {
+      // El interceptor de sesión ignora el POST /auth: aquí se muestra el
+      // mensaje específico según el estado (401 credenciales, 403 permisos,
+      // 429 con Retry-After del limitador de intentos)
+      Swal.fire('Problemas acceso', authErrorMessage(error), 'error');
 
   })
 

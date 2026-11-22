@@ -1,5 +1,7 @@
-import { describe, it, expect, beforeEach, jest } from '@jest/globals';
-import api from '../../utils/api';
+import { AxiosHeaders } from 'axios';
+import api, { sesionFallback } from '../../utils/api';
+import { API_URL } from '../../utils/constants';
+import { setToken, setUser } from '../../services/session';
 import { logger } from '../../utils/logger';
 
 jest.mock('../../utils/logger', () => ({
@@ -10,6 +12,15 @@ jest.mock('../../utils/logger', () => ({
         debug: jest.fn(),
     }
 }));
+
+jest.mock('sweetalert2', () => ({
+    __esModule: true,
+    default: {
+        fire: jest.fn(),
+    }
+}));
+
+const mockSwalFire = jest.requireMock<{ default: { fire: jest.Mock } }>('sweetalert2').default.fire;
 
 describe('API Utils', () => {
     beforeEach(() => {
@@ -76,13 +87,13 @@ describe('API Utils', () => {
         it('debe tener handlers de request', () => {
             expect(api.interceptors.request.handlers).toBeDefined();
             expect(Array.isArray(api.interceptors.request.handlers)).toBe(true);
-            expect(api.interceptors.request.handlers.length).toBe(1);
+            expect(api.interceptors.request.handlers.length).toBe(2);
         });
 
         it('debe tener handlers de response', () => {
             expect(api.interceptors.response.handlers).toBeDefined();
             expect(Array.isArray(api.interceptors.response.handlers)).toBe(true);
-            expect(api.interceptors.response.handlers.length).toBe(2);
+            expect(api.interceptors.response.handlers.length).toBe(3);
         });
     });
 
@@ -282,5 +293,125 @@ describe('API Utils', () => {
                 expect(error.message).toBe('Request failed');
             }
         });
+    });
+});
+
+describe('Auth request interceptor', () => {
+    const authorizationFor = (url: string, method: string): unknown => {
+        const config = { url, method, headers: new AxiosHeaders() };
+        const fulfilled = api.interceptors.request.handlers[1].fulfilled as (_config: typeof config) => typeof config;
+        const result = fulfilled(config);
+        return result.headers.get('Authorization');
+    };
+
+    beforeEach(() => {
+        localStorage.clear();
+    });
+
+    it('añade Authorization: Bearer <token> en rutas protegidas (URL relativa y absoluta)', async () => {
+        setToken('jwt-123');
+        expect(authorizationFor('/usuarios/1/cursos', 'get')).toBe('Bearer jwt-123');
+        expect(authorizationFor(`${API_URL}/usuarios/1/cursos`, 'get')).toBe('Bearer jwt-123');
+        expect(authorizationFor(`${API_URL}/usuarios/1/misCursosComprados`, 'post')).toBe('Bearer jwt-123');
+    });
+
+    it('omite la cabecera en POST /auth y POST /usuarios (login y alta públicos)', async () => {
+        setToken('jwt-123');
+        expect(authorizationFor(`${API_URL}/auth`, 'post')).toBeUndefined();
+        expect(authorizationFor(`${API_URL}/usuarios`, 'post')).toBeUndefined();
+        expect(authorizationFor('/auth', 'post')).toBeUndefined();
+    });
+
+    it('omite la cabecera en los GET públicos de catálogo', async () => {
+        setToken('jwt-123');
+        expect(authorizationFor(`${API_URL}/categorias?sort=nombre`, 'get')).toBeUndefined();
+        expect(authorizationFor('categorias', 'get')).toBeUndefined();
+        expect(authorizationFor(`${API_URL}/cursos/search/selectMorePoints`, 'get')).toBeUndefined();
+        expect(authorizationFor(`${API_URL}/valoraciones/5`, 'get')).toBeUndefined();
+    });
+
+    it('omite la cabecera cuando no hay token o vale literalmente undefined', async () => {
+        expect(authorizationFor('/usuarios/1/cursos', 'get')).toBeUndefined();
+        setToken('undefined');
+        expect(authorizationFor('/usuarios/1/cursos', 'get')).toBeUndefined();
+    });
+});
+
+describe('Sesion response interceptor (401/403 en rutas protegidas)', () => {
+    const rejectedError = (error: Record<string, unknown>): Promise<unknown> => {
+        const rejected = api.interceptors.response.handlers[2].rejected as (e: unknown) => Promise<unknown>;
+        return rejected(error);
+    };
+
+    const originalRedirect = sesionFallback.redirigirAAcceso;
+    const mockRedirect = jest.fn();
+
+    beforeEach(() => {
+        localStorage.clear();
+        mockRedirect.mockClear();
+        mockSwalFire.mockClear();
+        // jsdom define window.location como no configurable: se sustituye
+        // el seam de redirección del módulo en lugar de mockear el navegador
+        sesionFallback.redirigirAAcceso = mockRedirect;
+    });
+
+    afterAll(() => {
+        sesionFallback.redirigirAAcceso = originalRedirect;
+    });
+
+    it('un 401 en ruta protegida limpia la sesión, avisa y redirige a /acceso', async () => {
+        setToken('jwt-123');
+        setUser('{"id":1}');
+
+        const error = { response: { status: 401, data: {} }, config: { method: 'get', url: '/usuarios/1/cursos' } };
+        await expect(rejectedError(error)).rejects.toBe(error);
+
+        expect(localStorage.getItem('token')).toBeNull();
+        expect(localStorage.getItem('usuario')).toBeNull();
+        expect(mockSwalFire).toHaveBeenCalledWith('Sesión caducada', 'Su sesión ha expirado, vuelva a acceder', 'warning');
+        expect(mockRedirect).toHaveBeenCalled();
+    });
+
+    it('un 401 en el POST /auth NO cierra sesión ni redirige: lo muestra la página de acceso', async () => {
+        setToken('jwt-123');
+
+        const error = { response: { status: 401, data: {} }, config: { method: 'post', url: `${API_URL}/auth` } };
+        await expect(rejectedError(error)).rejects.toBe(error);
+
+        expect(localStorage.getItem('token')).toBe('jwt-123');
+        expect(mockSwalFire).not.toHaveBeenCalled();
+        expect(mockRedirect).not.toHaveBeenCalled();
+    });
+
+    it('un 403 avisa de falta de permisos sin cerrar la sesión', async () => {
+        setToken('jwt-123');
+
+        const error = { response: { status: 403, data: {} }, config: { method: 'get', url: '/usuarios/9/cursos' } };
+        await expect(rejectedError(error)).rejects.toBe(error);
+
+        expect(localStorage.getItem('token')).toBe('jwt-123');
+        expect(mockSwalFire).toHaveBeenCalledWith('Sin permisos', 'No tiene permiso para ver estos datos', 'error');
+        expect(mockRedirect).not.toHaveBeenCalled();
+    });
+
+    it('no interviene en otros estados ni sin respuesta (red)', async () => {
+        const notFound = { response: { status: 404, data: {} }, config: { method: 'get', url: '/usuarios/1/cursos' } };
+        await expect(rejectedError(notFound)).rejects.toBe(notFound);
+
+        const network = { config: { method: 'get', url: '/usuarios/1/cursos' } };
+        await expect(rejectedError(network)).rejects.toBe(network);
+
+        expect(mockSwalFire).not.toHaveBeenCalled();
+        expect(mockRedirect).not.toHaveBeenCalled();
+    });
+
+    it('la implementación real de la redirección usa window.location sin romper el entorno de test', () => {
+        // jsdom no navega: registra el intento como jsdomError en console.error
+        const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+        try {
+            expect(() => originalRedirect()).not.toThrow();
+        } finally {
+            consoleErrorSpy.mockRestore();
+        }
     });
 });
