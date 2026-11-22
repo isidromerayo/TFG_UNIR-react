@@ -3,7 +3,7 @@
 **Fecha:** 2026-11-06  
 **Proyecto:** TFG_UNIR-react (Next.js 16.4.5 + React 19.3.1)  
 **Versión Objetivo:** Cypress 16.2.1 + plugins compatibles  
-**Estado:** En ejecución  
+**Estado:** Completado (PR #288, mergeada el 2026-11-10)  
 **Prioridad:** ALTA (primera ejecución del plan global)
 
 ---
@@ -33,9 +33,9 @@ Este documento describe el plan para actualizar Cypress en el proyecto React. Ac
 ### Versiones
 | Dependencia | Actual | Objetivo | Estado |
 |-------------|--------|----------|--------|
-| `cypress` | 15.21.1 | **16.2.1** | ❌ |
-| `@cypress/webpack-preprocessor` | 7.1.2 | **8.0.0** | ❌ |
-| `@cypress/code-coverage` | 4.1.2 | **4.1.3** | ❌ |
+| `cypress` | 16.2.1 | **16.2.1** | ✅ |
+| `@cypress/webpack-preprocessor` | 8.0.0 | **8.0.0** | ✅ |
+| `@cypress/code-coverage` | 4.1.3 | **4.1.3** | ✅ |
 | `@babel/core` | 7.29.7 | 7.29.7 | ✅ |
 | `babel-plugin-istanbul` | 8.0.0 | 8.0.0 | ✅ |
 
@@ -193,10 +193,14 @@ gh pr create --title "chore: upgrade Cypress to 16.2.1" --body "See docs/plans/2
 - [ ] `pnpm audit --prod` ✅ 0 vulnerabilidades
 
 ### CI/CD (Después de PR)
-- [ ] Workflow `tests.yml` ✅ pasa completamente
-- [ ] Workflow `node.js.yml` ✅ pasa completamente
-- [ ] SonarCloud gate ✅ pasa (coverage ≥ 80%)
+- [x] Workflow `tests.yml` ✅ pasa completamente
+- [x] Workflow `node.js.yml` ✅ pasa completamente
+- [x] SonarCloud gate ✅ pasa (coverage ≥ 80%)
 - [ ] Codacy ✅ 0 new issues
+
+> Verificado el 2026-11-22 sobre el HEAD de `main`: check-runs en verde para `Unit Tests (Jest)`,
+> `Component Tests (Cypress)`, `E2E Tests (Cypress)`, `SonarCloud Code Analysis` y `SonarCloud
+> Analysis`. Codacy no expone check-run en `main`, así que no se marca.
 
 ---
 
@@ -349,6 +353,6 @@ coverageThreshold: {
 
 ---
 
-**Estado:** 🟡 En ejecución  
-**Próximos Pasos:** Ejecutar pasos 1-10  
+**Estado:** ✅ Completado (PR #288, 2026-11-10)  
+**Próximos Pasos:** Ninguno  
 **Relacionado:** Parte del plan global de actualización de Cypress en todos los frontend
